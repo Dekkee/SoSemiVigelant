@@ -1,9 +1,6 @@
-﻿{
+{
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "version": "1.0.1",
-      "type": "platform"
-    },
+    "Microsoft.NETCore.App": "1.0.3",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Routing": "1.0.1",
@@ -15,7 +12,14 @@
     "Microsoft.Extensions.Logging": "1.0.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
-    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0"
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+    "HtmlAgilityPack.NetCore": "1.5.0.1",
+    "Microsoft.AspNetCore.Identity": "1.1.0",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
+    "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.1.0",
+    "Microsoft.AspNetCore.Http": "1.1.0",
+    "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0"
   },
 
   "tools": {
@@ -53,5 +57,8 @@
 
   "scripts": {
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+  },
+  "runtimes": {
+    "win10-x64": {}
   }
 }

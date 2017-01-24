@@ -38,6 +38,8 @@ namespace SoSemiVigelant
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
+
+            services.AddSingleton<IPagesLoader, PagesLoader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

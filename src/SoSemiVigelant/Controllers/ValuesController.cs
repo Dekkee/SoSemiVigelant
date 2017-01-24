@@ -3,24 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SoSemiVigelant.Models;
 
 namespace SoSemiVigelant.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public ValuesController(IPagesLoader loader)
         {
-            return new string[] { "value1", "value2" };
+            PagesLoader = loader;
+
+            PagesLoader.SetCredentials("dekker25@gmail.com", "67251425");
+            PagesLoader.Authorise();
         }
 
+        public IPagesLoader PagesLoader { get; set; }
+        // GET api/values
+        [HttpGet]
+        [Route("Aucs/List")]
+        public IEnumerable<AuctionEntry> Get()
+        {
+            
+            return PagesLoader.LoadTopics();
+        }
+        
         // GET api/values/5
         [HttpGet("{id}")]
+        [Route("Aucs/Get/{id}")]
         public string Get(int id)
         {
-            return "value";
+            var entry = new AuctionEntry();
+            entry.Url = $"{Settings.Url}forum/index.php?showtopic={id}";
+
+            PagesLoader.LoadAuction(entry);
+            return entry.RawHtml;
         }
 
         // POST api/values
@@ -39,6 +56,21 @@ namespace SoSemiVigelant.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpPost]
+        public void SetCredentials([FromBody]string username, [FromBody]string password)
+        {
+            PagesLoader.SetCredentials(username, password);
+        }
+
+        [HttpGet(Name = "Auth")]
+        public string Auth()
+        {
+            PagesLoader.SetCredentials("dekker25@gmail.com", "67251425");
+            PagesLoader.Authorise();
+
+            return "Gut";
         }
     }
 }
