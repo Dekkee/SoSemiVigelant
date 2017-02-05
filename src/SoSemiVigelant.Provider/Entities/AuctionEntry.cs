@@ -6,23 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using SoSemiVigelant.Utilities;
+using SoSemiVigelant.Provider.Utilities;
 
-namespace SoSemiVigelant.Models
+namespace SoSemiVigelant.Provider.Entities
 {
     public class AuctionEntry : INotifyPropertyChanged
     {
-        private readonly PagesLoader loader = PagesLoader.GetLoader();
-        private ICommand _openPageCommand;
-        private readonly Func<bool> _canOpenPage;
-        private void _openPage()
-        {
-            loader.LoadAuction(this);
-        }
-        
         public AuctionEntry()
         {
-            _canOpenPage = () => !string.IsNullOrEmpty(Url);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -174,21 +165,5 @@ namespace SoSemiVigelant.Models
         public int? WinnerBet { get; set; }
         public string WinnerName { get; set; }
         public int? WinnedId { get; set; }
-        
-        public void MakeBid(int bid)
-        {
-            loader.MakeBid(new FormModel
-            {
-                auc_id = Id,
-                bid = bid,
-                //Отправить = "Отправить"
-            });
-            loader.LoadAuctionData(this);
-        }
-
-        public void Refresh()
-        {
-            loader.LoadAuctionData(this);
-        }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SoSemiVigelant.Models;
+using SoSemiVigelant.Provider;
+using SoSemiVigelant.Provider.Entities;
 
 namespace SoSemiVigelant.Controllers
 {

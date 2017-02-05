@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using HtmlAgilityPack;
-using SoSemiVigelant.Models;
-using SoSemiVigelant.Utilities;
+using SoSemiVigelant.Data.Data;
+using SoSemiVigelant.Provider.Entities;
+using SoSemiVigelant.Provider.Utilities;
 
-namespace SoSemiVigelant
+namespace SoSemiVigelant.Provider
 {
     public class PagesLoader : IPagesLoader
     {
@@ -22,10 +24,14 @@ namespace SoSemiVigelant
         private string _login;
         private string _password;
 
+        private Timer _syncTimer;
+
         public PagesLoader()
         {
             _doc = new HtmlDocument();
             _adapter = new WebAdapter();
+
+            _syncTimer = new Timer(SyncTopics, null, 0, (int)TimeSpan.FromMinutes(1).TotalMilliseconds);
         }
 
         public static PagesLoader GetLoader()
@@ -35,6 +41,18 @@ namespace SoSemiVigelant
                 _loader = new PagesLoader();
             }
             return _loader;
+        }
+
+        private void SyncTopics(object obj)
+        {
+            var topics = LoadTopics();
+            foreach (var topic in topics)
+            {
+                using (var db = new DatabaseContextFactory().Create())
+                {
+                    //db.Auctions.Add();
+                }
+            }
         }
 
         public IEnumerable<AuctionEntry> LoadTopics()

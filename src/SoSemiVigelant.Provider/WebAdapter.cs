@@ -11,17 +11,16 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SoSemiVigelant.Models;
-using SoSemiVigelant.Utilities;
+using SoSemiVigelant.Provider.Entities;
+using SoSemiVigelant.Provider.Utilities;
 
-namespace SoSemiVigelant
+namespace SoSemiVigelant.Provider
 {
     internal class WebAdapter
     {
         private CookieContainer _cookies;
         private CookieCollection _cooCol;
         private string _antiForgeryToken;
-        private string __RequestVerificationToken;
         private Stopwatch sw;
 
         public List<TimeSpan> TimeSpent;

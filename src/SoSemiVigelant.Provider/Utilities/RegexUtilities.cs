@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SoSemiVigelant.Utilities
+namespace SoSemiVigelant.Provider.Utilities
 {
     public static class RegexUtilities
     {
@@ -9,10 +9,8 @@ namespace SoSemiVigelant.Utilities
         {
             if (match.Success)
             {
-                var matchList = new List<string>();
-
-                matchList.Add(GetTokenString(match, token).Trim());
-
+                var matchList = new List<string> {GetTokenString(match, token).Trim()};
+                
                 do
                 {
                     match = match.NextMatch();

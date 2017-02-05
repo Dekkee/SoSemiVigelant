@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using SoSemiVigelant.Models;
+using SoSemiVigelant.Provider.Entities;
 
-namespace SoSemiVigelant.Utilities
+namespace SoSemiVigelant.Provider.Utilities
 {
     public static class ExtensionMethods
     {

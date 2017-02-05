@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoSemiVigelant.Models
+namespace SoSemiVigelant.Provider.Entities
 {
     public class FormModel
     {

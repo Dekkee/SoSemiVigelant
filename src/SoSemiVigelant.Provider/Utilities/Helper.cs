@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoSemiVigelant.Utilities
+namespace SoSemiVigelant.Provider.Utilities
 {
     public static class Helper
     {

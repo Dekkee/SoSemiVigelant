@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SoSemiVigelant
+namespace SoSemiVigelant.Provider
 {
     public class Settings
     {

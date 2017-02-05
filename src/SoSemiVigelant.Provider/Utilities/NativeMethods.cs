@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace SoSemiVigelant.Utilities
+namespace SoSemiVigelant.Provider.Utilities
 {
     internal static class NativeMethods
     {
