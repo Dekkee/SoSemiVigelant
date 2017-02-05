@@ -16,12 +16,11 @@
     "HtmlAgilityPack.NetCore": "1.5.0.1",
     "Microsoft.AspNetCore.Identity": "1.1.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
-    "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
-    "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.1.0",
     "Microsoft.AspNetCore.Http": "1.1.0",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
     "SoSemiVigelant.Data": "1.0.0-*",
-    "SoSemiVigelant.Provider": "1.0.0-*"
+    "SoSemiVigelant.Provider": "1.0.0-*",
+    "SoSemiVigelant.Core": "1.0.0-*"
   },
 
   "tools": {
@@ -29,7 +28,7 @@
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.6": {
       "imports": [
         "dotnet5.6",
         "portable-net45+win8"

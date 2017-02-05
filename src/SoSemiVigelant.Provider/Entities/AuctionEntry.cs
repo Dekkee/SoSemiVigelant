@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -17,14 +18,36 @@ namespace SoSemiVigelant.Provider.Entities
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public string Name { get; set; }
         public string Creator { get; set; }
         public Uri CreatorUrl { get; set; }
         public string CreatorRating { get; set; }
         public Uri CreatorRatingUrl { get; set; }
+        public int? CreatorId
+        {
+            get
+            {
+                int creator;
+                if (int.TryParse(Regex.Match(Url, "showuser=(\\d+)$", RegexOptions.IgnoreCase).Value, out creator))
+                    return creator;
+
+                return null;
+            }
+        }
         public string City { get; set; }
         public string Url { get; set; }
+        public int? Topic
+        {
+            get
+            {
+                int topic;
+                if(int.TryParse(Regex.Match(Url, "showtopic=(\\d+)$", RegexOptions.IgnoreCase).Value, out topic))
+                    return topic;
+
+                return null;
+            }
+        }
         public int Id { get; set; }
         public int? Bid { get; set; }
         public bool IsFinished { get; set; }

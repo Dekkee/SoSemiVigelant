@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SoSemiVigelant.Data.Data;
+using SoSemiVigelant.Data.Entities;
 using SoSemiVigelant.Models;
 using SoSemiVigelant.Provider;
 using SoSemiVigelant.Provider.Entities;
@@ -26,7 +28,12 @@ namespace SoSemiVigelant.Controllers
         [Route("Aucs/List")]
         public IEnumerable<AuctionEntry> Get()
         {
-            
+            //using (var db = new DatabaseContextFactory().Create())
+            //{
+            //    var aucs = db.Set<Auction>();
+            //    return aucs;
+            //}
+
             return PagesLoader.LoadTopics();
         }
         
@@ -35,44 +42,10 @@ namespace SoSemiVigelant.Controllers
         [Route("Aucs/Get/{id}")]
         public string Get(int id)
         {
-            var entry = new AuctionEntry();
-            entry.Url = $"{Settings.Url}forum/index.php?showtopic={id}";
+            var entry = new AuctionEntry {Url = $"{Settings.Url}forum/index.php?showtopic={id}"};
 
             PagesLoader.LoadAuction(entry);
             return entry.RawHtml;
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        [HttpPost]
-        public void SetCredentials([FromBody]string username, [FromBody]string password)
-        {
-            PagesLoader.SetCredentials(username, password);
-        }
-
-        [HttpGet(Name = "Auth")]
-        public string Auth()
-        {
-            PagesLoader.SetCredentials("dekker25@gmail.com", "67251425");
-            PagesLoader.Authorise();
-
-            return "Gut";
         }
     }
 }

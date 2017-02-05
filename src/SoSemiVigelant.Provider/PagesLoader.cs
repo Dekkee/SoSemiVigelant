@@ -9,6 +9,7 @@ using System.Windows;
 using System.Xml.Linq;
 using HtmlAgilityPack;
 using SoSemiVigelant.Data.Data;
+using SoSemiVigelant.Data.Entities;
 using SoSemiVigelant.Provider.Entities;
 using SoSemiVigelant.Provider.Utilities;
 
@@ -50,7 +51,20 @@ namespace SoSemiVigelant.Provider
             {
                 using (var db = new DatabaseContextFactory().Create())
                 {
-                    //db.Auctions.Add();
+                    if (!db.Auctions.Any(_ => _.AuctionId == topic.Topic))
+                    {
+                        var auc = new Auction
+                        {
+                            AuctionId = topic.Topic,
+                            Name = topic.Name,
+                            Creator = new User
+                            {
+                                Name = topic.Creator,
+                                OriginId = topic.CreatorId.HasValue ? topic.CreatorId.Value : 0
+                            }
+                        };
+                        db.Auctions.Add(auc);
+                    }
                 }
             }
         }
@@ -59,24 +73,6 @@ namespace SoSemiVigelant.Provider
         {
             List<AuctionEntry> topics = new List<AuctionEntry>();
             topics.AddRange(GetTopics(/*Settings.Url + "forum/index.php?showforum=15"*/Settings.Url + "auc/aucs.php"));
-            //var totalPages = (GetTotalPages() / 30) + 1;
-
-            //int currentPage = 0;
-
-            //string link;
-            //while (!string.IsNullOrEmpty(link = GetNextPageLink()))
-            //{
-            //    if (LoadingProgressChangedEvent != null)
-            //    {
-            //        currentPage++;
-            //        LoadingProgressChangedEvent(
-            //            this, 
-            //            new LoadingProgressChangedEventArgs((int)((float)(currentPage) / (float)totalPages * 100),
-            //            $"Loading page: {currentPage}/{totalPages}"));
-            //    }
-
-            //    topics.AddRange(GetTopics(link));
-            //}
             
             return topics;
         }
