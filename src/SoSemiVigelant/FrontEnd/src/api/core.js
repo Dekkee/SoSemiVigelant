@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch';
 var endPoint = "http://localhost:65107";
 
 const respToJson = response => response.json();
+
 const checkStatus = response => {
     if (response.status >= 200 && response.status < 300) {
         return response
@@ -14,11 +15,14 @@ const checkStatus = response => {
 }
 
 export function resolveUrl(url) {
+    console.log(url);
     return `${endPoint}/${url}`;
 }
 
 export function getJson(url){
-    return fetch(resolveUrl(url), {credentials: 'include'})
+    console.log('getJson' + url);
+    return fetch(
+        resolveUrl(url))
         .then(checkStatus)
         .then(respToJson);
 }

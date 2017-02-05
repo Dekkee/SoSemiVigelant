@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchAucsIfNeeded } from '../actions'
+import Auctions from '../components/Auctions'
 
 class App extends Component {
     static propTypes = {
@@ -12,13 +13,15 @@ class App extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props
-        dispatch(fetchAucsIfNeeded())
+        console.log('didMount');
+        console.log(this.props);
+        dispatch(fetchAucsIfNeeded(this.props))
     }
 
     componentWillReceiveProps(nextProps) {
         if (/*nextProps.selectedReddit !== this.props.selectedReddit*/true) {
             const { dispatch } = nextProps
-            dispatch(fetchAucsIfNeeded())
+            dispatch(fetchAucsIfNeeded(this.props))
         }
     }
 
@@ -32,7 +35,12 @@ class App extends Component {
                 </header>
 
                 <section className="aucs">
-
+                    {isEmpty
+                        ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+                        : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+                            <Auctions aucs={aucs} />
+                        </div>
+                    }
                 </section>
             </main>
         )

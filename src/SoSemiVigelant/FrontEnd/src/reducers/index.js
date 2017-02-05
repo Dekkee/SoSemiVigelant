@@ -27,7 +27,7 @@ const aucs = (state = {
         ...state,
         isFetching: false,
         didInvalidate: false,
-        items: action.posts,
+        items: action.aucs,
         lastUpdated: action.receivedAt
       }
     default:

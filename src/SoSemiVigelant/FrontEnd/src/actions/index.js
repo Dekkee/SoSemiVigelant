@@ -6,25 +6,27 @@ export const INVALIDATE_AUCS = 'INVALIDATE_AUCS'
 export const REQUEST_AUC = 'REQUEST_AUC'
 export const RECEIVE_AUC = 'RECEIVE_AUC'
 
-export const requestAucs = () => ({
-  type: REQUEST_AUCS
+export const requestAucs = aucs => ({
+  type: REQUEST_AUCS,
+  aucs
 })
 
-export const receiveAucs = (json) => ({
-  type: RECEIVE_AUCS,
-  posts: json.data.children.map(child => child.data),
-  receivedAt: Date.now()
-})
+export const receiveAucs = (aucs, json) => ({
+    type: RECEIVE_AUCS,
+    aucs: json,
+    receivedAt: Date.now()
+  })
 
-const fetchAucs = () => dispatch => {
-  dispatch(requestAucs())
-  return fetch(getJson('aucs/values'))
-    .then(response => response.json())
-    .then(json => dispatch(receiveAucs(json)))
+const fetchAucs = aucs => dispatch => {
+  dispatch(requestAucs(aucs))
+  return getJson('aucs/list')
+    .then(json => {
+      dispatch(receiveAucs(aucs, json))
+  })
 }
 
-const shouldFetchAucs = (state,) => {
-  const aucs = state.getAucs
+const shouldFetchAucs = (state) => {
+  const aucs = state.getAucs['data']
   if (!aucs) {
     return true
   }
@@ -34,8 +36,8 @@ const shouldFetchAucs = (state,) => {
   return aucs.didInvalidate
 }
 
-export const fetchAucsIfNeeded = reddit => (dispatch, getState) => {
-  if (shouldFetchAucs(getState(), reddit)) {
-    return dispatch(fetchAucs(reddit))
+export const fetchAucsIfNeeded = aucs => (dispatch, getState) => {
+  if (shouldFetchAucs(getState(), aucs)) {
+    return dispatch(fetchAucs(aucs))
   }
 }
