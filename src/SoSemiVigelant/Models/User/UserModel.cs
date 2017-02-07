@@ -12,32 +12,33 @@ namespace SoSemiVigelant.Models.User
     {
         public static async Task<UserModel> Create(DatabaseContext db, int id, CancellationToken token)
         {
-            var auc = await db.Users.FirstOrDefaultAsync(_ => _.OriginId == id, token);
+            var user = await db.Users.FirstOrDefaultAsync(_ => _.OriginId == id, token);
 
-            if (auc == null)
+            if (user == null)
             {
                 //TODO: Залогировать
                 return null;
             }
 
-            return Create(auc);
+            return Create(user);
         }
 
-        public static UserModel Create(Data.Entities.User auction)
+        public static UserModel Create(Data.Entities.User user)
         {
             var model = new UserModel
             {
-                Name = auction.Name
+                Id = user.OriginId,
+                Name = user.Name
             };
             return model;
         }
 
-        public static UserModel Map(Data.Entities.User auction)
+        public static UserModel Map(Data.Entities.User user)
         {
             return new UserModel
             {
-                Id = auction.OriginId,
-                Name = auction.Name
+                Id = user.OriginId,
+                Name = user.Name
             };
         }
 

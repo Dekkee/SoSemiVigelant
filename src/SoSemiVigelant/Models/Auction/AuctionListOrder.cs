@@ -8,6 +8,6 @@ namespace SoSemiVigelant.Models.Auction
     public enum AuctionListOrder
     {
         ID = 1,
-        Name
+        Name = 2
     }
 }

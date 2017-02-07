@@ -14,27 +14,27 @@ namespace SoSemiVigelant.Models.User
     {
         protected override IOrderedQueryable<UserEntity> BasicQuery(DatabaseContext db, UserListRequest request)
         {
-            var auctions = db.Users.AsQueryable();
+            var users = db.Users.AsQueryable();
 
-            auctions = Filteration(auctions, request);
-            auctions = OrderBy(auctions, request.Order, request.Asc);
+            users = Filteration(users, request);
+            users = OrderBy(users, request.Order, request.Asc);
 
-            return (IOrderedQueryable<UserEntity>)auctions;
+            return (IOrderedQueryable<UserEntity>)users;
         }
 
         /// <summary>
         /// Фильтрация
         /// </summary>
-        /// <param name="auctions"></param>
+        /// <param name="users"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        private IQueryable<UserEntity> Filteration(IQueryable<UserEntity> auctions, UserListRequest request)
+        private IQueryable<UserEntity> Filteration(IQueryable<UserEntity> users, UserListRequest request)
         {
-            auctions = string.IsNullOrEmpty(request.Name)
-                ? auctions
-                : auctions.Where(_ => _.Name.Contains(request.Name));
+            users = string.IsNullOrEmpty(request.Name)
+                ? users
+                : users.Where(_ => _.Name.Contains(request.Name));
 
-            return auctions;
+            return users;
         }
 
         /// <summary>

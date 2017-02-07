@@ -27,6 +27,7 @@ namespace SoSemiVigelant.Models.Auction
         {
             var model = new AuctionModel
             {
+                Id = auction.AuctionId ?? 0,
                 Name = auction.Name
             };
             return model;

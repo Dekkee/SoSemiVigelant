@@ -43,20 +43,20 @@ namespace SoSemiVigelant.Models.Auction
         /// <param name="asc">направление</param>
         /// <param name="clients"></param>
         /// <returns></returns>
-        private IOrderedQueryable<AuctionEntity> OrderBy(IQueryable<AuctionEntity> clients, AuctionListOrder? order = null, bool asc = true)
+        private IOrderedQueryable<AuctionEntity> OrderBy(IQueryable<AuctionEntity> auctions, AuctionListOrder? order = null, bool asc = true)
         {
             if (order == null)
             {
                 // сортировка по умолчанию
-                return clients.OrderBy(_ => _.Name);
+                return auctions.OrderBy(_ => _.Name);
             }
 
             switch (order.Value)
             {
                 case AuctionListOrder.Name:
-                    return asc ? clients.OrderBy(_ => _.Name) : clients.OrderByDescending(_ => _.Name);
+                    return asc ? auctions.OrderBy(_ => _.Name) : auctions.OrderByDescending(_ => _.Name);
                 default:
-                    return asc ? clients.OrderBy(_ => _.Id) : clients.OrderByDescending(_ => _.Id);
+                    return asc ? auctions.OrderBy(_ => _.Id) : auctions.OrderByDescending(_ => _.Id);
             }
         }
 
