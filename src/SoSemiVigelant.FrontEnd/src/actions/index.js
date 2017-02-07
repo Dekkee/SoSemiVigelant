@@ -13,7 +13,7 @@ export const requestAucs = aucs => ({
 
 export const receiveAucs = (aucs, json) => ({
     type: RECEIVE_AUCS,
-    aucs: json,
+    aucs: json.result,
     receivedAt: Date.now()
   })
 

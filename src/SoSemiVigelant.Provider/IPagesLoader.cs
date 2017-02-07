@@ -8,8 +8,6 @@ namespace SoSemiVigelant.Provider
 {
     public interface IPagesLoader
     {
-        void SetCredentials(string login, string password);
-        void Authorise();
         IEnumerable<AuctionEntry> LoadTopics();
         void LoadAuction(AuctionEntry entry);
     }

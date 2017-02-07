@@ -309,13 +309,13 @@ namespace SoSemiVigelant.Provider
             return nodes;
         }
 
-        public void SetCredentials(string login, string password)
+        private void SetCredentials(string login, string password)
         {
             _login = login;
             _password = password;
         }
 
-        public void Authorise()
+        private void Authorise()
         {
             _adapter.SendGet("");
             
