@@ -27,6 +27,7 @@ namespace SoSemiVigelant.Controllers
 
         [FromServices]
         public DatabaseContext DbContext { get; set; }
+
         // GET api/values
         [HttpGet]
         [Route("Users/List")]
@@ -37,7 +38,7 @@ namespace SoSemiVigelant.Controllers
         
         // GET api/values/5
         [HttpGet("{id}")]
-        [Route("Users/Get/{id}")]
+        [Route("Users/Get")]
         public async Task<BaseResponse<UserModel>> Get([FromQuery]int id, CancellationToken token)
         {
             var auc = await DbContext.Users.FirstOrDefaultAsync(_ => _.OriginId == id, token);

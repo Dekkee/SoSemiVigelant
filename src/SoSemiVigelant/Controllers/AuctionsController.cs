@@ -28,6 +28,7 @@ namespace SoSemiVigelant.Controllers
 
         [FromServices]
         public IListFactory<AuctionModel, AuctionListRequest> ListFactory { get; set; }
+
         // GET api/values
         [HttpGet]
         [Route("Aucs/List")]
@@ -38,7 +39,7 @@ namespace SoSemiVigelant.Controllers
         
         // GET api/values/5
         [HttpGet("{id}")]
-        [Route("Aucs/Get/{id}")]
+        [Route("Aucs/Get")]
         public async Task<BaseResponse<AuctionModel>> Get([FromQuery]int id, CancellationToken token)
         {
             var entry = new AuctionEntry { Url = $"{Settings.Url}forum/index.php?showtopic={id}" };
