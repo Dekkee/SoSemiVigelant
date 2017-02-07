@@ -30,6 +30,9 @@ namespace SoSemiVigelant.Provider
         public PagesLoader()
         {
             _adapter = new WebAdapter();
+            
+            SetCredentials("dekker25@gmail.com", "67251425");
+            Authorise();
 
             _syncTimer = new Timer(SyncTopics, null, 0, (int)TimeSpan.FromMinutes(1).TotalMilliseconds);
         }
@@ -66,14 +69,15 @@ namespace SoSemiVigelant.Provider
             if (!_cachedAuctions.TryGetValue(auctionId, out auction))
             {
                 auction = db.Auctions.FirstOrDefault(_ => _.AuctionId == auctionId);
-                if (auction != null) return auction;
-
-                auction = new Auction
+                if (auction == null)
                 {
-                    AuctionId = auctionId
-                };
+                    auction = new Auction
+                    {
+                        AuctionId = auctionId
+                    };
+                    db.Auctions.Add(auction);
+                }
                 _cachedAuctions[auctionId] = auction;
-                db.Auctions.Add(auction);
             }
 
             return auction;
@@ -85,14 +89,15 @@ namespace SoSemiVigelant.Provider
             if (!_cachedUsers.TryGetValue(name, out user))
             {
                 user = db.Users.FirstOrDefault(_ => _.Name == name);
-                if (user != null) return user;
-
-                user = new User
+                if (user == null)
                 {
-                    Name = name
-                };
+                    user = new User
+                    {
+                        Name = name
+                    };
+                    db.Users.Add(user);
+                }
                 _cachedUsers[name] = user;
-                db.Users.Add(user);
             }
 
             return user;
@@ -112,15 +117,13 @@ namespace SoSemiVigelant.Provider
 
             var doc = new HtmlDocument();
             doc.LoadHtml(answer);
-            var content = doc.DocumentNode.SelectNodes("//*[contains(@class,'post entry-content')]");
-            doc.LoadHtml(content.Select(_ => _.InnerHtml.Replace("\r\n", "").Replace("\n", "").Replace("\t", ""))
-                    .FirstOrDefault());
-
-            entry.RawHtml = doc.DocumentNode.InnerHtml;
-
-            extractNodes(doc, "//comment()");
+            var content = doc.DocumentNode.SelectSingleNode("//*[contains(@class,'post entry-content')]");
             
-            foreach (var element in doc.DocumentNode.ChildNodes)
+            entry.RawHtml = content.InnerHtml;
+
+            extractNodes(content, "//comment()");
+            
+            foreach (var element in content.ChildNodes)
             {
                 switch (element.Name)
                 {
@@ -296,9 +299,9 @@ namespace SoSemiVigelant.Provider
             }
         }
 
-        private HtmlNodeCollection extractNodes(HtmlDocument document, string name)
+        private HtmlNodeCollection extractNodes(HtmlNode document, string name)
         {
-            var nodes = document.DocumentNode.SelectNodes(name);
+            var nodes = document.SelectNodes(name);
             if (nodes != null)
                 foreach (var node in nodes)
                     node.Remove();

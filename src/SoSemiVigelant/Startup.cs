@@ -4,10 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SoSemiVigelant.Core.Models;
 using SoSemiVigelant.Data.Data;
+using SoSemiVigelant.Models.Auction;
+using SoSemiVigelant.Models.User;
 using SoSemiVigelant.Provider;
 
 namespace SoSemiVigelant
@@ -42,6 +46,11 @@ namespace SoSemiVigelant
             services.AddMvc();
 
             services.AddSingleton<IPagesLoader, PagesLoader>();
+            services.AddSingleton<IListFactory<AuctionModel, AuctionListRequest>, AuctionListFactory>();
+            services.AddSingleton<IListFactory<UserModel, UserListRequest>, UserListFactory>();
+            services.AddEntityFrameworkSqlServer()
+                    .AddDbContext<DatabaseContext>(options => options.UseSqlServer(
+                    "Server=DEKKER-PC;Database=SoSemiDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

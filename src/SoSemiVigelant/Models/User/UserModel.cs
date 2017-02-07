@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SoSemiVigelant.Data.Data;
 
-namespace SoSemiVigelant.Models.Auction
+namespace SoSemiVigelant.Models.User
 {
-    public class AuctionModel
+    public class UserModel
     {
-        public static async Task<AuctionModel> Create(DatabaseContext db, int id, CancellationToken token)
+        public static async Task<UserModel> Create(DatabaseContext db, int id, CancellationToken token)
         {
-            var auc = await db.Auctions.FirstOrDefaultAsync(_ => _.AuctionId == id, token);
+            var auc = await db.Users.FirstOrDefaultAsync(_ => _.OriginId == id, token);
 
             if (auc == null)
             {
@@ -23,20 +23,20 @@ namespace SoSemiVigelant.Models.Auction
             return Create(auc);
         }
 
-        public static AuctionModel Create(Data.Entities.Auction auction)
+        public static UserModel Create(Data.Entities.User auction)
         {
-            var model = new AuctionModel
+            var model = new UserModel
             {
                 Name = auction.Name
             };
             return model;
         }
 
-        public static AuctionModel Map(Data.Entities.Auction auction)
+        public static UserModel Map(Data.Entities.User auction)
         {
-            return new AuctionModel
+            return new UserModel
             {
-                Id = auction.AuctionId ?? 0,
+                Id = auction.OriginId,
                 Name = auction.Name
             };
         }
