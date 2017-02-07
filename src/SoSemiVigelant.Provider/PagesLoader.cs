@@ -45,7 +45,6 @@ namespace SoSemiVigelant.Provider
                     if (!topic.Topic.HasValue) continue;
 
                     var auc = SelectAuction(db, topic.Topic.Value);
-                    auc.AuctionId = topic.Topic;
                     auc.Name = topic.Name;
                     auc.City = topic.City;
                     auc.Bet = topic.Bet;
@@ -53,8 +52,7 @@ namespace SoSemiVigelant.Provider
                     //auc.TimeLeft = topic.TimeLeft;
                     auc.TotalBets = topic.TotalBets;
                     
-                    auc.Creator = SelectUser(db, topic.Name);
-                    auc.Creator.Name = topic.Creator;
+                    auc.Creator = SelectUser(db, topic.Creator);
                     auc.Creator.OriginId = topic.CreatorId ?? 0;
                 }
 
@@ -70,7 +68,11 @@ namespace SoSemiVigelant.Provider
                 auction = db.Auctions.FirstOrDefault(_ => _.AuctionId == auctionId);
                 if (auction != null) return auction;
 
-                auction = new Auction();
+                auction = new Auction
+                {
+                    AuctionId = auctionId
+                };
+                _cachedAuctions[auctionId] = auction;
                 db.Auctions.Add(auction);
             }
 
@@ -85,7 +87,11 @@ namespace SoSemiVigelant.Provider
                 user = db.Users.FirstOrDefault(_ => _.Name == name);
                 if (user != null) return user;
 
-                user = new User();
+                user = new User
+                {
+                    Name = name
+                };
+                _cachedUsers[name] = user;
                 db.Users.Add(user);
             }
 
