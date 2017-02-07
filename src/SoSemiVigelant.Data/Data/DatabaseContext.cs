@@ -22,6 +22,9 @@ namespace SoSemiVigelant.Data.Data
         {
             builder.Entity<Auction>().ToTable("Auctions");
             builder.Entity<User>().ToTable("Users");
+
+            Auction.Setup(builder);
+            User.Setup(builder);
         }
     }
 }

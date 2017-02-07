@@ -8,9 +8,10 @@ using SoSemiVigelant.Data.Data;
 namespace SoSemiVigelant.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20170207180210_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -50,8 +51,6 @@ namespace SoSemiVigelant.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuctionId");
-
                     b.HasIndex("CreatorId");
 
                     b.HasIndex("WinnerId");
@@ -69,8 +68,6 @@ namespace SoSemiVigelant.Data.Migrations
                     b.Property<int>("OriginId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name");
 
                     b.ToTable("Users");
                 });

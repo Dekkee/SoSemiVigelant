@@ -15,58 +15,81 @@ using SoSemiVigelant.Provider.Utilities;
 
 namespace SoSemiVigelant.Provider
 {
-    public class PagesLoader : IPagesLoader
+    public class PagesLoader : IPagesLoader, IDisposable
     {
-        private static PagesLoader _loader;
-
         private readonly WebAdapter _adapter;
-        private HtmlDocument _doc;
 
         private string _login;
         private string _password;
 
-        private Timer _syncTimer;
+        private readonly Timer _syncTimer;
+
+        private readonly Dictionary<int, Auction> _cachedAuctions = new Dictionary<int, Auction>();
+        private readonly Dictionary<string, User> _cachedUsers = new Dictionary<string, User>();
 
         public PagesLoader()
         {
-            _doc = new HtmlDocument();
             _adapter = new WebAdapter();
 
             _syncTimer = new Timer(SyncTopics, null, 0, (int)TimeSpan.FromMinutes(1).TotalMilliseconds);
         }
-
-        public static PagesLoader GetLoader()
-        {
-            if (_loader == null)
-            {
-                _loader = new PagesLoader();
-            }
-            return _loader;
-        }
-
+        
         private void SyncTopics(object obj)
         {
             var topics = LoadTopics();
-            foreach (var topic in topics)
+            
+            using (var db = new DatabaseContextFactory().Create())
             {
-                using (var db = new DatabaseContextFactory().Create())
+                foreach (var topic in topics)
                 {
-                    if (!db.Auctions.Any(_ => _.AuctionId == topic.Topic))
-                    {
-                        var auc = new Auction
-                        {
-                            AuctionId = topic.Topic,
-                            Name = topic.Name,
-                            Creator = new User
-                            {
-                                Name = topic.Creator,
-                                OriginId = topic.CreatorId.HasValue ? topic.CreatorId.Value : 0
-                            }
-                        };
-                        db.Auctions.Add(auc);
-                    }
+                    if (!topic.Topic.HasValue) continue;
+
+                    var auc = SelectAuction(db, topic.Topic.Value);
+                    auc.AuctionId = topic.Topic;
+                    auc.Name = topic.Name;
+                    auc.City = topic.City;
+                    auc.Bet = topic.Bet;
+                    auc.BuyOut = topic.BuyOut;
+                    //auc.TimeLeft = topic.TimeLeft;
+                    auc.TotalBets = topic.TotalBets;
+                    
+                    auc.Creator = SelectUser(db, topic.Name);
+                    auc.Creator.Name = topic.Creator;
+                    auc.Creator.OriginId = topic.CreatorId ?? 0;
                 }
+
+                db.SaveChanges();
             }
+        }
+
+        private Auction SelectAuction(DatabaseContext db, int auctionId)
+        {
+            Auction auction;
+            if (!_cachedAuctions.TryGetValue(auctionId, out auction))
+            {
+                auction = db.Auctions.FirstOrDefault(_ => _.AuctionId == auctionId);
+                if (auction != null) return auction;
+
+                auction = new Auction();
+                db.Auctions.Add(auction);
+            }
+
+            return auction;
+        }
+
+        private User SelectUser(DatabaseContext db, string name)
+        {
+            User user;
+            if (!_cachedUsers.TryGetValue(name, out user))
+            {
+                user = db.Users.FirstOrDefault(_ => _.Name == name);
+                if (user != null) return user;
+
+                user = new User();
+                db.Users.Add(user);
+            }
+
+            return user;
         }
 
         public IEnumerable<AuctionEntry> LoadTopics()
@@ -81,17 +104,17 @@ namespace SoSemiVigelant.Provider
         {
             string answer = _adapter.SendGet(Helper.EscapeHtml(entry.Url));
 
-            _doc = new HtmlDocument();
-            _doc.LoadHtml(answer);
-            var content = _doc.DocumentNode.SelectNodes("//*[contains(@class,'post entry-content')]");
-            _doc.LoadHtml(content.Select(_ => _.InnerHtml.Replace("\r\n", "").Replace("\n", "").Replace("\t", ""))
+            var doc = new HtmlDocument();
+            doc.LoadHtml(answer);
+            var content = doc.DocumentNode.SelectNodes("//*[contains(@class,'post entry-content')]");
+            doc.LoadHtml(content.Select(_ => _.InnerHtml.Replace("\r\n", "").Replace("\n", "").Replace("\t", ""))
                     .FirstOrDefault());
 
-            entry.RawHtml = _doc.DocumentNode.InnerHtml;
+            entry.RawHtml = doc.DocumentNode.InnerHtml;
 
-            extractNodes(_doc, "//comment()");
+            extractNodes(doc, "//comment()");
             
-            foreach (var element in _doc.DocumentNode.ChildNodes)
+            foreach (var element in doc.DocumentNode.ChildNodes)
             {
                 switch (element.Name)
                 {
@@ -287,12 +310,6 @@ namespace SoSemiVigelant.Provider
         {
             _adapter.SendGet("");
             
-            if (LoadingProgressChangedEvent != null)
-            {
-                LoadingProgressChangedEvent(this, new LoadingProgressChangedEventArgs(0, "Authorizing"));
-            }
-
-
             var res = _adapter.SubmitForm("/forum/index.php?app=core&module=global&section=login&do=process", new LoginModel
             {
                 username = _login,
@@ -301,41 +318,14 @@ namespace SoSemiVigelant.Provider
                 rememberMe = "1"
             });
         }
-
-        public class LoadingProgressChangedEventArgs
-        {
-            public int Progress;
-            public string Message;
-
-            public LoadingProgressChangedEventArgs(int progress, string message = "")
-            {
-                Progress = progress;
-                Message = message;
-            }
-        }
         
-        public delegate void LoadingProgressChangedEventHandler(object sender, LoadingProgressChangedEventArgs ev);
-
-        public event LoadingProgressChangedEventHandler LoadingProgressChangedEvent;
-        
-        private string GetNextPageLink()
-        {
-            string nextPageLink = null;
-            var nextPageElement = _doc.DocumentNode.SelectNodes("//li").FirstOrDefault(d => d.Attributes.Contains("class") && d.Attributes["class"].Value.Contains("next"));
-            if (nextPageElement != null)
-            {
-                nextPageLink = nextPageElement.ChildNodes.FirstOrDefault().Attributes["href"].Value;
-            }
-            return nextPageLink;
-        }
-
         private IEnumerable<AuctionEntry> GetTopics(string link)
         {
             string answer = _adapter.SendGet(Helper.EscapeHtml(link));
 
-            _doc = new HtmlDocument();
-            _doc.LoadHtml(answer);
-            return _doc.DocumentNode.SelectNodes("//table[@class='reftable']//tr[not(@class='header')]")
+            var doc = new HtmlDocument();
+            doc.LoadHtml(answer);
+            return doc.DocumentNode.SelectNodes("//table[@class='reftable']//tr[not(@class='header')]")
                     .Select(tr =>
                     {
                         var cells = tr.SelectNodes(".//td").ToArray();
@@ -385,31 +375,10 @@ namespace SoSemiVigelant.Provider
                     });
 
         }
-
-        //private BitmapImage GetImage(Uri uri)
-        //{
-        //    string answer = _adapter.SendGet(uri.AbsoluteUri);
-
-        //    _doc = new HtmlDocument();
-        //    _doc.LoadHtml(answer);
-        //    var address = _doc.DocumentNode.SelectNodes("//img").Select(_ => _.Attributes["src"].Value).FirstOrDefault();
-
-        //    return string.IsNullOrEmpty(address) 
-        //        ? null
-        //        : new BitmapImage(new Uri(Settings.BaseUri, address));
-        //}
-
-        private int GetTotalPages()
+        
+        public void Dispose()
         {
-            string totalPagesString = "0";
-            var nextPageElement = _doc.DocumentNode.SelectNodes("//li").FirstOrDefault(d => d.Attributes.Contains("class") && d.Attributes["class"].Value.Contains("last"));
-            var pattern = "&amp;st=";
-            if (nextPageElement != null)
-            {
-                totalPagesString = nextPageElement.ChildNodes.FirstOrDefault().Attributes["href"].Value;
-                totalPagesString = totalPagesString.Substring(totalPagesString.IndexOf(pattern) + pattern.Length);
-            }
-            return int.Parse(totalPagesString);
+            _syncTimer.Dispose();
         }
     }
 }

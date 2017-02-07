@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SoSemiVigelant.Data.Data;
-using SoSemiVigelant.Data.Entities;
-using SoSemiVigelant.Models;
 using SoSemiVigelant.Provider;
 using SoSemiVigelant.Provider.Entities;
 

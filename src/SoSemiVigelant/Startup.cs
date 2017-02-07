@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SoSemiVigelant.Data.Data;
 using SoSemiVigelant.Provider;
 
 namespace SoSemiVigelant
@@ -49,6 +50,8 @@ namespace SoSemiVigelant
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            MigrateDatabase();
+
             app.UseCors(builder => builder.AllowAnyOrigin().AllowCredentials().AllowAnyMethod().AllowAnyHeader());
 
             app.UseApplicationInsightsRequestTelemetry();
@@ -56,6 +59,12 @@ namespace SoSemiVigelant
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
+        }
+
+        private void MigrateDatabase()
+        {
+            var factory = new DatabaseContextFactory();
+            factory.MigrateToLatest();
         }
     }
 }

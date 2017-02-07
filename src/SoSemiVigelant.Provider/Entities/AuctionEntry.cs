@@ -11,7 +11,7 @@ using SoSemiVigelant.Provider.Utilities;
 
 namespace SoSemiVigelant.Provider.Entities
 {
-    public class AuctionEntry : INotifyPropertyChanged
+    public class AuctionEntry
     {
         public AuctionEntry()
         {
@@ -28,9 +28,14 @@ namespace SoSemiVigelant.Provider.Entities
         {
             get
             {
-                int creator;
-                if (int.TryParse(Regex.Match(Url, "showuser=(\\d+)$", RegexOptions.IgnoreCase).Value, out creator))
-                    return creator;
+                var match = Regex.Match(CreatorUrl.AbsoluteUri, "showuser=(\\d+)$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    int creator;
+                    if (int.TryParse(match.Groups[1].Value, out
+                        creator))
+                        return creator;
+                }
 
                 return null;
             }
@@ -41,9 +46,14 @@ namespace SoSemiVigelant.Provider.Entities
         {
             get
             {
-                int topic;
-                if(int.TryParse(Regex.Match(Url, "showtopic=(\\d+)$", RegexOptions.IgnoreCase).Value, out topic))
-                    return topic;
+                var match = Regex.Match(Url, "showtopic=(\\d+)$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    int topic;
+                    if (int.TryParse(match.Groups[1].Value,
+                        out topic))
+                        return topic;
+                }
 
                 return null;
             }

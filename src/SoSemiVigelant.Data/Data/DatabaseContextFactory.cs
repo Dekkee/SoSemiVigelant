@@ -24,5 +24,11 @@ namespace SoSemiVigelant.Data.Data
                 "Server=DEKKER-PC;Database=SoSemiDatabase;Trusted_Connection=True;MultipleActiveResultSets=true");
             return new DatabaseContext(builder.Options);
         }
+
+        public void MigrateToLatest()
+        {
+            var db = Create();
+            db.Database.Migrate();
+        }
     }
 }

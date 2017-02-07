@@ -2,8 +2,6 @@
   "dependencies": {
     "Microsoft.NETCore.App": "1.0.3",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
-    "Microsoft.AspNetCore.Mvc": "1.0.1",
-    "Microsoft.AspNetCore.Routing": "1.0.1",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
@@ -13,14 +11,15 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-    "HtmlAgilityPack.NetCore": "1.5.0.1",
     "Microsoft.AspNetCore.Identity": "1.1.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
     "Microsoft.AspNetCore.Http": "1.1.0",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
     "SoSemiVigelant.Data": "1.0.0-*",
     "SoSemiVigelant.Provider": "1.0.0-*",
-    "SoSemiVigelant.Core": "1.0.0-*"
+    "SoSemiVigelant.Core": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc": "1.1.1",
+    "Microsoft.AspNetCore.Routing": "1.1.0"
   },
 
   "tools": {

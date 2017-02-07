@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
 
 namespace SoSemiVigelant.Data.Entities
 {
@@ -36,5 +37,11 @@ namespace SoSemiVigelant.Data.Entities
         public User Winner { get; set; }
 
         public int? AuctionId { get; set; }
+
+        public static void Setup(ModelBuilder builder)
+        {
+            builder.Entity<Auction>()
+                .HasIndex(_ => _.AuctionId);
+        }
     }
 }

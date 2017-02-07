@@ -13,7 +13,8 @@ namespace SoSemiVigelant.Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     OriginId = table.Column<int>(nullable: false)
                 },
@@ -28,15 +29,16 @@ namespace SoSemiVigelant.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Bid = table.Column<int>(nullable: true),
+                    AuctionId = table.Column<int>(nullable: true),
+                    Bet = table.Column<int>(nullable: true),
                     BuyOut = table.Column<int>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     CreatorId = table.Column<int>(nullable: false),
                     CurrentBet = table.Column<int>(nullable: false),
-                    FinishTime = table.Column<DateTime>(nullable: true),
                     IsFinished = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Step = table.Column<int>(nullable: false),
+                    TimeLeft = table.Column<TimeSpan>(nullable: true),
                     TotalBets = table.Column<int>(nullable: false),
                     WinnerBet = table.Column<int>(nullable: true),
                     WinnerId = table.Column<int>(nullable: true)

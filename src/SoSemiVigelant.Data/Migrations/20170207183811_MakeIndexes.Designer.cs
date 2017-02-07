@@ -8,8 +8,8 @@ using SoSemiVigelant.Data.Data;
 namespace SoSemiVigelant.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170205164957_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20170207183811_MakeIndexes")]
+    partial class MakeIndexes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,9 @@ namespace SoSemiVigelant.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("Bid");
+                    b.Property<int?>("AuctionId");
+
+                    b.Property<int?>("Bet");
 
                     b.Property<int?>("BuyOut");
 
@@ -33,13 +35,13 @@ namespace SoSemiVigelant.Data.Migrations
 
                     b.Property<int>("CurrentBet");
 
-                    b.Property<DateTime?>("FinishTime");
-
                     b.Property<bool>("IsFinished");
 
                     b.Property<string>("Name");
 
                     b.Property<int>("Step");
+
+                    b.Property<TimeSpan?>("TimeLeft");
 
                     b.Property<int>("TotalBets");
 
@@ -48,6 +50,8 @@ namespace SoSemiVigelant.Data.Migrations
                     b.Property<int?>("WinnerId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuctionId");
 
                     b.HasIndex("CreatorId");
 
@@ -58,13 +62,16 @@ namespace SoSemiVigelant.Data.Migrations
 
             modelBuilder.Entity("SoSemiVigelant.Data.Entities.User", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
                     b.Property<int>("OriginId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Users");
                 });
