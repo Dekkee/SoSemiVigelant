@@ -6,14 +6,14 @@ export const INVALIDATE_AUCS = 'INVALIDATE_AUCS'
 export const REQUEST_AUC = 'REQUEST_AUC'
 export const RECEIVE_AUC = 'RECEIVE_AUC'
 
-export const requestAucs = aucs => ({
+export const requestAucs = values => ({
   type: REQUEST_AUCS,
-  aucs
+  values
 })
 
 export const receiveAucs = (aucs, json) => ({
     type: RECEIVE_AUCS,
-    aucs: json.result,
+    values: json.result,
     receivedAt: Date.now()
   })
 
@@ -26,7 +26,8 @@ const fetchAucs = aucs => dispatch => {
 }
 
 const shouldFetchAucs = (state) => {
-  const aucs = state.getAucs['data']
+  console.log('shouldFetch', state)
+  const aucs = state.auctions
   if (!aucs) {
     return true
   }
@@ -36,8 +37,8 @@ const shouldFetchAucs = (state) => {
   return aucs.didInvalidate
 }
 
-export const fetchAucsIfNeeded = aucs => (dispatch, getState) => {
-  if (shouldFetchAucs(getState(), aucs)) {
-    return dispatch(fetchAucs(aucs))
+export const fetchAucsIfNeeded = values => (dispatch, getState) => {
+  if (shouldFetchAucs(getState(), values)) {
+    return dispatch(fetchAucs(values))
   }
 }
