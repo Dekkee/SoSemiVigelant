@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Button from './Button'
+
 class AuctionItem extends React.Component {
     static propTypes = {
         name: React.PropTypes.string.isRequired,
@@ -8,11 +10,20 @@ class AuctionItem extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.handleView = this.handleView.bind(this);
+    }
+
+    handleView() {
+        this.props.onView(this.props.id);
     }
 
     render() {
         return (
-            <div>{this.props.name}</div>
+            <div className="auctionItem">
+                <span className="auctionItem-title">{unescape(this.props.name)}</span>
+                <Button className="icon" icon="visibility" onClick={this.handleView} />
+            </div>
         );
     }
 }

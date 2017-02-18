@@ -348,12 +348,12 @@ namespace SoSemiVigelant.Provider
                             return new AuctionEntry
                             {
                                 Url = cell0A.Attributes["href"].Value,
-                                Name = cell0A.InnerText,
-                                Creator = cell1A[0].InnerText,
+                                Name = HtmlEntity.DeEntitize(cell0A.InnerText),
+                                Creator = HtmlEntity.DeEntitize(cell1A[0].InnerText),
                                 CreatorUrl = new Uri(cell1A[0].Attributes["href"].Value),
-                                CreatorRating = cell1A[1].InnerText,
+                                CreatorRating = HtmlEntity.DeEntitize(cell1A[1].InnerText),
                                 CreatorRatingUrl = new Uri(Settings.Url + cell1A[1].Attributes["href"].Value),
-                                City = cells[2].InnerText,
+                                City = HtmlEntity.DeEntitize(cells[2].InnerText),
                                 TimeLeft = cells[3].InnerText.ToTimeSpan(),
                                 CurrentBet = int.TryParse(cells[4].InnerText, out currentBet) ? currentBet : 0,
                                 BuyOut = int.TryParse(cells[5].InnerText, out buyOut) ? (int?) buyOut : null,
@@ -369,10 +369,10 @@ namespace SoSemiVigelant.Provider
                             return new AuctionEntry
                             {
                                 Url = cell0A.Attributes["href"].Value,
-                                Name = cell0A.InnerText,
-                                Creator = cell1A[0].InnerText,
+                                Name = HtmlEntity.DeEntitize(cell0A.InnerText),
+                                Creator = HtmlEntity.DeEntitize(cell1A[0].InnerText),
                                 CreatorUrl = new Uri(cell1A[0].Attributes["href"].Value),
-                                CreatorRating = cell1A[1].InnerText,
+                                CreatorRating = HtmlEntity.DeEntitize(cell1A[1].InnerText),
                                 CreatorRatingUrl = new Uri(Settings.Url + cell1A[1].Attributes["href"].Value),
                                 FinishTime = DateTime.TryParse(cells[2].InnerText, out finishTime) ? (DateTime?)finishTime : null,
                                 WinnerName = cell3A?.Length == 2 ? cell3A[0].InnerText : string.Empty,

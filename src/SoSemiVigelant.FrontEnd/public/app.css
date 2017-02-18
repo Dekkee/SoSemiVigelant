@@ -138,8 +138,8 @@ header h1 {
 }
 
 
-/* Todo */
-.todo {
+/* auctionItem */
+.auctionItem {
     display: flex;
     font-size: 1rem;
     border-top: 1px solid rgba(0,0,0,.1);
@@ -151,65 +151,65 @@ header h1 {
     align-items: center;
 }
 
-.todo.completed * {
+.auctionItem.completed * {
     color: lightgray;
 }
 
-.todo.completed .todo-title {
+.auctionItem.completed .auctionItem-title {
     text-decoration: line-through;
 }
 
-.todo .todo-title {
+.auctionItem .auctionItem-title {
     margin-right: auto;
 }
 
-.todo .checkbox {
+.auctionItem .checkbox {
     margin-right: .5rem;
 }
 
-.todo button:not(.checkbox) {
+.auctionItem button:not(.checkbox) {
     opacity: 0;
     transition: all .2s;
 }
 
-.todo:hover button:not(.checkbox) {
+.auctionItem:hover button:not(.checkbox) {
     opacity: 1;
 }
 
-.todo-edit-form {
+.auctionItem-edit-form {
     display: flex;
     font-size: 1rem;
     padding: .85em;
     border-top: 1px solid rgba(0,0,0,.1);
 }
 
-.todo-edit-form input {
+.auctionItem-edit-form input {
     flex: 1;
 }
 
-.todo-edit-form .save {
+.auctionItem-edit-form .save {
     margin-left: .5em;
 }
 
-/* Todo form */
+/* auctionItem form */
 
-.todo-form {
+.auctionItem-form {
     display: flex;
     background-color: #FAFAFA;
     border-top: 1px solid rgba(0,0,0,.1);
     padding: 10px;
 }
 
-.todo-form input {
+.auctionItem-form input {
     flex: 1;
     outline: none;
     transition: all .2s;
 }
 
-.todo-form input:focus {
+.auctionItem-form input:focus {
     border: 1px solid #00d8ff;
 }
 
-.todo-form button {
+.auctionItem-form button {
     margin-left: 10px;
 }
