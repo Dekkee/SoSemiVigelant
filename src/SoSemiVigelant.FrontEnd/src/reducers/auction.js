@@ -8,29 +8,28 @@ const aucsReducer = (state = {
   didInvalidate: false,
   items: []
 }, action) => {
-    console.log('aucsReducer', state);
     switch (action.type) {
-    case INVALIDATE_AUCS:
-        return {
-            ...state,
-            didInvalidate: true
-        }
-    case REQUEST_AUCS:
-        return {
-            ...state,
-            isFetching: true,
-            didInvalidate: false
-        }
-    case RECEIVE_AUCS:
-        return {
-            ...state,
-            isFetching: false,
-            didInvalidate: false,
-            items: action.values,
-            lastUpdated: action.receivedAt
-        }
-    default:
-        return state
+        case INVALIDATE_AUCS:
+            return {
+                ...state,
+                didInvalidate: true
+            }
+        case REQUEST_AUCS:
+            return {
+                ...state,
+                isFetching: true,
+                didInvalidate: false
+            }
+        case RECEIVE_AUCS:
+            return {
+                ...state,
+                isFetching: false,
+                didInvalidate: false,
+                items: action.values,
+                lastUpdated: action.receivedAt
+            }
+        default:
+            return state
     }
 }
 

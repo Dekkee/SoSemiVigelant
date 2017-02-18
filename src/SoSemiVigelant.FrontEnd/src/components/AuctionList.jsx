@@ -32,22 +32,21 @@ class AuctionList extends React.Component{
     const { items, isFetching, lastUpdated } = this.props;
     const isEmpty = !!items && items.length === 0;
     return (
-    <ul>
+      <div>
       {isEmpty
         ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
         : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             {
               items.map((auc, i) =>
-                <li key={i}>
                   <AuctionItem 
                     name={auc.name} 
+                    key={i}
                     id={i}/>
-                </li>
               )
             }
         </div>
       }
-    </ul>
+      </div>
     );
   }
 } 

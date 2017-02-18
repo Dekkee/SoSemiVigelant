@@ -15,12 +15,10 @@ const checkStatus = response => {
 }
 
 export function resolveUrl(url) {
-    console.log(url);
     return `${endPoint}/${url}`;
 }
 
 export function getJson(url){
-    console.log('getJson' + url);
     return fetch(
         resolveUrl(url))
         .then(checkStatus)

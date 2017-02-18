@@ -26,7 +26,6 @@ const fetchAucs = aucs => dispatch => {
 }
 
 const shouldFetchAucs = (state) => {
-  console.log('shouldFetch', state)
   const aucs = state.auctions
   if (!aucs) {
     return true
