@@ -6,22 +6,33 @@ export const INVALIDATE_AUCS = 'INVALIDATE_AUCS'
 export const REQUEST_AUC = 'REQUEST_AUC'
 export const RECEIVE_AUC = 'RECEIVE_AUC'
 
-export const requestAucs = values => ({
-  type: REQUEST_AUCS,
-  values
+export const requestAucs = () => ({
+  type: REQUEST_AUCS
 })
 
-export const receiveAucs = (aucs, json) => ({
+export const receiveAucs = (json) => ({
     type: RECEIVE_AUCS,
     values: json.result,
     receivedAt: Date.now()
   })
 
-const fetchAucs = aucs => dispatch => {
-  dispatch(requestAucs(aucs))
+export const requestAuc = (id) => ({
+  type: REQUEST_AUC,
+  id
+})
+
+export const receiveAuc = (id, json) => ({
+    type: RECEIVE_AUC,
+    id,
+    value: json.result,
+    receivedAt: Date.now()
+  })
+
+const fetchAucs = () => dispatch => {
+  dispatch(requestAucs())
   return getJson('aucs/list')
     .then(json => {
-      dispatch(receiveAucs(aucs, json))
+      dispatch(receiveAucs(json))
   })
 }
 
@@ -40,4 +51,12 @@ export const fetchAucsIfNeeded = values => (dispatch, getState) => {
   if (shouldFetchAucs(getState(), values)) {
     return dispatch(fetchAucs(values))
   }
+}
+
+export const fetchAucInfo = id => (dispatch, getState) => {
+  dispatch(requestAuc(id))
+  return getJson(`aucs/get?id=${id}`)
+    .then(json => {
+      dispatch(receiveAuc(id, json))
+  })
 }

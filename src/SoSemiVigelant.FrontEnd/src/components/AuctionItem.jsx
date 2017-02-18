@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from './Button'
+import { fetchAucInfo } from '../actions'
 
 class AuctionItem extends React.Component {
     static propTypes = {
@@ -15,6 +16,8 @@ class AuctionItem extends React.Component {
     }
 
     handleView() {
+
+console.log(this.props);
         this.props.onView(this.props.id);
     }
 

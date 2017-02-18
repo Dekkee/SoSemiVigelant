@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import { fetchAucsIfNeeded } from '../actions'
-import AuctionItem from './AuctionItem'
+import AuctionItemContainer from '../containers/AuctionItemContainer'
 
 class AuctionList extends React.Component{
   static propTypes = {
@@ -38,10 +38,10 @@ class AuctionList extends React.Component{
         : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             {
               items.map((auc, i) =>
-                  <AuctionItem 
+                  <AuctionItemContainer 
                     name={auc.name} 
                     key={i}
-                    id={i}/>
+                    id={auc.id}/>
               )
             }
         </div>

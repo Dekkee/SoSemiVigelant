@@ -7,7 +7,7 @@ function App() {
     return (
         <main>
             <header>
-                <h1>React TODO!1</h1>
+                <h1>Оукционы!!1один</h1>
             </header>
 
             <section className="aucs">
