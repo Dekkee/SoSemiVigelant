@@ -16,15 +16,13 @@ class AuctionItem extends React.Component {
     }
 
     handleView() {
-
-console.log(this.props);
         this.props.onView(this.props.id);
     }
 
     render() {
         return (
             <div className="auctionItem">
-                <span className="auctionItem-title">{unescape(this.props.name)}</span>
+                <span className="auctionItem-title">{this.props.name}</span>
                 <Button className="icon" icon="visibility" onClick={this.handleView} />
             </div>
         );

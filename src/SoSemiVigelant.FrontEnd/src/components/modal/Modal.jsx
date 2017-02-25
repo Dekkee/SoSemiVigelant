@@ -24,10 +24,11 @@ export class Modal extends Component {
     }
 
     render() {
+        let { onRequestClose, isOpen } = this.props;
         let { style = customStyles } = this.props;
         return(
-            <ReactModal {...modalProps} style={style}>
-                <button className="close-button modal-container__close-button" type="button" onClick={modalProps.onRequestClose}>
+            <ReactModal isOpen={isOpen} onRequestClose={onRequestClose} style={style} contentLabel="Popup window">
+                <button className="close-button modal-container__close-button" type="button" onClick={onRequestClose}>
                     <span>&times;</span>
                 </button>
                 {this.props.children}

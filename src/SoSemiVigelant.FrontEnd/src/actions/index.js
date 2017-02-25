@@ -5,28 +5,33 @@ export const RECEIVE_AUCS = 'RECEIVE_AUCS'
 export const INVALIDATE_AUCS = 'INVALIDATE_AUCS'
 export const REQUEST_AUC = 'REQUEST_AUC'
 export const RECEIVE_AUC = 'RECEIVE_AUC'
+export const CLOSE_AUC_MODAL = 'CLOSE_AUC_MODAL'
 
-export const requestAucs = () => ({
+const requestAucs = () => ({
   type: REQUEST_AUCS
 })
 
-export const receiveAucs = (json) => ({
-    type: RECEIVE_AUCS,
-    values: json.result,
-    receivedAt: Date.now()
-  })
+const receiveAucs = (json) => ({
+  type: RECEIVE_AUCS,
+  values: json.result,
+  receivedAt: Date.now()
+})
 
-export const requestAuc = (id) => ({
+const requestAuc = (id) => ({
   type: REQUEST_AUC,
   id
 })
 
-export const receiveAuc = (id, json) => ({
-    type: RECEIVE_AUC,
-    id,
-    value: json.result,
-    receivedAt: Date.now()
-  })
+const receiveAuc = (id, json) => ({
+  type: RECEIVE_AUC,
+  id,
+  auction: json.result,
+  receivedAt: Date.now()
+})
+
+const closeAuc = () => ({
+    type: CLOSE_AUC_MODAL
+})
 
 const fetchAucs = () => dispatch => {
   dispatch(requestAucs())
@@ -60,3 +65,5 @@ export const fetchAucInfo = id => (dispatch, getState) => {
       dispatch(receiveAuc(id, json))
   })
 }
+
+export const closeAucModal = () => (dispatch, getState) => dispatch(closeAuc());

@@ -1,6 +1,5 @@
 import {
-  REQUEST_AUCS, RECEIVE_AUCS, INVALIDATE_AUCS,
-  REQUEST_AUC, RECEIVE_AUC
+  REQUEST_AUCS, RECEIVE_AUCS, INVALIDATE_AUCS
 } from '../actions'
 
 function reducer(state = {

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import AuctionListContainer from './containers/AuctionListContainer'
+import AuctionItemModalContainer from './containers/AuctionItemModalContainer'
 
 function App() {
     
@@ -12,6 +13,7 @@ function App() {
 
             <section className="aucs">
                 <AuctionListContainer />
+                <AuctionItemModalContainer />
             </section>
         </main>
     );
