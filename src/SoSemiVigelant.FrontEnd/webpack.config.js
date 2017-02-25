@@ -1,17 +1,22 @@
+'use strict';
+
+const path = require('path');
+
 module.exports = {
     entry: './src/index.jsx',
 
     output: {
         filename: 'bundle.js',
-        path: './public',
+        path: path.join(__dirname, 'public'),
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.(jsx|js)?$/,
+                
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'babel-loader']
+                use: ['react-hot-loader', 'babel-loader']
             }
         ]
     },
@@ -19,6 +24,6 @@ module.exports = {
     devtool: 'eval-source-map',
     
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     }
 };

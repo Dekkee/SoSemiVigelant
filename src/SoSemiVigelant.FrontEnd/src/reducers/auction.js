@@ -3,11 +3,11 @@ import {
   REQUEST_AUC, RECEIVE_AUC
 } from '../actions'
 
-const aucsReducer = (state = {
+function reducer(state = {
   isFetching: false,
   didInvalidate: false,
   items: []
-}, action) => {
+}, action) {
     switch (action.type) {
         case INVALIDATE_AUCS:
             return {
@@ -30,21 +30,6 @@ const aucsReducer = (state = {
             }
         default:
             return state
-    }
-}
-
-function reducer(state = {}, action) {
-    switch (action.type) {
-        case REQUEST_AUCS:
-        case RECEIVE_AUCS:
-        case INVALIDATE_AUCS:
-        case REQUEST_AUC:
-        case RECEIVE_AUC:
-            return {
-                ...aucsReducer(state, action)
-            }
-        default:
-            return state;
     }
 }
 
