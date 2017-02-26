@@ -29,6 +29,10 @@ namespace SoSemiVigelant.Models.Auction
         /// <returns></returns>
         private IQueryable<AuctionEntity> Filteration(IQueryable<AuctionEntity> auctions, AuctionListRequest request)
         {
+            auctions = request.OnlyActive
+                ? auctions.Where(_ => !_.IsFinished)
+                : auctions;
+
             auctions = string.IsNullOrEmpty(request.Name)
                 ? auctions
                 : auctions.Where(_ => _.Name.Contains(request.Name));
@@ -48,7 +52,7 @@ namespace SoSemiVigelant.Models.Auction
             if (order == null)
             {
                 // сортировка по умолчанию
-                return auctions.OrderBy(_ => _.Name);
+                return auctions.OrderBy(_ => _.TimeLeft);
             }
 
             switch (order.Value)
@@ -56,7 +60,7 @@ namespace SoSemiVigelant.Models.Auction
                 case AuctionListOrder.Name:
                     return asc ? auctions.OrderBy(_ => _.Name) : auctions.OrderByDescending(_ => _.Name);
                 default:
-                    return asc ? auctions.OrderBy(_ => _.Id) : auctions.OrderByDescending(_ => _.Id);
+                    return asc ? auctions.OrderBy(_ => _.TimeLeft) : auctions.OrderByDescending(_ => _.TimeLeft);
             }
         }
 

@@ -8,7 +8,9 @@ const customStyles = {
         right: 'auto',
         bottom: 'auto',
         marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
+        maxHeight: '80%', 
+        overlfow: 'scroll' 
     }
 };
 
@@ -28,9 +30,11 @@ export class Modal extends Component {
         let { style = customStyles } = this.props;
         return(
             <ReactModal isOpen={isOpen} onRequestClose={onRequestClose} style={style} contentLabel="Popup window">
-                <button className="close-button modal-container__close-button" type="button" onClick={onRequestClose}>
-                    <span>&times;</span>
-                </button>
+                <div>
+                    <button className="close-button modal-container__close-button" type="button" onClick={onRequestClose}>
+                        <span>&times;</span>
+                    </button>
+                </div>
                 {this.props.children}
             </ReactModal>
         );

@@ -22,7 +22,7 @@ namespace SoSemiVigelant.Core.Models
                 entityList = entityList.Skip(request.Skip).Take(request.Take);
             }
 
-            var list = (await entityList.ToArrayAsync(token)).Select(entity => Map(entity)).ToList();
+            var list = (await entityList.ToArrayAsync(token)).Select(Map).ToList();
             
             return new GenericListResponse<TModel>
             {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SoSemiVigelant.Core.Models;
 using SoSemiVigelant.Data.Data;
+using SoSemiVigelant.Data.Entities;
 using SoSemiVigelant.Models.Auction;
 using SoSemiVigelant.Provider;
 using SoSemiVigelant.Provider.Entities;
@@ -42,11 +43,8 @@ namespace SoSemiVigelant.Controllers
         [Route("Aucs/Get")]
         public async Task<BaseResponse<AuctionModel>> Get([FromQuery]int id, CancellationToken token)
         {
-            var entry = new AuctionEntry { Url = $"{Settings.Url}forum/index.php?showtopic={id}" };
-            PagesLoader.LoadAuction(entry);
-            var auc = await DbContext.Auctions.FirstOrDefaultAsync(_ => _.AuctionId == id, token);
-            var model = AuctionModel.Map(auc);
-            return new BaseResponse<AuctionModel>(model);
+            var auc = AuctionModel.Map(await PagesLoader.LoadAuction(id, token));
+            return new BaseResponse<AuctionModel>(auc);
         }
     }
 }

@@ -159,6 +159,15 @@ header h1 {
 
 .auctionItem .auctionItem-title {
     margin-right: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.auctionItem .auctionItem-currentBet {
+    width: 10%;
+    min-width: 70px;
+    text-align: right;
 }
 
 .auctionItem .checkbox {
@@ -210,4 +219,37 @@ header h1 {
 
 .auctionItem-form button {
     margin-left: 10px;
+}
+
+.ReactModal__Overlay {
+    perspective: 600;
+    opacity: 0;
+    z-index: 100;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+    transition: opacity 150ms ease-out;
+}
+
+.ReactModal__Content {
+    transform: scale(0.5) rotateX(-30deg);
+}
+
+.ReactModal__Content--after-open {
+    transform: scale(1) rotateX(0deg);
+    transition: all 150ms ease-in;
+}
+
+.ReactModal__Content--before-close {
+    opacity: 0;
+    transform: scale(0.5) rotateX(30deg);
+    transition: all 150ms ease-in;
+}
+
+.modal-container__close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 20;
 }

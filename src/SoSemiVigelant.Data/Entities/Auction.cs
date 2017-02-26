@@ -28,7 +28,7 @@ namespace SoSemiVigelant.Data.Entities
         public int Step { get; set; }
         public int? BuyOut { get; set; }
 
-        public TimeSpan? TimeLeft { get; set; }
+        public long? TimeLeft { get; set; }
         public bool IsFinished { get; set; }
         public int? WinnerBet { get; set; }
 
@@ -37,6 +37,8 @@ namespace SoSemiVigelant.Data.Entities
         public User Winner { get; set; }
 
         public int? AuctionId { get; set; }
+
+        public string Description { get; set; }
 
         public static void Setup(ModelBuilder builder)
         {

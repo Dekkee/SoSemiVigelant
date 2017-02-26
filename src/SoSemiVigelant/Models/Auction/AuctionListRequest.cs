@@ -19,6 +19,11 @@ namespace SoSemiVigelant.Models.Auction
         public bool Asc { get; set; } = true;
 
         /// <summary>
+        /// Показывать только активные
+        /// </summary>
+        public bool OnlyActive { get; set; } = true;
+
+        /// <summary>
         /// фильтр по имени
         /// </summary>
         public string Name { get; set; }

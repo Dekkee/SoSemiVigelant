@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import renderHTML from 'react-render-html';
 
 import { fetchAucsIfNeeded } from '../actions'
 import AuctionItemContainer from '../containers/AuctionItemContainer'
@@ -27,14 +28,20 @@ class AuctionItemModal extends React.Component{
   }
 
   render() {
-    const { auction, isFetching, lastUpdated } = this.props;
+    const { auction, isFetching, lastUpdated, modalIsOpen } = this.props;
         return (
             <div>
-            <Modal
-                isOpen={this.props.modalIsOpen}
-                onRequestClose={this.closeModal}>
-                {isFetching ? <h2>Loading...</h2> : <span>{auction.name}</span>}
-            </Modal>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={this.closeModal}>
+                    {modalIsOpen && isFetching 
+                        ? <h2>Loading...</h2> 
+                        : <div>
+                            <span>{auction.name}</span>
+                            <div dangerouslySetInnerHTML={{__html: auction.description}}/>
+                        </div>
+                    }
+                </Modal>
             </div>
         );
     }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SoSemiVigelant.Data.Data;
+using SoSemiVigelant.Core.Extensions;
 
 namespace SoSemiVigelant.Models.Auction
 {
@@ -25,28 +26,30 @@ namespace SoSemiVigelant.Models.Auction
 
         public static AuctionModel Create(Data.Entities.Auction auction)
         {
-            var model = new AuctionModel
+            return new AuctionModel
             {
                 Id = auction.AuctionId ?? 0,
-                Name = auction.Name
+                Name = auction.Name,
+                //TimeLeft = auction.TimeLeft.HasValue ? (TimeSpan?)TimeSpan.FromTicks(auction.TimeLeft.Value) : null,
+                TimeLeft = auction.TimeLeft,
+                CurrentBet = auction.CurrentBet
             };
-            return model;
         }
 
         public static AuctionModel Map(Data.Entities.Auction auction)
         {
-            return new AuctionModel
-            {
-                Id = auction.AuctionId ?? 0,
-                Name = auction.Name
-            };
+            var entity = Create(auction);
+            entity.Description = auction.Description;
+            return entity;
         }
 
         #region Properties
 
         public int Id { get; set; }
         public string Name { get; set; }
-
+        public long? TimeLeft { get; set; }
+        public int CurrentBet { get; set; }
+        public string Description { get; set; }
         #endregion
 
     }

@@ -4,6 +4,8 @@ import { fetchAucsIfNeeded } from '../actions'
 import AuctionItemContainer from '../containers/AuctionItemContainer'
 import { Modal } from './modal'
 
+
+
 class AuctionList extends React.Component{
   static propTypes = {
         items: PropTypes.array.isRequired,
@@ -40,9 +42,8 @@ class AuctionList extends React.Component{
               {
                 items.map((auc, i) =>
                     <AuctionItemContainer 
-                      name={auc.name} 
-                      key={i}
-                      id={auc.id}/>
+                      {...auc}
+                      key={i}/>
                 )
               }
           </div>

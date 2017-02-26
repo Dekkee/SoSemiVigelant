@@ -8,9 +8,10 @@ using SoSemiVigelant.Data.Data;
 namespace SoSemiVigelant.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20170225152550_TimeLeftToTicks")]
+    partial class TimeLeftToTicks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -33,8 +34,6 @@ namespace SoSemiVigelant.Data.Migrations
                     b.Property<int>("CreatorId");
 
                     b.Property<int>("CurrentBet");
-
-                    b.Property<string>("Description");
 
                     b.Property<bool>("IsFinished");
 

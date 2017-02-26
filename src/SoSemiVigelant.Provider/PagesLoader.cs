@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using HtmlAgilityPack;
+using Microsoft.EntityFrameworkCore;
 using SoSemiVigelant.Data.Data;
 using SoSemiVigelant.Data.Entities;
+using SoSemiVigelant.Data.Migrations;
 using SoSemiVigelant.Provider.Entities;
 using SoSemiVigelant.Provider.Utilities;
 
@@ -40,7 +42,10 @@ namespace SoSemiVigelant.Provider
         private void SyncTopics(object obj)
         {
             var topics = LoadTopics();
-            
+
+            _cachedAuctions.Clear();
+            _cachedUsers.Clear();
+
             using (var db = new DatabaseContextFactory().Create())
             {
                 foreach (var topic in topics)
@@ -52,13 +57,15 @@ namespace SoSemiVigelant.Provider
                     auc.City = topic.City;
                     auc.Bet = topic.Bet;
                     auc.BuyOut = topic.BuyOut;
-                    //auc.TimeLeft = topic.TimeLeft;
+                    auc.TimeLeft = topic.TimeLeft?.Ticks;
                     auc.TotalBets = topic.TotalBets;
-                    
+                    auc.IsFinished = topic.IsFinished;
+                    auc.CurrentBet = topic.CurrentBet;
+
                     auc.Creator = SelectUser(db, topic.Creator);
                     auc.Creator.OriginId = topic.CreatorId ?? 0;
                 }
-
+                
                 db.SaveChanges();
             }
         }
@@ -85,6 +92,8 @@ namespace SoSemiVigelant.Provider
 
         private User SelectUser(DatabaseContext db, string name)
         {
+            if (string.IsNullOrEmpty(name)) return null;
+
             User user;
             if (!_cachedUsers.TryGetValue(name, out user))
             {
@@ -111,7 +120,34 @@ namespace SoSemiVigelant.Provider
             return topics;
         }
 
-        public void LoadAuction(AuctionEntry entry)
+        public async Task<Auction> LoadAuction(int id, CancellationToken token)
+        {
+            var entry = new AuctionEntry { Url = $"{Settings.Url}forum/index.php?showtopic={id}" };
+            await new TaskFactory().StartNew(() => { LoadAuction(entry); }, token);
+
+            using (var db = new DatabaseContextFactory().Create())
+            {
+                var entity = await db.Auctions.FirstOrDefaultAsync(_ => _.AuctionId == id, token);
+
+                entity.IsFinished = entry.IsFinished;
+                entity.TimeLeft = entry.TimeLeft?.Ticks;
+                entity.TotalBets = entry.TotalBets;
+                entity.Step = entry.Step;
+
+                entity.Description = entry.RawHtml;
+
+                var winner = SelectUser(db, entry.WinnerName);
+                if (winner != null)
+                {
+                    winner.OriginId = entry.WinnedId ?? 0;
+                    entity.WinnerBet = entry.WinnerBet;
+                }
+
+                return entity;
+            }
+        }
+
+        private void LoadAuction(AuctionEntry entry)
         {
             string answer = _adapter.SendGet(Helper.EscapeHtml(entry.Url));
 
@@ -119,10 +155,10 @@ namespace SoSemiVigelant.Provider
             doc.LoadHtml(answer);
             var content = doc.DocumentNode.SelectSingleNode("//*[contains(@class,'post entry-content')]");
             
-            entry.RawHtml = content.InnerHtml;
-
             extractNodes(content, "//comment()");
-            
+
+            List<HtmlNode> nodesToRemove = new List<HtmlNode>();
+
             foreach (var element in content.ChildNodes)
             {
                 switch (element.Name)
@@ -178,6 +214,7 @@ namespace SoSemiVigelant.Provider
                     //    paragraph.Inlines.Add(link);
                     //    break;
                     case "iframe":
+                        nodesToRemove.Add(element);
                         var url = element.Attributes["src"].Value;
                         var pattern = "/auc/auc.php?id=";
                         int id;
@@ -188,7 +225,14 @@ namespace SoSemiVigelant.Provider
                         break;
                 }
             }
-            
+
+            foreach (var node in nodesToRemove)
+            {
+                content.ChildNodes.Remove(node);
+            }
+
+            entry.RawHtml = content.InnerHtml;
+
             LoadAuctionData(entry);
             
         }
@@ -340,6 +384,7 @@ namespace SoSemiVigelant.Provider
                         var cells = tr.SelectNodes(".//td").ToArray();
                         var cell0A = cells[0].SelectSingleNode(".//a");
                         var cell1A = cells[1].SelectNodes(".//a").ToArray();
+                        var timeLeft = cells[3].InnerText.ToTimeSpan();
                         int totalBet;
                         if (cells.Length == 7)
                         {
@@ -354,11 +399,11 @@ namespace SoSemiVigelant.Provider
                                 CreatorRating = HtmlEntity.DeEntitize(cell1A[1].InnerText),
                                 CreatorRatingUrl = new Uri(Settings.Url + cell1A[1].Attributes["href"].Value),
                                 City = HtmlEntity.DeEntitize(cells[2].InnerText),
-                                TimeLeft = cells[3].InnerText.ToTimeSpan(),
+                                TimeLeft = timeLeft,
                                 CurrentBet = int.TryParse(cells[4].InnerText, out currentBet) ? currentBet : 0,
                                 BuyOut = int.TryParse(cells[5].InnerText, out buyOut) ? (int?) buyOut : null,
                                 TotalBets = int.TryParse(cells[6].InnerText, out totalBet) ? totalBet : 0,
-                                IsFinished = false
+                                IsFinished = !timeLeft.HasValue
                             };
                         }
                         else
