@@ -1,9 +1,7 @@
-﻿FROM microsoft/dotnet:1.0.0-core
+﻿FROM microsoft/dotnet:1.1-sdk-projectjson
 
 # Copy the app
 COPY . /app
-
-# Set the Working Directory
 WORKDIR /app
 
 RUN ["dotnet", "restore"]
