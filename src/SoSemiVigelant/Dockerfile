@@ -1,20 +1,7 @@
 ﻿FROM microsoft/aspnetcore:1.1
 
-#COPY . /app
-#WORKDIR /app
-
-#RUN ["dotnet", "restore"]
-#RUN ["dotnet", "build"]
-
-# Configure the listening port to 5000
-#ENV ASPNETCORE_URLS http://*:5000
-#EXPOSE 5000
-
-#COPY ${source:-obj/Docker/publish} .
-ENTRYPOINT ["dotnet", "SoSemiVigelant.dll"]
-
-ARG source=.
+ARG source=./bin/Debug/netcoreapp1.6/publish
 WORKDIR /app
-ENV ASPNETCORE_URLS http://+:5000
-EXPOSE 5000
+EXPOSE 80
 COPY $source .
+ENTRYPOINT ["dotnet", "SoSemiVigelant.dll"]

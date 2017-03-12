@@ -50,7 +50,7 @@ namespace SoSemiVigelant
             services.AddSingleton<IListFactory<UserModel, UserListRequest>, UserListFactory>();
             services.AddEntityFrameworkSqlServer()
                     .AddDbContext<DatabaseContext>(options => options.UseSqlServer(
-                    "Server=DEKKER-PC;Database=SoSemiDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                    Configuration["ConnectionStrings:DefaultConnection"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -72,6 +72,7 @@ namespace SoSemiVigelant
 
         private void MigrateDatabase()
         {
+            DatabaseContextFactory.ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
             var factory = new DatabaseContextFactory();
             factory.MigrateToLatest();
         }

@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  sosemi.api:
+    image: sosemivigelant.api
+    build:
+      context: ./src/SoSemiVigelant
+      dockerfile: Dockerfile
+    depends_on:
+      - sql.data
+
+  sosemi:
+    image: sosemivigelant
+    build:
+      context: ./src/SoSemiVigelant.FrontEnd
+      dockerfile: Dockerfile
+    depends_on:
+      - sosemi.api
+      
+  sql.data:
+    image: microsoft/mssql-server-linux

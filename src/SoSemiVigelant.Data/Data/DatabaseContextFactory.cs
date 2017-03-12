@@ -9,11 +9,13 @@ namespace SoSemiVigelant.Data.Data
 {
     public class DatabaseContextFactory : IDbContextFactory<DatabaseContext>
     {
+        public static string ConnectionString { get; set; }
+
         public DatabaseContext Create(DbContextFactoryOptions options)
         {
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
             builder.UseSqlServer(
-                "Server=DEKKER-PC;Database=SoSemiDatabase;Trusted_Connection=True;MultipleActiveResultSets=true");
+                ConnectionString);
             return new DatabaseContext(builder.Options);
         }
 
@@ -21,7 +23,7 @@ namespace SoSemiVigelant.Data.Data
         {
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
             builder.UseSqlServer(
-                "Server=DEKKER-PC;Database=SoSemiDatabase;Trusted_Connection=True;MultipleActiveResultSets=true");
+                ConnectionString);
             return new DatabaseContext(builder.Options);
         }
 
