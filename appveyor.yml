@@ -13,9 +13,12 @@ before_build:
 build_script:  
     - dotnet build .\src\SoSemiVigelant
     - dotnet publish .\src\SoSemiVigelant
+    - npm build .\src\SoSemiVigelant.FrontEnd
 after_build:  
     - docker build -t dekker/sosemivigelant .\src\SoSemiVigelant
+    - docker build -t dekker/sosemivigelantt.frontend .\src\SoSemiVigelant.FrontEnd
 deploy_script:  
     #- docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
     - docker login -u="dekker" -p="67251425"
     - docker push dekker/sosemivigelant
+    - docker push dekker/sosemivigelant.frontend
