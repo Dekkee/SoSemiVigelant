@@ -14,8 +14,8 @@ build_script:
     - dotnet build .\src\SoSemiVigelant
     - dotnet publish .\src\SoSemiVigelant
 after_build:  
-    - docker build -t sosemivigelant .\src\SoSemiVigelant
+    - docker build -t dekker/sosemivigelant .\src\SoSemiVigelant
 deploy_script:  
     #- docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
     - docker login -u="dekker" -p="67251425"
-    - docker push dekker/alexander:sosemivigelant
+    - docker push dekker/sosemivigelant
