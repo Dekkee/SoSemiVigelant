@@ -1,6 +1,6 @@
 ﻿FROM microsoft/dotnet:nanoserver
 
-ARG source=./bin/Debug/netcoreapp1.6/publish
+ARG source=./bin/Debug/netcoreapp1.1/publish
 WORKDIR /app
 EXPOSE 80
 COPY $source .

@@ -12,6 +12,7 @@ before_build:
     - dotnet restore .\src\SoSemiVigelant
 build_script:  
     - dotnet build .\src\SoSemiVigelant
+    - dotnet publish .\src\SoSemiVigelant
 after_build:  
     - docker build -t sosemivigelant .\src\SoSemiVigelant
 deploy_script:  
