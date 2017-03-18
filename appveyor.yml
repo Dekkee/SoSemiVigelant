@@ -3,9 +3,9 @@ image: Visual Studio 2017
 
 environment:  
   DOCKER_USER:
-    secure: dekker
+    secure: 1XrH+FwCALwaZSkP8gJK6w==
   DOCKER_PASS:
-    secure: 67251425
+    secure: Lg7PbpxV+8GmoLAdkQGeoQ==
 install:  
     - docker version
 build_script:  
