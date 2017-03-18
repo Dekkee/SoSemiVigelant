@@ -10,7 +10,7 @@ install:
     - docker version
 build_script:  
     - dotnet restore
-    - docker build -t sosemivigelant .
+    - docker build -t sosemivigelant .\src\SoSemiVigelant
 deploy_script:  
     - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
     - docker push sosemivigelant
