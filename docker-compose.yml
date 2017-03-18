@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  sosemi.api:
+  sosemivigelant.api:
     image: dekker/sosemivigelant.api
     build:
       context: ./src/SoSemiVigelant
@@ -9,13 +9,13 @@ services:
     depends_on:
       - sql.data
 
-  sosemi:
+  sosemivigelant:
     image: dekker/sosemivigelant
     build:
       context: ./src/SoSemiVigelant.FrontEnd
       dockerfile: Dockerfile
     depends_on:
-      - sosemi.api
+      - sosemivigelant.api
       
   sql.data:
     image: microsoft/mssql-server-linux
