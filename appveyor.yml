@@ -18,7 +18,7 @@ build_script:
 after_build:  
     #- docker build -t dekker/sosemivigelant.api .\src\SoSemiVigelant
     #- docker build -t dekker/sosemivigelant .\src\SoSemiVigelant.FrontEnd
-    -docker-compose build
+    - docker-compose build
 deploy_script:  
     #- docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
     - docker login -u="dekker" -p="67251425"
