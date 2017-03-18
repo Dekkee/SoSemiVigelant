@@ -2,7 +2,7 @@ version: '2'
 
 services:
   sosemi.api:
-    image: sosemivigelant.api
+    image: dekker/sosemivigelant.api
     build:
       context: ./src/SoSemiVigelant
       dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
       - sql.data
 
   sosemi:
-    image: sosemivigelant
+    image: dekker/sosemivigelant
     build:
       context: ./src/SoSemiVigelant.FrontEnd
       dockerfile: Dockerfile

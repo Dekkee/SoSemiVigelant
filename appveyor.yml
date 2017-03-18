@@ -8,6 +8,7 @@ environment:
     secure: Lg7PbpxV+8GmoLAdkQGeoQ==
 install:  
     - docker version
+    - choco install docker-compose  
 before_build:  
     - dotnet restore .\src\SoSemiVigelant
 build_script:  
@@ -15,10 +16,11 @@ build_script:
     - dotnet publish .\src\SoSemiVigelant
     - npm run build .\src\SoSemiVigelant.FrontEnd
 after_build:  
-    - docker build -t dekker/sosemivigelant .\src\SoSemiVigelant
-    - docker build -t dekker/sosemivigelantt.frontend .\src\SoSemiVigelant.FrontEnd
+    - docker build -t dekker/sosemivigelant.api .\src\SoSemiVigelant
+    #- docker build -t dekker/sosemivigelant .\src\SoSemiVigelant.FrontEnd
+    #-docker-compose build
 deploy_script:  
     #- docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
     - docker login -u="dekker" -p="67251425"
-    - docker push dekker/sosemivigelant
-    - docker push dekker/sosemivigelant.frontend
+    - docker push dekker/sosemivigelant.api
+    #- docker push dekker/sosemivigelant
