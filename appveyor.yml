@@ -6,8 +6,6 @@ environment:
     secure: 1XrH+FwCALwaZSkP8gJK6w==
   DOCKER_PASS:
     secure: Lg7PbpxV+8GmoLAdkQGeoQ==
-platform:  
-    - win7-x64
 install:  
     - docker version
 before_build:  
@@ -15,6 +13,7 @@ before_build:
 build_script:  
     - dotnet build
     - dotnet publish
+after_build:  
     - docker build -t sosemivigelant .\src\SoSemiVigelant
 deploy_script:  
     - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
