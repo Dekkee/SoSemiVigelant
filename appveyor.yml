@@ -1,0 +1,16 @@
+version: 1.0.{build}  
+image: Visual Studio 2017
+
+environment:  
+  DOCKER_USER:
+    secure: dekker
+  DOCKER_PASS:
+    secure: 67251425
+install:  
+    - docker version
+build_script:  
+    - dotnet restore
+    - docker build -t sosemivigelant .
+deploy_script:  
+    - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+    - docker push sosemivigelant
