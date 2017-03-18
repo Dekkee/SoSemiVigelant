@@ -6,10 +6,13 @@ environment:
     secure: 1XrH+FwCALwaZSkP8gJK6w==
   DOCKER_PASS:
     secure: Lg7PbpxV+8GmoLAdkQGeoQ==
+platform:  
+    - win7-x64
 install:  
     - docker version
-build_script:  
+before_build:  
     - dotnet restore
+build_script:  
     - dotnet build
     - dotnet publish
     - docker build -t sosemivigelant .\src\SoSemiVigelant
