@@ -16,5 +16,6 @@ build_script:
 after_build:  
     - docker build -t sosemivigelant .\src\SoSemiVigelant
 deploy_script:  
-    - docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
-    - docker push sosemivigelant
+    #- docker login -u="$env:DOCKER_USER" -p="$env:DOCKER_PASS"
+    - docker login -u="dekker" -p="67251425"
+    - docker push .\src\SoSemiVigelant
