@@ -9,10 +9,9 @@ environment:
 install:  
     - docker version
 before_build:  
-    - dotnet restore
+    - dotnet restore .\src\SoSemiVigelant
 build_script:  
-    - dotnet build -å SoSemiVigelant
-    - dotnet publish
+    - dotnet build .\src\SoSemiVigelant
 after_build:  
     - docker build -t sosemivigelant .\src\SoSemiVigelant
 deploy_script:  
