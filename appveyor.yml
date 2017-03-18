@@ -14,7 +14,7 @@ before_build:
 build_script:  
     - dotnet build .\src\SoSemiVigelant
     - dotnet publish .\src\SoSemiVigelant
-    - npm run build .\src\SoSemiVigelant.FrontEnd
+    #- npm run build .\src\SoSemiVigelant.FrontEnd
 after_build:  
     - docker build -t dekker/sosemivigelant.api .\src\SoSemiVigelant
     #- docker build -t dekker/sosemivigelant .\src\SoSemiVigelant.FrontEnd
