@@ -11,7 +11,7 @@ install:
 before_build:  
     - dotnet restore
 build_script:  
-    - dotnet build
+    - dotnet build -å SoSemiVigelant
     - dotnet publish
 after_build:  
     - docker build -t sosemivigelant .\src\SoSemiVigelant
