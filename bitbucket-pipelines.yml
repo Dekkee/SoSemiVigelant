@@ -9,6 +9,6 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - dotnet restore ./src/SoSemiVigelant
-          - dotnet build  ./src/SoSemiVigelant
+          - dotnet restore src/SoSemiVigelant
+          - dotnet build  src/SoSemiVigelant
 #          - dotnet test TestName
