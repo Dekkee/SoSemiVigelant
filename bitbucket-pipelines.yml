@@ -14,8 +14,8 @@ pipelines:
 #          - dotnet test TestName
           - dotnet publish src/SoSemiVigelant
 #          - npm run build src/SoSemiVigelant.FrontEnd
-          - docker build -t dekker/sosemivigelant ./src/SoSemiVigelant.FrontEnd
-          - docker build -t dekker/sosemivigelant.api ./src/SoSemiVigelant
+          - docker build -t dekker/sosemivigelant src/SoSemiVigelant.FrontEnd
+          - docker build -t dekker/sosemivigelant.api src/SoSemiVigelant
           - docker login -u="dekker" -p="PipeIt!1"
           - docker push dekker/sosemivigelant.api
           - docker push dekker/sosemivigelant
