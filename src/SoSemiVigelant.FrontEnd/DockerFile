@@ -1,4 +1,4 @@
-FROM node:argon
+FROM stefanscherer/node-windows:6.7.0-nano
 
 # Create app directory
 RUN mkdir -p /usr/src/app
