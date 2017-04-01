@@ -1,4 +1,4 @@
-﻿FROM microsoft/dotnet:nanoserver
+﻿FROM docker pull microsoft/aspnetcore:1.1.1
 
 ARG source=./bin/Debug/netcoreapp1.1/publish
 WORKDIR /app
