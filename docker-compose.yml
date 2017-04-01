@@ -18,4 +18,4 @@ services:
       - sosemivigelant.api
       
   sql.data:
-    image: postgresql:9.6-alpine
+    image: postgres:9.6-alpine
