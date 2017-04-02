@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-var endPoint = "http://localhost:65107";
+var endPoint = "http://dekkee.com:65107";
 
 const respToJson = response => response.json();
 
@@ -18,9 +18,9 @@ export function resolveUrl(url) {
     return `${endPoint}/${url}`;
 }
 
-export function getJson(url){
+export function getJson(url) {
     return fetch(
-        resolveUrl(url))
+            resolveUrl(url))
         .then(checkStatus)
         .then(respToJson);
 }
