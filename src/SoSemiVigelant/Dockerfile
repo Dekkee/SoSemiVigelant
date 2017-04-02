@@ -1,4 +1,4 @@
-﻿FROM docker pull microsoft/aspnetcore:1.1
+﻿FROM microsoft/aspnetcore:1.1.1
 
 RUN dotnet restore ./src/SoSemiVigelant
 RUN dotnet build ./src/SoSemiVigelant
