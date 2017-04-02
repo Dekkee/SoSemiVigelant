@@ -1,6 +1,9 @@
 version: '2'
 
 services:
+  sosemivigelant:
+    ports:
+      - "80:8080"
 
   sosemivigelant.api:
     environment:
@@ -15,5 +18,3 @@ services:
     environment:
       - SA_PASSWORD=D0ckSql!
       - ACCEPT_EULA=Y
-    ports:
-      - "5433:1433"

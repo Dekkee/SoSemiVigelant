@@ -4,12 +4,6 @@ ARG source=./bin/Debug/netcoreapp1.1/publish
 WORKDIR /app
 EXPOSE 80
 
-COPY . .
-
-RUN dotnet restore
-RUN dotnet build ./src/SoSemiVigelant
-RUN dotnet publish ./src/SoSemiVigelant
-
-#COPY $source .
+COPY $source .
 
 ENTRYPOINT ["dotnet", "SoSemiVigelant.dll"]
