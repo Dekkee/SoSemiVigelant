@@ -20,3 +20,5 @@ services:
   sql.data:
     container_name: sql.data
     image: postgres:9.6-alpine
+    environment:
+      POSTGRES_PASSWORD: SoPostMuchGreWow!1

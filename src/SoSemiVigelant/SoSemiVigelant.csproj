@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SoSemiVigelant.Data\SoSemiVigelant.Data.csproj" />
     <ProjectReference Include="..\SoSemiVigelant.Provider\SoSemiVigelant.Provider.csproj" />
     <ProjectReference Include="..\SoSemiVigelant.Core\SoSemiVigelant.Core.csproj" />

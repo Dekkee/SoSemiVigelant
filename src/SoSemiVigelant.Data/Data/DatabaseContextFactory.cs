@@ -14,7 +14,7 @@ namespace SoSemiVigelant.Data.Data
         public DatabaseContext Create(DbContextFactoryOptions options)
         {
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
-            builder.UseSqlServer(
+            builder.UseNpgsql(
                 ConnectionString);
             return new DatabaseContext(builder.Options);
         }
@@ -22,7 +22,7 @@ namespace SoSemiVigelant.Data.Data
         public DatabaseContext Create()
         {
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
-            builder.UseSqlServer(
+            builder.UseNpgsql(
                 ConnectionString);
             return new DatabaseContext(builder.Options);
         }

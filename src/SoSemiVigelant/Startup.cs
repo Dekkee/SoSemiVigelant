@@ -33,6 +33,8 @@ namespace SoSemiVigelant
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            DatabaseContextFactory.ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -48,9 +50,9 @@ namespace SoSemiVigelant
             services.AddSingleton<IPagesLoader, PagesLoader>();
             services.AddSingleton<IListFactory<AuctionModel, AuctionListRequest>, AuctionListFactory>();
             services.AddSingleton<IListFactory<UserModel, UserListRequest>, UserListFactory>();
-            services.AddEntityFrameworkSqlServer()
-                    .AddDbContext<DatabaseContext>(options => options.UseSqlServer(
-                    Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddEntityFrameworkNpgsql()
+                    .AddDbContext<DatabaseContext>(options => options.UseNpgsql(
+                    DatabaseContextFactory.ConnectionString, b => b.MigrationsAssembly("SoSemiVigelant.Data")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -72,7 +74,6 @@ namespace SoSemiVigelant
 
         private void MigrateDatabase()
         {
-            DatabaseContextFactory.ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
             var factory = new DatabaseContextFactory();
             factory.MigrateToLatest();
         }
