@@ -1,6 +1,6 @@
-'use strict';
+var express = require('express');
 
-import { express } from 'express';
+'use strict';
 
 // Constants
 const PORT = 8080;
