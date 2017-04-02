@@ -21,6 +21,6 @@ services:
     container_name: sql.data
     image: postgres:9.6-alpine
     volumes:
-      - ./data/postgres/data:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: SoPostMuchGreWow!1
