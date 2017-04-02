@@ -11,6 +11,10 @@
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug\netcoreapp1.1\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="wwwroot\**\*;Dockerfile;NuGet.Config">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

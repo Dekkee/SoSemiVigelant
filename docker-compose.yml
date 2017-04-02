@@ -16,8 +16,6 @@ services:
     build:
       context: ./src/SoSemiVigelant.FrontEnd
       dockerfile: Dockerfile
-    depends_on:
-      - sosemivigelant.api
       
   sql.data:
     container_name: sql.data
