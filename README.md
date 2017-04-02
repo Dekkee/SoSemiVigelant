@@ -5,7 +5,7 @@ SoSemiVigelant
 
 * Бэк на **ASP.NET Core**
 * Фронт на **React/Redux**
-* **PostgreSQL**
+* Данные в **PostgreSQL**
 
 Как запустить
 -------------
