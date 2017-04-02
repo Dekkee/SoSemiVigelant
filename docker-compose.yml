@@ -9,6 +9,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - sql.data
+    restart: always
 
   sosemivigelant:
     image: dekker/sosemivigelant
@@ -16,6 +17,7 @@ services:
     build:
       context: ./src/SoSemiVigelant.FrontEnd
       dockerfile: Dockerfile
+    restart: always
       
   sql.data:
     container_name: sql.data
@@ -24,6 +26,7 @@ services:
       - sql.data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: SoPostMuchGreWow!1
+    restart: always
 
 volumes:
   sql.data:
