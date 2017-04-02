@@ -25,8 +25,6 @@ services:
     environment:
       POSTGRES_PASSWORD: SoPostMuchGreWow!1
 
-# Сей volume создается командой 'docker volume create --name sql.data -d local'
-# Иначе не стартанет в доккере под виндой
 volumes:
   sql.data:
     external: true
