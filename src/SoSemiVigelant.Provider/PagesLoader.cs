@@ -11,7 +11,6 @@ using HtmlAgilityPack;
 using Microsoft.EntityFrameworkCore;
 using SoSemiVigelant.Data.Data;
 using SoSemiVigelant.Data.Entities;
-using SoSemiVigelant.Data.Migrations;
 using SoSemiVigelant.Provider.Entities;
 using SoSemiVigelant.Provider.Utilities;
 

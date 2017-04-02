@@ -14,7 +14,7 @@ namespace SoSemiVigelant.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Name = table.Column<string>(nullable: true),
                     OriginId = table.Column<int>(nullable: false)
                 },
@@ -28,17 +28,18 @@ namespace SoSemiVigelant.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AuctionId = table.Column<int>(nullable: true),
                     Bet = table.Column<int>(nullable: true),
                     BuyOut = table.Column<int>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     CreatorId = table.Column<int>(nullable: false),
                     CurrentBet = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     IsFinished = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Step = table.Column<int>(nullable: false),
-                    TimeLeft = table.Column<TimeSpan>(nullable: true),
+                    TimeLeft = table.Column<long>(nullable: true),
                     TotalBets = table.Column<int>(nullable: false),
                     WinnerBet = table.Column<int>(nullable: true),
                     WinnerId = table.Column<int>(nullable: true)
@@ -61,6 +62,11 @@ namespace SoSemiVigelant.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Auctions_AuctionId",
+                table: "Auctions",
+                column: "AuctionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Auctions_CreatorId",
                 table: "Auctions",
                 column: "CreatorId");
@@ -69,6 +75,11 @@ namespace SoSemiVigelant.Data.Migrations
                 name: "IX_Auctions_WinnerId",
                 table: "Auctions",
                 column: "WinnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Name",
+                table: "Users",
+                column: "Name");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
