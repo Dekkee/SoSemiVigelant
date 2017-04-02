@@ -21,6 +21,12 @@ services:
     container_name: sql.data
     image: postgres:9.6-alpine
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - sql.data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: SoPostMuchGreWow!1
+
+# Сей volume создается командой 'docker volume create --name sql.data -d local'
+# Иначе не стартанет в доккере под виндой
+volumes:
+  sql.data:
+    external: true
