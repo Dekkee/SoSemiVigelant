@@ -12,7 +12,7 @@ services:
       - ConnectionString=Server=sql.data;Database=SoSemiDatabase;User Id=sa;Password=D0ckSql!
       - ExternalCatalogBaseUrl=http://localhost:5101    #Local: You need to open your local dev-machine firewall at range 5100-5105.  at range 5100-5105.
     ports:
-      - "5101:5101"
+      - "65107:5101"
 
   sql.data:
     environment:
