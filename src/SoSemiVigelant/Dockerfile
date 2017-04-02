@@ -6,7 +6,7 @@ EXPOSE 80
 
 COPY . .
 
-RUN dotnet restore ./src/SoSemiVigelant
+RUN dotnet restore
 RUN dotnet build ./src/SoSemiVigelant
 RUN dotnet publish ./src/SoSemiVigelant
 
