@@ -7,6 +7,13 @@ SoSemiVigelant
 * Фронт на **React/Redux**
 * Данные в **PostgreSQL**
 
+Статус сборки
+-------------
+
+| Ветка     | Статус                                                                                                             |
+|-----------|--------------------------------------------------------------------------------------------------------------------|
+| `dev`     | ![dev](https://teamcity.dekkee.com/app/rest/builds/buildType%3A%28id%3ASosemivigelant_Build%29/statusIcon)         |
+
 Как запустить
 -------------
 
