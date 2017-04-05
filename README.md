@@ -12,7 +12,7 @@ SoSemiVigelant
 
 | Ветка     | Статус                                                                                                             |
 |-----------|--------------------------------------------------------------------------------------------------------------------|
-| `dev`     | ![dev](https://dekkee.com:56780/app/rest/builds/buildType%3A%28id%3ASosemivigelant_Build%29/statusIcon)         |
+| `dev`     | ![dev](https://dekkee.com:56780/app/rest/builds/buildType(id:Sosemivigelant_Build)/statusIcon)         |
 
 Как запустить
 -------------
