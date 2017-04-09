@@ -49,8 +49,7 @@ const shouldFetchAucs = (state) => {
 }
 
 export const fetchAucsIfNeeded = props => (dispatch, getState) => {
-    var hx = shouldFetchAucs(getState());
-    if (hx) {
+    if (shouldFetchAucs(getState())) {
         return dispatch(fetchAucs(props))
     }
 }

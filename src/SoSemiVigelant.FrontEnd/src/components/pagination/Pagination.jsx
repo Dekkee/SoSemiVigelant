@@ -29,6 +29,7 @@ export class Pagination extends React.Component{
                     previousLabel={'<<'}
                     nextLabel={'>>'}
                     breakLabel={'...'}
+                    breakClassName={'break'}
                     pageCount={pageCount}
                     //forcePage={page}
                     marginPagesDisplayed={2}

@@ -10,7 +10,7 @@ class AuctionList extends React.Component{
         items: PropTypes.array.isRequired,
         isFetching: PropTypes.bool.isRequired,
         lastUpdated: PropTypes.number,
-        page
+        page: PropTypes.number
     }
 
   constructor(props) {
@@ -22,12 +22,11 @@ class AuctionList extends React.Component{
   }
 
   componentDidMount() {
-    const { loadAucs } = this.props;
-    const request = {
-      page: 0,
+    const { loadAucs, page } = this.props;
+    loadAucs({
+      page,
       perPage: this.perPage
-    }
-    loadAucs(request);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,11 +42,10 @@ class AuctionList extends React.Component{
 
   handlePageChange(data) {
     const { loadAucs } = this.props;
-    const request = {
+    loadAucs({
       page: data.selected,
       perPage: this.perPage
-    }
-    loadAucs(request);
+    });
   }
 
   render() {

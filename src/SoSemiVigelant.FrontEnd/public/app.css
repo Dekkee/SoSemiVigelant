@@ -283,10 +283,17 @@ header h1 {
 }
 
 .pagination li.current {
-    color: #00d8ff;
+    color: #fff;
+    background: #00d8ff;
     font-weight: bold;
 }
 
+.pagination li.break {
+    cursor: default;
+}
+
 .pagination li.disabled {
-    color: #757575;
+    color: #fff;
+    background: #757575;
+    cursor: default;
 }

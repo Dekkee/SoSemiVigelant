@@ -4,18 +4,17 @@ import { createStore, applyMiddleware } from 'redux'
 
 import reducer from '../reducers'
 
-const middleware = [ thunk ]
+const middleware = [thunk]
 if (process.env.NODE_ENV !== 'production') {
-  middleware.push(createLogger())
+    middleware.push(createLogger())
 }
 
 const store = createStore(
-    reducer,
-    {
+    reducer, {
         auctions: {
             isFetching: false,
-            didInvalidate: true,
-            items: []
+            items: [],
+            page: 0
         }
     },
     applyMiddleware(...middleware)

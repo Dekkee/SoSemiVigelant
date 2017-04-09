@@ -12,7 +12,8 @@ const mapStateToProps = state => {
         page
     } = state.auctions || {
         isFetching: true,
-        items: []
+        items: [],
+        page: 0
     }
 
     return {
