@@ -22,7 +22,9 @@ class Ticker extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ticks: moment.duration(nextProps.initialTime / 10000)})
+        if (this.props !== nextProps) {
+            this.setState({ticks: moment.duration(nextProps.initialTime / 10000)})
+        }
     }
 
     tick() {
