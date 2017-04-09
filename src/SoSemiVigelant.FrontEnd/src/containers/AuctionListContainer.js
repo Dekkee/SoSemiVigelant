@@ -8,7 +8,8 @@ const mapStateToProps = state => {
         isFetching,
         lastUpdated,
         items,
-        count
+        count,
+        page
     } = state.auctions || {
         isFetching: true,
         items: []
@@ -18,7 +19,8 @@ const mapStateToProps = state => {
         items,
         isFetching,
         lastUpdated,
-        count
+        count,
+        page
     }
 }
 
