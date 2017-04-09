@@ -7,7 +7,8 @@ const mapStateToProps = state => {
     const {
         isFetching,
         lastUpdated,
-        items
+        items,
+        count
     } = state.auctions || {
         isFetching: true,
         items: []
@@ -16,13 +17,14 @@ const mapStateToProps = state => {
     return {
         items,
         isFetching,
-        lastUpdated
+        lastUpdated,
+        count
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadAucs: props => dispatch(fetchAucsIfNeeded(props))
+        loadAucs: request => dispatch(fetchAucsIfNeeded(request))
     }
 }
 

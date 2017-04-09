@@ -1,6 +1,8 @@
+import { map } from '../common/fp';
+import { flow, compact, join } from 'lodash/fp';
 import fetch from 'isomorphic-fetch';
 
-var endPoint = "http://dekkee.com:65107";
+var endPoint = "http://localhost:65107";
 
 const respToJson = response => response.json();
 
@@ -18,9 +20,22 @@ export function resolveUrl(url) {
     return `${endPoint}/${url}`;
 }
 
-export function getJson(url) {
-    return fetch(
-            resolveUrl(url))
+export const getQuery = flow(
+    map((val, key) => val ? `${key}=${val}` : undefined),
+    compact,
+    join('&'),
+);
+
+export function getTakeSkipQuery(pagecount, page) {
+    return { take: pagecount, skip: Math.ceil(page * pagecount) };
+}
+
+export function getTakeSkipQueryString(pagecount, page) {
+    return getQuery(getTakeSkipQuery(pagecount, page));
+}
+
+export function getJson(url, data) {
+    return fetch(resolveUrl(url), data)
         .then(checkStatus)
         .then(respToJson);
 }

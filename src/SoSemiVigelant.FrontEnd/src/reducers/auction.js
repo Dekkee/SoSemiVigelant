@@ -1,30 +1,25 @@
 import {
-  REQUEST_AUCS, RECEIVE_AUCS, INVALIDATE_AUCS
+    REQUEST_AUCS,
+    RECEIVE_AUCS,
+    INVALIDATE_AUCS
 } from '../actions'
 
 function reducer(state = {
-  isFetching: false,
-  didInvalidate: false,
-  items: []
+    isFetching: false,
+    items: []
 }, action) {
     switch (action.type) {
-        case INVALIDATE_AUCS:
-            return {
-                ...state,
-                didInvalidate: true
-            }
         case REQUEST_AUCS:
             return {
                 ...state,
-                isFetching: true,
-                didInvalidate: false
+                isFetching: true
             }
         case RECEIVE_AUCS:
             return {
                 ...state,
                 isFetching: false,
-                didInvalidate: false,
                 items: action.values,
+                count: action.count,
                 lastUpdated: action.receivedAt
             }
         default:

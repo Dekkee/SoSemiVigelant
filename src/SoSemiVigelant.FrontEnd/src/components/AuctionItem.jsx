@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Button from './Button'
 import Ticker from './Ticker'
@@ -6,10 +6,10 @@ import { fetchAucInfo } from '../actions'
 
 class AuctionItem extends React.Component {
     static propTypes = {
-        name: React.PropTypes.string.isRequired,
-        id: React.PropTypes.number.isRequired,
-        timeLeft: React.PropTypes.string,
-        currentBet: React.PropTypes.number
+        name: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        timeLeft: PropTypes.number,
+        currentBet: PropTypes.number
     }
 
     constructor(props) {
