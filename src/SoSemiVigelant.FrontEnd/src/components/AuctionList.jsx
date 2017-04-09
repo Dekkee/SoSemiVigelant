@@ -57,6 +57,9 @@ class AuctionList extends React.Component{
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+              <div className="pagination-container">
+                <Pagination count={count} page={this.state.page} pageSize={this.state.perPage} clickCallback={this.handlePageChange} />
+              </div>
               {
                 items.map((auc, i) =>
                     <AuctionItemContainer 
@@ -64,7 +67,7 @@ class AuctionList extends React.Component{
                       key={i}/>
                 )
               }
-              <div className="pagination">
+              <div className="pagination-container">
                 <Pagination count={count} page={this.state.page} pageSize={this.state.perPage} clickCallback={this.handlePageChange} />
               </div>
           </div>

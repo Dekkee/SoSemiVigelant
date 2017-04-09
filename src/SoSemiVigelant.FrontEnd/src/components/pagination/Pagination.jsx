@@ -32,9 +32,10 @@ export class Pagination extends React.Component{
                     pageCount={pageCount}
                     //forcePage={page}
                     marginPagesDisplayed={2}
-                    pageRangeDisplayed={3}
+                    pageRangeDisplayed={3}                    
                     containerClassName={'pagination pagination--custom text-center'}
                     activeClassName={'current'}
+                    disabledClassName={'disabled'}
                     previousClassName={'pagination-previous'}
                     nextClassName={'pagination-next'} />;
     }
