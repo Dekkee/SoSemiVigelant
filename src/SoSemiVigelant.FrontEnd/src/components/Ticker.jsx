@@ -21,6 +21,12 @@ class Ticker extends React.Component {
         this.interval = setInterval(this.tick, this._interval);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props !== nextProps) {
+            this.setState({ticks: moment.duration(nextProps.initialTime / 10000)})
+        }
+    }
+
     tick() {
         if (this.state.running) {
             this.setState({

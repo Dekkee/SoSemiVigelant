@@ -22,7 +22,6 @@ class AuctionItemModal extends React.Component{
   }
 
   closeModal() {
-      console.log(this.props);
       const { onClose } = this.props;
       onClose();
   }

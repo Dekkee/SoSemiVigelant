@@ -16,14 +16,14 @@ button {
     min-width: 64px;
     padding: 0 16px;
     display: inline-block;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0;
     overflow: hidden;
     will-change: box-shadow;
-    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+    transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
     outline: none;
     cursor: pointer;
     text-decoration: none;
@@ -33,11 +33,11 @@ button {
 }
 
 button:hover {
-    background-color: rgba(158,158,158,.2);
+    background-color: rgba(158, 158, 158, .2);
 }
 
 button:active {
-    background-color: rgba(158,158,158,.4);
+    background-color: rgba(158, 158, 158, .4);
 }
 
 button.icon {
@@ -57,7 +57,7 @@ button .material-icons {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-12px,-12px);
+    transform: translate(-12px, -12px);
     line-height: 24px;
     width: 24px;
     vertical-align: middle;
@@ -78,7 +78,7 @@ main {
     margin: 70px 20px;
     border-radius: 2px;
     overflow: hidden;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
 header {
@@ -96,7 +96,9 @@ header h1 {
     margin: 1rem auto;
 }
 
+
 /* Stats */
+
 .stats {
     margin: 10px;
 }
@@ -119,8 +121,8 @@ header h1 {
 }
 
 
-
 /* Stopwatch */
+
 .stopwatch {
     padding: 15px 10px 5px 10px;
 }
@@ -137,10 +139,11 @@ header h1 {
 
 
 /* auctionItem */
+
 .auctionItem {
     display: flex;
     font-size: 1rem;
-    border-top: 1px solid rgba(0,0,0,.1);
+    border-top: 1px solid rgba(0, 0, 0, .1);
     background-color: #fff;
     transition: all .2s;
     -webkit-user-select: none;
@@ -187,7 +190,7 @@ header h1 {
     display: flex;
     font-size: 1rem;
     padding: .85em;
-    border-top: 1px solid rgba(0,0,0,.1);
+    border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
 .auctionItem-edit-form input {
@@ -198,12 +201,13 @@ header h1 {
     margin-left: .5em;
 }
 
+
 /* auctionItem form */
 
 .auctionItem-form {
     display: flex;
     background-color: #FAFAFA;
-    border-top: 1px solid rgba(0,0,0,.1);
+    border-top: 1px solid rgba(0, 0, 0, .1);
     padding: 10px;
 }
 
@@ -252,4 +256,37 @@ header h1 {
     top: 10px;
     right: 10px;
     z-index: 20;
+}
+
+
+/* pagination */
+
+.pagination-container {
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+}
+
+.pagination {
+    list-style-type: none;
+    display: inline;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    padding: 0;
+    margin: 10px;
+}
+
+.pagination li {
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, .1);
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+.pagination li.current {
+    color: #00d8ff;
+    font-weight: bold;
+}
+
+.pagination li.disabled {
+    color: #757575;
 }
