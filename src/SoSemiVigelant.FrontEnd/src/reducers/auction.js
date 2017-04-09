@@ -6,7 +6,8 @@ import {
 
 function reducer(state = {
     isFetching: false,
-    items: []
+    items: [],
+    page: 0
 }, action) {
     switch (action.type) {
         case REQUEST_AUCS:

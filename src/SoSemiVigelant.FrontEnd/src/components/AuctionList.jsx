@@ -9,23 +9,24 @@ class AuctionList extends React.Component{
   static propTypes = {
         items: PropTypes.array.isRequired,
         isFetching: PropTypes.bool.isRequired,
-        lastUpdated: PropTypes.number
+        lastUpdated: PropTypes.number,
+        page: PropTypes.number
     }
 
   constructor(props) {
     super(props)
 
-    this.state = {
-      perPage: 20,
-      page: 0
-    }
-
+    this.perPage = 20;
+    
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
-    const { loadAucs } = this.props;
-    loadAucs(this.state);
+    const { loadAucs, page } = this.props;
+    loadAucs({
+      page,
+      perPage: this.perPage
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,16 +42,14 @@ class AuctionList extends React.Component{
 
   handlePageChange(data) {
     const { loadAucs } = this.props;
-    const request = {
+    loadAucs({
       page: data.selected,
-      perPage: this.state.perPage
-    }
-    this.setState({...request});
-    loadAucs(request);
+      perPage: this.perPage
+    });
   }
 
   render() {
-    const { items, isFetching, lastUpdated, count } = this.props;
+    const { items, isFetching, lastUpdated, count, page } = this.props;
     const isEmpty = !!items && items.length === 0;
     return (
       <div>
@@ -58,7 +57,7 @@ class AuctionList extends React.Component{
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
               <div className="pagination-container">
-                <Pagination count={count} page={this.state.page} pageSize={this.state.perPage} clickCallback={this.handlePageChange} />
+                <Pagination count={count} page={page} pageSize={this.perPage} clickCallback={this.handlePageChange} />
               </div>
               {
                 items.map((auc, i) =>
@@ -68,7 +67,7 @@ class AuctionList extends React.Component{
                 )
               }
               <div className="pagination-container">
-                <Pagination count={count} page={this.state.page} pageSize={this.state.perPage} clickCallback={this.handlePageChange} />
+                <Pagination count={count} page={page} pageSize={this.perPage} clickCallback={this.handlePageChange} />
               </div>
           </div>
         }
