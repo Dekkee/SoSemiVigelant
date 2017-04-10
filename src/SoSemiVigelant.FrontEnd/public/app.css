@@ -263,8 +263,8 @@ header h1 {
 
 .pagination-container {
     display: flex;
-    justify-content: end;
-    flex-direction: row;
+    align-items: flex-end;
+    flex-direction: column;
 }
 
 .pagination {
