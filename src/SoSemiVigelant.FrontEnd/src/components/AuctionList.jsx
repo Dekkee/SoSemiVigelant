@@ -10,7 +10,7 @@ class AuctionList extends React.Component{
         items: PropTypes.array.isRequired,
         isFetching: PropTypes.bool.isRequired,
         lastUpdated: PropTypes.number,
-        page: PropTypes.number
+        page: PropTypes.number.isRequired
     }
 
   constructor(props) {

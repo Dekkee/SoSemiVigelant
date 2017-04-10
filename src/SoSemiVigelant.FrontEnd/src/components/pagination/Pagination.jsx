@@ -31,7 +31,7 @@ export class Pagination extends React.Component{
                     breakLabel={'...'}
                     breakClassName={'break'}
                     pageCount={pageCount}
-                    //forcePage={page}
+                    forcePage={page}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={3}                    
                     containerClassName={'pagination pagination--custom text-center'}
