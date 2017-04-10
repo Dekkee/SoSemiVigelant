@@ -10,7 +10,6 @@ class Ticker extends React.Component {
         this._interval = 1000;
 
         this.state = {
-            running: true,
             ticks: moment.duration(props.initialTime / 10000)
         };
 
@@ -18,7 +17,7 @@ class Ticker extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(this.tick, this._interval);
+        this.timer = setInterval(this.tick, this._interval);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -27,17 +26,15 @@ class Ticker extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        clearInterval(this.timer);
+        this.timer = null;
+    }
+
     tick() {
-        if (this.state.running) {
-            this.setState({
-                ticks: moment.duration(this.state.ticks - this._interval)
-            });
-        } else {
-            this.setState({
-                running: false,
-                ticks: 0
-            });
-        }
+        this.setState({
+            ticks: moment.duration(this.state.ticks - this._interval)
+        });
     }
 
     format(duration) {
