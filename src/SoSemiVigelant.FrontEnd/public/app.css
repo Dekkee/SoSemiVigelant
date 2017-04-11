@@ -280,6 +280,11 @@ header h1 {
     border: 1px solid rgba(0, 0, 0, .1);
     padding: 2px 5px;
     cursor: pointer;
+    min-height: 24px;
+    line-height: 20px;
+    min-width: 16px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .pagination li.current {
@@ -293,7 +298,11 @@ header h1 {
 }
 
 .pagination li.disabled {
-    color: #fff;
-    background: rgba(117, 117, 117, 0.1);
+    color: rgba(0, 0, 0, .1);
     cursor: default;
+}
+
+.pagination a, .material-icons {
+    vertical-align: middle;
+    text-align: center
 }
