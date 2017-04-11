@@ -294,6 +294,6 @@ header h1 {
 
 .pagination li.disabled {
     color: #fff;
-    background: #757575;
+    background: rgba(117, 117, 117, 0.1);
     cursor: default;
 }
