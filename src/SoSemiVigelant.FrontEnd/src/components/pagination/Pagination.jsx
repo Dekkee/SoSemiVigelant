@@ -26,9 +26,9 @@ export class Pagination extends React.Component{
         return <ReactPaginate
                     disableInitialCallback={true}
                     onPageChange={clickCallback}
-                    previousLabel={'<<'}
-                    nextLabel={'>>'}
-                    breakLabel={'...'}
+                    previousLabel={<i className="material-icons">navigate_before</i>}
+                    nextLabel={<i className="material-icons">navigate_next</i>}
+                    breakLabel={<i className="material-icons">more_horiz</i>}
                     breakClassName={'break'}
                     pageCount={pageCount}
                     forcePage={page}
