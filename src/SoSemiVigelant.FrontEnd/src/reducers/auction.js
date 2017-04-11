@@ -13,7 +13,8 @@ function reducer(state = {
         case REQUEST_AUCS:
             return {
                 ...state,
-                isFetching: true
+                isFetching: true,
+                page: action.page
             }
         case RECEIVE_AUCS:
             return {
