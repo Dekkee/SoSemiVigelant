@@ -278,11 +278,7 @@ header h1 {
 .pagination li {
     display: inline-block;
     border: 1px solid rgba(0, 0, 0, .1);
-    padding: 2px 5px;
     cursor: pointer;
-    min-height: 24px;
-    line-height: 20px;
-    min-width: 16px;
     vertical-align: middle;
     text-align: center;
 }
@@ -302,7 +298,11 @@ header h1 {
     cursor: default;
 }
 
-.pagination a, .material-icons {
-    vertical-align: middle;
-    text-align: center
+.pagination a {
+    text-align: center;
+    display: block;
+    min-height: 30px;
+    line-height: 30px;
+    min-width: 16px;
+    padding: 2px 5px;
 }
