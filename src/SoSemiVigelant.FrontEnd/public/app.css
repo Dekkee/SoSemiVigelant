@@ -305,5 +305,10 @@ header h1 {
     text-align: center;
     display: block;
     min-width: 16px;
+    line-height: 24px;
     padding: 2px 5px;
+}
+
+.pagination .material-icons {
+    display: block;
 }
