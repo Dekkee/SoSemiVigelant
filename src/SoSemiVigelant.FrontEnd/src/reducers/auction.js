@@ -7,14 +7,18 @@ import {
 function reducer(state = {
     isFetching: false,
     items: [],
-    page: 0
+    page: 0,
+    sortOrder: 'timeLeft',
+    sortDirection: true
 }, action) {
     switch (action.type) {
         case REQUEST_AUCS:
             return {
                 ...state,
                 isFetching: true,
-                page: action.page
+                page: action.page,
+                sortOrder: action.sortOrder,
+                sortDirection: action.sortDirection
             }
         case RECEIVE_AUCS:
             return {

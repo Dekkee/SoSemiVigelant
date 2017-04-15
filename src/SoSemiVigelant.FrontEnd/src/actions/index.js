@@ -7,9 +7,11 @@ export const REQUEST_AUC = 'REQUEST_AUC'
 export const RECEIVE_AUC = 'RECEIVE_AUC'
 export const CLOSE_AUC_MODAL = 'CLOSE_AUC_MODAL'
 
-const requestAucs = page => ({
+const requestAucs = props => ({
     type: REQUEST_AUCS,
-    page
+    page: props.page,
+    sortOrder: props.sortOrder,
+    sortDirection: props.sortDirection
 })
 
 const receiveAucs = (json) => ({
@@ -36,8 +38,8 @@ const closeAuc = () => ({
 })
 
 const fetchAucs = props => dispatch => {
-    dispatch(requestAucs(props.page))
-    return getJson(`aucs/list?${getTakeSkipQueryString(props.perPage, props.page)}`)
+    dispatch(requestAucs(props))
+    return getJson(`aucs/list?${getQuery({...getTakeSkipQuery(props.perPage, props.page), order: props.sortOrder, asc: props.sortDirection.toString()})}`)
         .then(json => {
             dispatch(receiveAucs(json))
         })

@@ -14,7 +14,9 @@ const store = createStore(
         auctions: {
             isFetching: false,
             items: [],
-            page: 0
+            page: 0,
+            sortOrder: 'timeLeft',
+            sortDirection: true
         }
     },
     applyMiddleware(...middleware)

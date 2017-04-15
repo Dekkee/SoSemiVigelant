@@ -137,37 +137,68 @@ header h1 {
     color: white;
 }
 
+.auctionList-header {
+    display: flex;
+    padding: 0px 10px;
+    line-height: 32px;
+}
+
+.auctionList-header-item {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auctionList-header-item:hover {
+    text-decoration: underline;
+}
+
 
 /* auctionItem */
 
 .auctionItem {
     display: flex;
     font-size: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, .1);
     background-color: #fff;
+    border-top: 1px solid rgba(0, 0, 0, .1);
     transition: all .2s;
     -webkit-user-select: none;
     user-select: none;
     padding: 0px 10px;
     align-items: center;
+    line-height: 32px;
+}
+
+.auctionItem:hover {
+    background-color: rgba(0, 0, 0, .1);
+    cursor: pointer;
 }
 
 .auctionItem.completed * {
     color: lightgray;
 }
 
-.auctionItem.completed .auctionItem-title {
+.auctionItem.completed .auction-column-name {
     text-decoration: line-through;
 }
 
-.auctionItem .auctionItem-title {
+.auctionList-header-item.sort-by::after {
+    font-family: 'Material Icons';
+    content: "arrow_drop_up";
+}
+
+.auctionList-header-item.sort-by-desc::after {
+    font-family: 'Material Icons';
+    content: "arrow_drop_down";
+}
+
+.auction-column-name {
     margin-right: auto;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
-.auctionItem .auctionItem-currentBet {
+.auction-column-currentBet {
     width: 10%;
     min-width: 70px;
     text-align: right;
@@ -284,6 +315,10 @@ header h1 {
     cursor: pointer;
     vertical-align: middle;
     text-align: center;
+}
+
+.pagination li:hover:not(.current):not(.disabled) {
+    background: rgba(0, 0, 0, .1);
 }
 
 .pagination li.current {

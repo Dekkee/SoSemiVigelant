@@ -24,11 +24,10 @@ class AuctionItem extends React.Component {
 
     render() {
         return (
-            <div className="auctionItem">
-                <Button className="icon" icon="visibility" onClick={this.handleView} />
-                <span className="auctionItem-title">{this.props.name}</span>
-                <Ticker initialTime={this.props.timeLeft}/>
-                <span className="auctionItem-currentBet">{this.props.currentBet}</span>
+            <div className="auctionItem" onClick={this.handleView}>
+                <span className="auction-column auction-column-name">{this.props.name}</span>
+                <Ticker className="auction-column auction-column-timeLeft" initialTime={this.props.timeLeft}/>
+                <span className="auction-column auction-column-currentBet">{this.props.currentBet}</span>
             </div>
         );
     }
