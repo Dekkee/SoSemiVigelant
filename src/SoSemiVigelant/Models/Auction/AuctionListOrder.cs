@@ -9,6 +9,7 @@ namespace SoSemiVigelant.Models.Auction
     {
         ID = 1,
         Name = 2,
-        TimeLeft
+        TimeLeft = 3,
+        CurrentBet = 4
     }
 }

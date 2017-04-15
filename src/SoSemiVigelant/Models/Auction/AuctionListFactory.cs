@@ -45,7 +45,6 @@ namespace SoSemiVigelant.Models.Auction
         /// </summary>
         /// <param name="order"></param>
         /// <param name="asc">направление</param>
-        /// <param name="clients"></param>
         /// <returns></returns>
         private IOrderedQueryable<AuctionEntity> OrderBy(IQueryable<AuctionEntity> auctions, AuctionListOrder? order = null, bool asc = true)
         {
@@ -59,6 +58,10 @@ namespace SoSemiVigelant.Models.Auction
             {
                 case AuctionListOrder.Name:
                     return asc ? auctions.OrderBy(_ => _.Name) : auctions.OrderByDescending(_ => _.Name);
+                case AuctionListOrder.TimeLeft:
+                    return asc ? auctions.OrderBy(_ => _.TimeLeft) : auctions.OrderByDescending(_ => _.TimeLeft);
+                case AuctionListOrder.CurrentBet:
+                    return asc ? auctions.OrderBy(_ => _.CurrentBet) : auctions.OrderByDescending(_ => _.CurrentBet);
                 default:
                     return asc ? auctions.OrderBy(_ => _.TimeLeft) : auctions.OrderByDescending(_ => _.TimeLeft);
             }
