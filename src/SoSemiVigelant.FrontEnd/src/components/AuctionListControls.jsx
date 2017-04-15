@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import _ from 'lodash';
 
 import { Pagination } from './pagination'
 
@@ -7,8 +8,10 @@ class AuctionListControls extends React.Component{
         count: PropTypes.number.isRequired,
         page: PropTypes.number.isRequired,
         perPage: PropTypes.number.isRequired,
+        showSearchInput: PropTypes.bool,
         onPageSizeChanged: PropTypes.func,
-        onPageChanged: PropTypes.func
+        onPageChanged: PropTypes.func,
+        onSearchTextChange: PropTypes.func,
     }
 
     constructor(props) {
@@ -25,6 +28,17 @@ class AuctionListControls extends React.Component{
 
         this.handlePageChange = this.handlePageChange.bind(this);
         this.handlePageSizeChanged = this.handlePageSizeChanged.bind(this);
+        this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+    }
+
+    handleSearchTextChange(event) {
+        const f = () => 
+        {
+            console.log('wwoo');
+            console.log(this.props.onSearchTextChange);
+            this.props.onSearchTextChange(event.target.value);
+        };
+        _.debounce(f, 100);
     }
 
     handlePageChange(data) {
@@ -32,18 +46,24 @@ class AuctionListControls extends React.Component{
     }
 
     handlePageSizeChanged(event) {
-        console.log(event.target);
-        console.log(event.target.value);
         this.props.onPageSizeChanged(event.target.value);
     }
 
     render() {
-        const { count, page, perPage } = this.props;
+        const { count, page, perPage, showSearchInput } = this.props;
         const options = this.options;
 
         return (
             <div className="pagination-container">
                 <div className="pagination-count">Всего: {count}</div>
+                {
+                    showSearchInput ?
+                        <div className="pagination-search-input">
+                            <i className="material-icons">search</i>
+                            <input type="text" placeholder="Поиск..." onChange={this.handleSearchTextChange}/> 
+                        </div> : 
+                        ''
+                }
                 <Pagination count={count} page={page} pageSize={perPage} clickCallback={this.handlePageChange} />
                 <select className="pagination-page-size-select" onChange={this.handlePageSizeChanged} value={perPage}>
                 {

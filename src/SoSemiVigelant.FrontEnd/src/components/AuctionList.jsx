@@ -14,7 +14,8 @@ class AuctionList extends React.Component{
         page: PropTypes.number.isRequired,
         perPage: PropTypes.number.isRequired,
         sortOrder: PropTypes.string.isRequired,
-        sortDirection: PropTypes.bool.isRequired
+        sortDirection: PropTypes.bool.isRequired,
+        searchText: PropTypes.string
     }
 
   constructor(props) {
@@ -40,15 +41,17 @@ class AuctionList extends React.Component{
     this.handleSort = this.handleSort.bind(this);
     this.handlePageSizeChange = this.handlePageSizeChange.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
   }
 
   componentDidMount() {
-    const { loadAucs, page, perPage, sortOrder, sortDirection } = this.props;
+    const { loadAucs, page, perPage, sortOrder, sortDirection, searchText } = this.props;
     loadAucs({
       page,
       perPage,
       sortOrder,
-      sortDirection
+      sortDirection,
+      searchText
     });
   }
 
@@ -64,27 +67,40 @@ class AuctionList extends React.Component{
   }
 
   handlePageChange(page) {
-    const { loadAucs, sortOrder, sortDirection, perPage } = this.props;
+    const { loadAucs, sortOrder, sortDirection, perPage, searchText } = this.props;
     loadAucs({
       page,
       perPage,
       sortOrder,
-      sortDirection
+      sortDirection,
+      searchText
     });
   }
 
   handlePageSizeChange(perPage) {
-    const { loadAucs, sortOrder, sortDirection, page } = this.props;
+    const { loadAucs, sortOrder, sortDirection, page, searchText } = this.props;
     loadAucs({
       page,
       perPage,
       sortOrder,
-      sortDirection
+      sortDirection,
+      searchText
+    });
+  }
+
+  handleSearchTextChange(searchText) {
+    const { loadAucs, sortOrder, sortDirection, page, perPage } = this.props;
+    loadAucs({
+      page,
+      perPage,
+      sortOrder,
+      sortDirection,
+      searchText
     });
   }
 
   handleSort(obj) {
-    const { loadAucs, sortOrder, page, sortDirection, perPage } = this.props;
+    const { loadAucs, sortOrder, page, sortDirection, perPage, searchText } = this.props;
     let direction = true;
 
     if (sortOrder === obj) {
@@ -95,7 +111,8 @@ class AuctionList extends React.Component{
       page,
       perPage,
       sortOrder: obj,
-      sortDirection: direction
+      sortDirection: direction,
+      searchText
     });
   }
 
@@ -114,7 +131,9 @@ class AuctionList extends React.Component{
               page={page} 
               pageSize={perPage} 
               onPageSizeChanged={this.handlePageSizeChange} 
-              onPageChanged={this.handlePageChange}/>
+              onPageChanged={this.handlePageChange}
+              onSearchTextChange={this.handleSearchTextChange}
+              showSearchInput={true}/>
             <div className="auctionList-header">
             {
                 columns.map((column, i) => {

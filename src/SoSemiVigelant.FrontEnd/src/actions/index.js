@@ -41,21 +41,13 @@ const fetchAucs = props => dispatch => {
     const paging = props.perPage ?
         getTakeSkipQuery(props.perPage, props.page) : { full: "true" };
 
-    console.log(paging);
-
     const params = {
         ...paging,
         order: props.sortOrder,
         asc: props.sortDirection.toString()
     };
 
-    console.log(params);
-
-    var query = getQuery(params);
-
-    console.log(query);
-
-    return getJson(`aucs/list?${query}`)
+    return getJson(`aucs/list?${getQuery(params)}`)
         .then(json => {
             dispatch(receiveAucs(json))
         })
