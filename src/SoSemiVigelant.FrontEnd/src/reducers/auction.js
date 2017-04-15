@@ -4,19 +4,14 @@ import {
     INVALIDATE_AUCS
 } from '../actions'
 
-function reducer(state = {
-    isFetching: false,
-    items: [],
-    page: 0,
-    sortOrder: 'timeLeft',
-    sortDirection: true
-}, action) {
+function reducer(state = {}, action) {
     switch (action.type) {
         case REQUEST_AUCS:
             return {
                 ...state,
                 isFetching: true,
                 page: action.page,
+                perPage: action.perPage,
                 sortOrder: action.sortOrder,
                 sortDirection: action.sortDirection
             }

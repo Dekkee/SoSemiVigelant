@@ -3,8 +3,8 @@ import classNames from 'classnames'
 
 import { fetchAucsIfNeeded } from '../actions'
 import AuctionItemContainer from '../containers/AuctionItemContainer'
+import AuctionListControlsContainer from '../containers/AuctionListControlsContainer'
 import { Modal } from './modal'
-import { Pagination } from './pagination'
 
 class AuctionList extends React.Component{
   static propTypes = {
@@ -12,6 +12,7 @@ class AuctionList extends React.Component{
         isFetching: PropTypes.bool.isRequired,
         lastUpdated: PropTypes.number,
         page: PropTypes.number.isRequired,
+        perPage: PropTypes.number.isRequired,
         sortOrder: PropTypes.string.isRequired,
         sortDirection: PropTypes.bool.isRequired
     }
@@ -36,15 +37,16 @@ class AuctionList extends React.Component{
       }
     ];
 
-    this.handlePageChange = this.handlePageChange.bind(this);
     this.handleSort = this.handleSort.bind(this);
+    this.handlePageSizeChange = this.handlePageSizeChange.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
-    const { loadAucs, page, sortOrder, sortDirection } = this.props;
+    const { loadAucs, page, perPage, sortOrder, sortDirection } = this.props;
     loadAucs({
       page,
-      perPage: this.perPage,
+      perPage,
       sortOrder,
       sortDirection
     });
@@ -61,59 +63,74 @@ class AuctionList extends React.Component{
     }
   }
 
-  handlePageChange(data) {
-    const { loadAucs, sortOrder, sortDirection } = this.props;
+  handlePageChange(page) {
+    const { loadAucs, sortOrder, sortDirection, perPage } = this.props;
     loadAucs({
-      page: data.selected,
-      perPage: this.perPage,
+      page,
+      perPage,
+      sortOrder,
+      sortDirection
+    });
+  }
+
+  handlePageSizeChange(perPage) {
+    const { loadAucs, sortOrder, sortDirection, page } = this.props;
+    loadAucs({
+      page,
+      perPage,
       sortOrder,
       sortDirection
     });
   }
 
   handleSort(obj) {
-    console.log(obj);
-    const { loadAucs, sortOrder, page, sortDirection } = this.props;
+    const { loadAucs, sortOrder, page, sortDirection, perPage } = this.props;
     let direction = true;
+
     if (sortOrder === obj) {
        direction = !sortDirection;
     }
+    
     loadAucs({
       page,
-      perPage: this.perPage,
+      perPage,
       sortOrder: obj,
       sortDirection: direction
     });
   }
 
   render() {
-    const { items, isFetching, lastUpdated, count, page, sortOrder, sortDirection } = this.props;
+    const { items, isFetching, lastUpdated, count, page, perPage, sortOrder, sortDirection } = this.props;
     const isEmpty = !!items && items.length === 0;
     const columns = this.columns;
     return (
       <div>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-          : <div className="auctionList" style={{ opacity: isFetching ? 0.5 : 1 }}>
-              <div className="pagination-container">
-                <Pagination count={count} page={page} pageSize={this.perPage} clickCallback={this.handlePageChange} />
-              </div>
-              <div className="auctionList-header">
-                {
-                  columns.map((column, i) => {
-                    const cn = classNames(
-                      'auctionList-header-item',
-                      `auctionList-header-item-${column.name}`,
-                      `auction-column-${column.name}`,
-                      {
-                        'sort-by': sortOrder === column.name && sortDirection,
-                        'sort-by-desc': sortOrder === column.name && !sortDirection
-                      }
-                    );
-                    return <span className={cn} onClick={() => this.handleSort(column.name)} key={i}>{column.label}</span>;
-                  })
-                }
-              </div>
+          ? (isFetching ? <h2 className="loading">Loading...</h2> : <h2>Empty.</h2>)
+          : 
+          <div className="auctionList" style={{ opacity: isFetching ? 0.5 : 1 }}>
+            <AuctionListControlsContainer 
+              count={count} 
+              page={page} 
+              pageSize={perPage} 
+              onPageSizeChanged={this.handlePageSizeChange} 
+              onPageChanged={this.handlePageChange}/>
+            <div className="auctionList-header">
+            {
+                columns.map((column, i) => {
+                  const cn = classNames(
+                    'auctionList-header-item',
+                    `auctionList-header-item-${column.name}`,
+                    `auction-column-${column.name}`,
+                    {
+                    'sort-by': sortOrder === column.name && sortDirection,
+                    'sort-by-desc': sortOrder === column.name && !sortDirection
+                    }
+                  );
+                  return <span className={cn} onClick={() => this.handleSort(column.name)} key={i}>{column.label}</span>;
+                })
+            }
+            </div>
               {
                 items.map((auc, i) =>
                     <AuctionItemContainer 
@@ -121,9 +138,12 @@ class AuctionList extends React.Component{
                       key={i}/>
                 )
               }
-              <div className="pagination-container">
-                <Pagination count={count} page={page} pageSize={this.perPage} clickCallback={this.handlePageChange} />
-              </div>
+              <AuctionListControlsContainer 
+                count={count} 
+                page={page} 
+                pageSize={perPage} 
+                onPageSizeChanged={this.handlePageSizeChange} 
+                onPageChanged={this.handlePageChange}/>
           </div>
         }
       </div>

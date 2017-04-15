@@ -32,11 +32,11 @@ class AuctionItemModal extends React.Component{
             <div>
                 <Modal
                     isOpen={modalIsOpen}
-                    onRequestClose={this.closeModal}>
+                    onRequestClose={this.closeModal}
+                    title={auction.name}>
                     {modalIsOpen && isFetching 
-                        ? <h2>Loading...</h2> 
+                        ? <h2 className="loading">Loading...</h2> 
                         : <div>
-                            <span>{auction.name}</span>
                             <div dangerouslySetInnerHTML={{__html: auction.description}}/>
                         </div>
                     }

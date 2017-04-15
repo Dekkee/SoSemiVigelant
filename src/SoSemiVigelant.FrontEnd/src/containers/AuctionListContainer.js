@@ -3,33 +3,7 @@ import { connect } from 'react-redux'
 import AuctionList from '../components/AuctionList'
 import { fetchAucInfo, fetchAucsIfNeeded } from '../actions'
 
-const mapStateToProps = state => {
-    const {
-        isFetching,
-        lastUpdated,
-        items,
-        count,
-        page,
-        sortOrder,
-        sortDirection
-    } = state.auctions || {
-        isFetching: true,
-        items: [],
-        page: 0,
-        sortOrder: 'timeLeft',
-        sortDirection: true
-    }
-
-    return {
-        items,
-        isFetching,
-        lastUpdated,
-        count,
-        page,
-        sortOrder,
-        sortDirection
-    }
-}
+const mapStateToProps = state => state.auctions;
 
 function mapDispatchToProps(dispatch) {
     return {

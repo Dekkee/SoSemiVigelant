@@ -15,6 +15,7 @@ const store = createStore(
             isFetching: false,
             items: [],
             page: 0,
+            perPage: 20,
             sortOrder: 'timeLeft',
             sortDirection: true
         }

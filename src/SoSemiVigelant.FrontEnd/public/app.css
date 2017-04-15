@@ -97,6 +97,19 @@ header h1 {
 }
 
 
+/* Loading */
+
+.loading {
+    display: block;
+    margin: auto;
+}
+
+.loading::before {
+    font-family: 'Material Icons';
+    content: "sync";
+}
+
+
 /* Stats */
 
 .stats {
@@ -136,6 +149,9 @@ header h1 {
     margin: 5px;
     color: white;
 }
+
+
+/* AuctionList Header */
 
 .auctionList-header {
     display: flex;
@@ -230,6 +246,8 @@ header h1 {
 
 .auctionItem-edit-form .save {
     margin-left: .5em;
+    padding: 0px 10px;
+    align-items: center;
 }
 
 
@@ -255,6 +273,9 @@ header h1 {
 .auctionItem-form button {
     margin-left: 10px;
 }
+
+
+/* ReactModal */
 
 .ReactModal__Overlay {
     perspective: 600;
@@ -289,24 +310,66 @@ header h1 {
     z-index: 20;
 }
 
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.modal-header-title {
+    padding: 0px 10px;
+    margin-right: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.modal-body {
+    padding: 0px 10px;
+}
+
 
 /* pagination */
 
 .pagination-container {
     display: flex;
+    justify-content: flex-end;
     align-items: flex-end;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .pagination {
     list-style-type: none;
     display: flex;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-    padding: 0;
-    margin: 10px;
     flex-direction: row;
     align-items: stretch;
     align-content: flex-end;
+}
+
+.pagination-page-size-select {
+    height: 30px;
+    padding: 2px 5px;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.pagination,
+.pagination-page-size-select,
+.pagination-count {
+    padding: 0;
+    margin: 10px;
+    line-height: 24px;
+    font-family: inherit;
+    color: inherit;
+    font-size: inherit;
+}
+
+.pagination,
+.pagination-page-size-select {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.pagination-count {
+    margin-right: auto;
 }
 
 .pagination li {

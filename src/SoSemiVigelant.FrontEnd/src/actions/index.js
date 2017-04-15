@@ -9,9 +9,7 @@ export const CLOSE_AUC_MODAL = 'CLOSE_AUC_MODAL'
 
 const requestAucs = props => ({
     type: REQUEST_AUCS,
-    page: props.page,
-    sortOrder: props.sortOrder,
-    sortDirection: props.sortDirection
+    ...props
 })
 
 const receiveAucs = (json) => ({
@@ -38,8 +36,26 @@ const closeAuc = () => ({
 })
 
 const fetchAucs = props => dispatch => {
-    dispatch(requestAucs(props))
-    return getJson(`aucs/list?${getQuery({...getTakeSkipQuery(props.perPage, props.page), order: props.sortOrder, asc: props.sortDirection.toString()})}`)
+    dispatch(requestAucs(props));
+
+    const paging = props.perPage ?
+        getTakeSkipQuery(props.perPage, props.page) : { full: "true" };
+
+    console.log(paging);
+
+    const params = {
+        ...paging,
+        order: props.sortOrder,
+        asc: props.sortDirection.toString()
+    };
+
+    console.log(params);
+
+    var query = getQuery(params);
+
+    console.log(query);
+
+    return getJson(`aucs/list?${query}`)
         .then(json => {
             dispatch(receiveAucs(json))
         })
