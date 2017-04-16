@@ -134,22 +134,23 @@ class AuctionList extends React.Component{
               onPageChanged={this.handlePageChange}
               onSearchTextChange={this.handleSearchTextChange}
               showSearchInput={true}/>
-            <div className="auctionList-header">
-            {
-                columns.map((column, i) => {
-                  const cn = classNames(
-                    'auctionList-header-item',
-                    `auctionList-header-item-${column.name}`,
-                    `auction-column-${column.name}`,
-                    {
-                    'sort-by': sortOrder === column.name && sortDirection,
-                    'sort-by-desc': sortOrder === column.name && !sortDirection
-                    }
-                  );
-                  return <span className={cn} onClick={() => this.handleSort(column.name)} key={i}>{column.label}</span>;
-                })
-            }
-            </div>
+            
+              <div className="auctionList-header">
+              {
+                  columns.map((column, i) => {
+                    const cn = classNames(
+                      'auctionList-header-item',
+                      `auctionList-header-item-${column.name}`,
+                      `auction-column-${column.name}`,
+                      {
+                      'sort-by': sortOrder === column.name && sortDirection,
+                      'sort-by-desc': sortOrder === column.name && !sortDirection
+                      }
+                    );
+                    return <span className={cn} onClick={() => this.handleSort(column.name)} key={i}>{column.label}</span>;
+                  })
+              }
+              </div>
               {
                 items.map((auc, i) =>
                     <AuctionItemContainer 
