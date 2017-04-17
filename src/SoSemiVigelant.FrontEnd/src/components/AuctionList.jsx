@@ -122,9 +122,8 @@ class AuctionList extends React.Component{
     const columns = this.columns;
     return (
       <div>
-        {isEmpty
-          ? (isFetching ? <h2 className="loading">Loading...</h2> : <h2>Empty.</h2>)
-          : 
+        {isFetching 
+          ? <h2 className="loading">Loading...</h2> : 
           <div className="auctionList" style={{ opacity: isFetching ? 0.5 : 1 }}>
             <AuctionListControlsContainer 
               count={count} 
@@ -152,6 +151,8 @@ class AuctionList extends React.Component{
               }
               </div>
               {
+                isEmpty ? <h2>Empty.</h2> 
+                : 
                 items.map((auc, i) =>
                     <AuctionItemContainer 
                       {...auc}
