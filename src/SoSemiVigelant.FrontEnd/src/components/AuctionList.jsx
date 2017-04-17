@@ -122,35 +122,35 @@ class AuctionList extends React.Component{
     const columns = this.columns;
     return (
       <div>
-        {isFetching 
-          ? <h2 className="loading">Loading...</h2> : 
-          <div className="auctionList" style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <AuctionListControlsContainer 
-              count={count} 
-              page={page} 
-              pageSize={perPage} 
-              onPageSizeChanged={this.handlePageSizeChange} 
-              onPageChanged={this.handlePageChange}
-              onSearchTextChange={this.handleSearchTextChange}
-              showSearchInput={true}/>
-            
-              <div className="auctionList-header">
-              {
-                  columns.map((column, i) => {
-                    const cn = classNames(
-                      'auctionList-header-item',
-                      `auctionList-header-item-${column.name}`,
-                      `auction-column-${column.name}`,
-                      {
-                      'sort-by': sortOrder === column.name && sortDirection,
-                      'sort-by-desc': sortOrder === column.name && !sortDirection
-                      }
-                    );
-                    return <span className={cn} onClick={() => this.handleSort(column.name)} key={i}>{column.label}</span>;
-                  })
-              }
-              </div>
-              {
+        <div className="auctionList" style={{ opacity: isFetching ? 0.5 : 1 }}>
+          <AuctionListControlsContainer 
+            count={count} 
+            page={page} 
+            pageSize={perPage} 
+            onPageSizeChanged={this.handlePageSizeChange} 
+            onPageChanged={this.handlePageChange}
+            onSearchTextChange={this.handleSearchTextChange}
+            showSearchInput={true}/>
+          
+            <div className="auctionList-header">
+            {
+                columns.map((column, i) => {
+                  const cn = classNames(
+                    'auctionList-header-item',
+                    `auctionList-header-item-${column.name}`,
+                    `auction-column-${column.name}`,
+                    {
+                    'sort-by': sortOrder === column.name && sortDirection,
+                    'sort-by-desc': sortOrder === column.name && !sortDirection
+                    }
+                  );
+                  return <span className={cn} onClick={() => this.handleSort(column.name)} key={i}>{column.label}</span>;
+                })
+            }
+            </div>
+            {
+              isFetching 
+                ? <h2 className="loading">Loading...</h2> : 
                 isEmpty ? <h2>Empty.</h2> 
                 : 
                 items.map((auc, i) =>
@@ -158,15 +158,14 @@ class AuctionList extends React.Component{
                       {...auc}
                       key={i}/>
                 )
-              }
-              <AuctionListControlsContainer 
-                count={count} 
-                page={page} 
-                pageSize={perPage} 
-                onPageSizeChanged={this.handlePageSizeChange} 
-                onPageChanged={this.handlePageChange}/>
-          </div>
-        }
+            }
+            <AuctionListControlsContainer 
+              count={count} 
+              page={page} 
+              pageSize={perPage} 
+              onPageSizeChanged={this.handlePageSizeChange} 
+              onPageChanged={this.handlePageChange}/>
+        </div>
       </div>
     );
   }
