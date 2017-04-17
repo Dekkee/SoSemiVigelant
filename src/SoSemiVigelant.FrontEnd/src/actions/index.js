@@ -44,7 +44,8 @@ const fetchAucs = props => dispatch => {
     const params = {
         ...paging,
         order: props.sortOrder,
-        asc: props.sortDirection.toString()
+        asc: props.sortDirection.toString(),
+        name: props.searchText
     };
 
     return getJson(`aucs/list?${getQuery(params)}`)

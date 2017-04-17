@@ -26,19 +26,18 @@ class AuctionListControls extends React.Component{
             //{ value: null, label: 'Все' },
          ];
 
+        this.onSearchTextChange = _.debounce((val) => 
+        {
+            this.props.onSearchTextChange(val);
+        }, 200);
+
         this.handlePageChange = this.handlePageChange.bind(this);
         this.handlePageSizeChanged = this.handlePageSizeChanged.bind(this);
         this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
     }
 
     handleSearchTextChange(event) {
-        const f = () => 
-        {
-            console.log('wwoo');
-            console.log(this.props.onSearchTextChange);
-            this.props.onSearchTextChange(event.target.value);
-        };
-        _.debounce(f, 100);
+        this.onSearchTextChange(event.target.value);
     }
 
     handlePageChange(data) {
