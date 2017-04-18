@@ -35,7 +35,7 @@ namespace SoSemiVigelant.Models.Auction
 
             auctions = string.IsNullOrEmpty(request.Name)
                 ? auctions
-                : auctions.Where(_ => _.Name.Contains(request.Name));
+                : auctions.Where(_ => _.Name.IndexOf(request.Name, StringComparison.CurrentCultureIgnoreCase) >= 0);
 
             return auctions;
         }

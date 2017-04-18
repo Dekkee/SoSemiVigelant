@@ -122,7 +122,7 @@ class AuctionList extends React.Component{
     const columns = this.columns;
     return (
       <div>
-        <div className="auctionList" style={{ opacity: isFetching ? 0.5 : 1 }}>
+        <div className="auctionList">
           <AuctionListControlsContainer 
             count={count} 
             page={page} 
@@ -148,6 +148,7 @@ class AuctionList extends React.Component{
                 })
             }
             </div>
+            <div className="auctionList-body" style={{ opacity: isFetching ? 0.5 : 1 }}>
             {
               isFetching 
                 ? <h2 className="loading">Loading...</h2> : 
@@ -159,6 +160,7 @@ class AuctionList extends React.Component{
                       key={i}/>
                 )
             }
+            </div>
             <AuctionListControlsContainer 
               count={count} 
               page={page} 
