@@ -148,19 +148,19 @@ class AuctionList extends React.Component{
                 })
             }
             </div>
-            <div className="auctionList-body" style={{ opacity: isFetching ? 0.5 : 1 }}>
             {
-              isFetching 
+              isFetching && isEmpty
                 ? <h2 className="loading">Loading...</h2> : 
                 isEmpty ? <h2>Empty.</h2> 
                 : 
-                items.map((auc, i) =>
+                <div className="auctionList-body" style={{ opacity: isFetching ? 0.5 : 1 }}>
+                  {items.map((auc, i) =>
                     <AuctionItemContainer 
                       {...auc}
                       key={i}/>
-                )
+                  )}
+                </div>
             }
-            </div>
             <AuctionListControlsContainer 
               count={count} 
               page={page} 
