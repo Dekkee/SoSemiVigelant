@@ -115,7 +115,8 @@ section.aucs {
 /* AuctionList */
 
 .auctionList {
-    padding: 0 100px;
+    max-width: 1500px;
+    margin: auto;
 }
 
 
