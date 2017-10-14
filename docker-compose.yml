@@ -5,7 +5,7 @@ services:
     image: dekker/sosemivigelant.api
     container_name: sosemivigelant.api
     build:
-      context: ./src/SoSemiVigelant
+      context: .
       dockerfile: Dockerfile
     depends_on:
       - sql.data
