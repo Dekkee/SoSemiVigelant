@@ -1,4 +1,4 @@
-﻿FROM microsoft/aspnetcore-build:1.1.1
+﻿FROM microsoft/aspnetcore-build:2
 
 ARG source=./bin/Debug/netcoreapp1.1/publish
 WORKDIR /app

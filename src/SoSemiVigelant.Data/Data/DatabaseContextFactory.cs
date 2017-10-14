@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace SoSemiVigelant.Data.Data
 {
-    public class DatabaseContextFactory : IDbContextFactory<DatabaseContext>
+    public class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
         public static string ConnectionString { get; set; }
 
@@ -20,6 +21,14 @@ namespace SoSemiVigelant.Data.Data
         }
 
         public DatabaseContext Create()
+        {
+            var builder = new DbContextOptionsBuilder<DatabaseContext>();
+            builder.UseNpgsql(
+                ConnectionString);
+            return new DatabaseContext(builder.Options);
+        }
+
+        public DatabaseContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
             builder.UseNpgsql(

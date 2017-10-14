@@ -3,7 +3,7 @@ version: '2'
 services:
   sosemivigelant:
     ports:
-      - "80:8080"
+      - "8080:8080"
 
   sosemivigelant.api:
     environment:
