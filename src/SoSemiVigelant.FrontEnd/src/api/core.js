@@ -2,8 +2,7 @@ import { map } from '../common/fp';
 import { flow, compact, join } from 'lodash/fp';
 import fetch from 'isomorphic-fetch';
 
-//var endPoint = "http://localhost:65107";
-var endPoint = "http://dekkee.com:65107";
+const endPoint = "/api";
 
 const respToJson = response => response.json();
 
