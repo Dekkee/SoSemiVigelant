@@ -14,7 +14,7 @@ using FromServicesAttribute = SoSemiVigelant.Core.Extensions.PropertyFromService
 
 namespace SoSemiVigelant.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class AuctionsController : Controller
     {
         public AuctionsController()
@@ -32,7 +32,6 @@ namespace SoSemiVigelant.Controllers
 
         // GET api/values
         [HttpGet]
-        [Route("Aucs/List")]
         public async Task<GenericListResponse<AuctionModel>> List([FromQuery]AuctionListRequest request, CancellationToken token)
         {
             return await ListFactory.Create(DbContext, request, token);
@@ -40,7 +39,6 @@ namespace SoSemiVigelant.Controllers
         
         // GET api/values/5
         [HttpGet("{id}")]
-        [Route("Aucs/Get")]
         public async Task<BaseResponse<AuctionModel>> Get([FromQuery]int id, CancellationToken token)
         {
             var auc = AuctionModel.Map(await PagesLoader.LoadAuction(id, token));

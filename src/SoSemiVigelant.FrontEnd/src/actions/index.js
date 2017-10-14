@@ -48,7 +48,7 @@ const fetchAucs = props => dispatch => {
         name: props.searchText
     };
 
-    return getJson(`aucs/list?${getQuery(params)}`)
+    return getJson(`auctions/list?${getQuery(params)}`)
         .then(json => {
             dispatch(receiveAucs(json))
         })
@@ -67,7 +67,7 @@ export const fetchAucsIfNeeded = props => (dispatch, getState) => {
 
 export const fetchAucInfo = id => (dispatch, getState) => {
     dispatch(requestAuc(id))
-    return getJson(`aucs/get?id=${id}`)
+    return getJson(`auctions/get?id=${id}`)
         .then(json => {
             dispatch(receiveAuc(id, json))
         })
