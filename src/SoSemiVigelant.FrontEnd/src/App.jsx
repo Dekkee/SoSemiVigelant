@@ -4,7 +4,6 @@ import AuctionListContainer from './containers/AuctionListContainer'
 import AuctionItemModalContainer from './containers/AuctionItemModalContainer'
 
 function App() {
-    
     return (
         <main>
             <header>
