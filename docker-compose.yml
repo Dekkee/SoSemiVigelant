@@ -21,7 +21,7 @@ services:
       
   sql.data:
     container_name: sql.data
-    image: postgres:10-alpine
+    image: postgres:9.6-alpine
     volumes:
       - sql.data:/var/lib/postgresql/data
     environment:
