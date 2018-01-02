@@ -14,7 +14,6 @@ using FromServicesAttribute = SoSemiVigelant.Core.Extensions.PropertyFromService
 
 namespace SoSemiVigelant.Controllers
 {
-    [Route("api/[controller]")]
     public class AuctionsController : Controller
     {
         public AuctionsController()
