@@ -153,150 +153,163 @@ namespace SoSemiVigelant.Provider
 
         private void LoadAuction(AuctionEntry entry)
         {
-            string answer = _adapter.SendGet(Helper.EscapeHtml(entry.Url));
-
-            var doc = new HtmlDocument();
-            doc.LoadHtml(answer);
-            var content = doc.DocumentNode.SelectSingleNode("//*[contains(@class,'post entry-content')]");
-            
-            extractNodes(content, "//comment()");
-
-            List<HtmlNode> nodesToRemove = new List<HtmlNode>();
-
-            foreach (var element in content.ChildNodes)
+            try
             {
-                switch (element.Name)
+                string answer = _adapter.SendGet(Helper.EscapeHtml(entry.Url));
+
+                var doc = new HtmlDocument();
+                doc.LoadHtml(answer);
+                var content = doc.DocumentNode.SelectSingleNode("//*[contains(@class,'post entry-content')]");
+
+                extractNodes(content, "//comment()");
+
+                List<HtmlNode> nodesToRemove = new List<HtmlNode>();
+
+                foreach (var element in content.ChildNodes)
                 {
-                    //case "strong":
-                    //    if (paragraph.Inlines.Count > 0)
-                    //    {
-                    //        while (paragraph.Inlines.LastInline is LineBreak)
-                    //            paragraph.Inlines.Remove(paragraph.Inlines.LastInline);
-                    //        document.Blocks.Add(paragraph);
-                    //    }
+                    switch (element.Name)
+                    {
+                        //case "strong":
+                        //    if (paragraph.Inlines.Count > 0)
+                        //    {
+                        //        while (paragraph.Inlines.LastInline is LineBreak)
+                        //            paragraph.Inlines.Remove(paragraph.Inlines.LastInline);
+                        //        document.Blocks.Add(paragraph);
+                        //    }
 
-                    //    paragraph = new Paragraph
-                    //    {
-                    //        LineHeight = 10
-                    //    };
-                    //    paragraph.Inlines.Add(new Bold(new Run(element.InnerText)));
-                    //    break;
-                    //case "#text":
-                    //    paragraph.Inlines.Add(new Run(element.InnerText));
-                    //    break;
-                    //case "br":
-                    //    paragraph.Inlines.Add(new LineBreak());
-                    //    break;
-                    //case "img":
-                    //    paragraph.Inlines.Add(new Image
-                    //    {
-                    //        Source = new BitmapImage(new Uri(element.Attributes["src"].Value))
-                    //    });
-                    //    break;
-                    //case "a":
-                    //    var link = new Hyperlink
-                    //    {
-                    //        IsEnabled = true,
-                    //        NavigateUri = new Uri(new Uri(Settings.Url), element.Attributes["href"].Value)
-                    //    };
-                    //    if (element.Attributes["class"].Value == "tooltipCard")
-                    //    {
-                    //        var showcard = "showcard.php?";
-                    //        var address = link.NavigateUri.AbsoluteUri;
-                    //        var cardName = address.Substring(address.IndexOf(showcard) + showcard.Length);
-                            
-                    //        BitmapImage bitmap = GetImage(link.NavigateUri);
-                    //        Image image = new Image
-                    //        {
-                    //            Source = bitmap
-                    //        };
-                    //        link.ToolTip = image;
-                    //        link.NavigateUri = new Uri($"http://magiccards.info/query?q={cardName}&v=card&s=cname");
-                    //    }
-                    //    link.Inlines.Add(element.InnerText);
-                    //    link.RequestNavigate += (sender, args) => Process.Start(args.Uri.ToString());
-                    //    paragraph.Inlines.Add(link);
-                    //    break;
-                    case "iframe":
-                        nodesToRemove.Add(element);
-                        var url = element.Attributes["src"].Value;
-                        var pattern = "/auc/auc.php?id=";
-                        int id;
-                        if (int.TryParse(url.Substring(url.IndexOf(pattern) + pattern.Length), out id))
-                            entry.Id = id;
-                        break;
-                    default:
-                        break;
+                        //    paragraph = new Paragraph
+                        //    {
+                        //        LineHeight = 10
+                        //    };
+                        //    paragraph.Inlines.Add(new Bold(new Run(element.InnerText)));
+                        //    break;
+                        //case "#text":
+                        //    paragraph.Inlines.Add(new Run(element.InnerText));
+                        //    break;
+                        //case "br":
+                        //    paragraph.Inlines.Add(new LineBreak());
+                        //    break;
+                        //case "img":
+                        //    paragraph.Inlines.Add(new Image
+                        //    {
+                        //        Source = new BitmapImage(new Uri(element.Attributes["src"].Value))
+                        //    });
+                        //    break;
+                        //case "a":
+                        //    var link = new Hyperlink
+                        //    {
+                        //        IsEnabled = true,
+                        //        NavigateUri = new Uri(new Uri(Settings.Url), element.Attributes["href"].Value)
+                        //    };
+                        //    if (element.Attributes["class"].Value == "tooltipCard")
+                        //    {
+                        //        var showcard = "showcard.php?";
+                        //        var address = link.NavigateUri.AbsoluteUri;
+                        //        var cardName = address.Substring(address.IndexOf(showcard) + showcard.Length);
+
+                        //        BitmapImage bitmap = GetImage(link.NavigateUri);
+                        //        Image image = new Image
+                        //        {
+                        //            Source = bitmap
+                        //        };
+                        //        link.ToolTip = image;
+                        //        link.NavigateUri = new Uri($"http://magiccards.info/query?q={cardName}&v=card&s=cname");
+                        //    }
+                        //    link.Inlines.Add(element.InnerText);
+                        //    link.RequestNavigate += (sender, args) => Process.Start(args.Uri.ToString());
+                        //    paragraph.Inlines.Add(link);
+                        //    break;
+                        case "iframe":
+                            nodesToRemove.Add(element);
+                            var url = element.Attributes["src"].Value;
+                            var pattern = "/auc/auc.php?id=";
+                            int id;
+                            if (int.TryParse(url.Substring(url.IndexOf(pattern) + pattern.Length), out id))
+                                entry.Id = id;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
 
-            foreach (var node in nodesToRemove)
+                foreach (var node in nodesToRemove)
+                {
+                    content.ChildNodes.Remove(node);
+                }
+
+                entry.RawHtml = content.InnerHtml;
+
+                LoadAuctionData(entry);
+            }
+            catch(Exception e)
             {
-                content.ChildNodes.Remove(node);
+                Console.Error.Write($"Failed to load auction {e.Message}: {e.StackTrace}");
             }
-
-            entry.RawHtml = content.InnerHtml;
-
-            LoadAuctionData(entry);
-            
         }
 
         public void LoadAuctionData(AuctionEntry entry)
         {
-            string answer = _adapter.SendGet($"/auc/auc.php?id={entry.Id}");
-
-            var frame = new HtmlDocument();
-            frame.LoadHtml(answer);
-            
-            var form = frame.DocumentNode.SelectNodes("//form");
-            //entry.IsFinished = form == null;
-
-            var body = frame.DocumentNode.SelectNodes("//body").FirstOrDefault();
-            if (body == null) return;
-
-            var currentName = string.Empty;
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var node in body.ChildNodes)
+            try
             {
-                switch (node.Name)
+                string answer = _adapter.SendGet($"/auc/auc.php?id={entry.Id}");
+
+                var frame = new HtmlDocument();
+                frame.LoadHtml(answer);
+
+                var form = frame.DocumentNode.SelectNodes("//form");
+                //entry.IsFinished = form == null;
+
+                var body = frame.DocumentNode.SelectNodes("//body").FirstOrDefault();
+                if (body == null) return;
+
+                var currentName = string.Empty;
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                StringBuilder sb = new StringBuilder();
+
+                foreach (var node in body.ChildNodes)
                 {
-                    case "input":
-                    case "b":
-                        //if (node.Attributes["style"] == null)
-                        //{
+                    switch (node.Name)
+                    {
+                        case "input":
+                        case "b":
+                            //if (node.Attributes["style"] == null)
+                            //{
                             if (!string.IsNullOrEmpty(currentName))
                             {
                                 dictionary[currentName] = sb.ToString();
                             }
                             sb.Clear();
                             currentName = node.InnerText;
-                        //}
-                        //else
-                        //{
-                        //    sb.Append(node.InnerText);
-                        //}
-                        break;
-                    case "#text":
-                    case "span":
-                        sb.Append(node.InnerText);
-                        break;
-                    case "br":
-                        sb.AppendLine();
-                        break;
-                    case "a":
-                        sb.Append(node.InnerText);
-                        break;
+                            //}
+                            //else
+                            //{
+                            //    sb.Append(node.InnerText);
+                            //}
+                            break;
+                        case "#text":
+                        case "span":
+                            sb.Append(node.InnerText);
+                            break;
+                        case "br":
+                            sb.AppendLine();
+                            break;
+                        case "a":
+                            sb.Append(node.InnerText);
+                            break;
+                    }
                 }
+                if (!string.IsNullOrEmpty(currentName))
+                {
+                    dictionary[currentName] = sb.ToString();
+                }
+
+                BuildAuctionEntry(dictionary, entry);
             }
-            if (!string.IsNullOrEmpty(currentName))
+            catch(Exception e)
             {
-                dictionary[currentName] = sb.ToString();
+                Console.Error.Write($"Failed to load auction {e.Message}: {e.StackTrace}");
             }
-            
-            BuildAuctionEntry(dictionary, entry);
-        }
+}
 
         public void MakeBid(FormModel model)
         {
