@@ -19,4 +19,16 @@ RUN dotnet publish --output /app/ --configuration Release
 FROM microsoft/aspnetcore
 WORKDIR /app
 COPY --from=builder /app .
+
+ENV NODE_VERSION 8.7.0
+ENV NPM_VERSION 5.5.1
+RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
+  # && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+  # && gpg --verify SHASUMS256.txt.asc \
+  # && grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
+  && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
+  # && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
+  && npm install -g "npm@$NPM_VERSION" 
+  # && npm cache clear
+
 ENTRYPOINT ["dotnet", "SoSemiVigelant.dll"]
