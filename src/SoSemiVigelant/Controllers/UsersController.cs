@@ -15,7 +15,6 @@ using FromServicesAttribute = SoSemiVigelant.Core.Extensions.PropertyFromService
 
 namespace SoSemiVigelant.Controllers
 {
-    //[Route("api/[controller]")]
     public class UsersController : Controller
     {
         public UsersController()
@@ -30,7 +29,6 @@ namespace SoSemiVigelant.Controllers
 
         // GET api/values
         [HttpGet]
-        [Route("Users/List")]
         public async Task<GenericListResponse<UserModel>> List([FromQuery]UserListRequest request, CancellationToken token)
         {
             return await ListFactory.Create(DbContext, request, token);
@@ -38,7 +36,6 @@ namespace SoSemiVigelant.Controllers
         
         // GET api/values/5
         [HttpGet("{id}")]
-        [Route("Users/Get")]
         public async Task<BaseResponse<UserModel>> Get([FromQuery]int id, CancellationToken token)
         {
             var auc = await DbContext.Users.FirstOrDefaultAsync(_ => _.OriginId == id, token);

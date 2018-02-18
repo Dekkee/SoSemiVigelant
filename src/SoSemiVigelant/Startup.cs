@@ -64,11 +64,7 @@ namespace SoSemiVigelant
             MigrateDatabase();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowCredentials().AllowAnyMethod().AllowAnyHeader());
-
-            app.UseApplicationInsightsRequestTelemetry();
-
-            app.UseApplicationInsightsExceptionTelemetry();
-
+           
             app.UseMvc();
         }
 
