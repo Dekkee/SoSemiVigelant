@@ -28,14 +28,14 @@ namespace SoSemiVigelant.Controllers
         public DatabaseContext DbContext { get; set; }
 
         // GET api/values
-        [HttpGet]
+        [HttpGet("~/users")]
         public async Task<GenericListResponse<UserModel>> List([FromQuery]UserListRequest request, CancellationToken token)
         {
             return await ListFactory.Create(DbContext, request, token);
         }
         
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("~/users/{id}")]
         public async Task<BaseResponse<UserModel>> Get([FromQuery]int id, CancellationToken token)
         {
             var auc = await DbContext.Users.FirstOrDefaultAsync(_ => _.OriginId == id, token);

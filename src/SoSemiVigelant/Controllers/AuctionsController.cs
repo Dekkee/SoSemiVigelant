@@ -29,13 +29,13 @@ namespace SoSemiVigelant.Controllers
         [FromServices]
         public IListFactory<AuctionModel, AuctionListRequest> ListFactory { get; set; }
         
-        [HttpGet]
+        [HttpGet("~/auctions")]
         public async Task<GenericListResponse<AuctionModel>> List([FromQuery]AuctionListRequest request, CancellationToken token)
         {
             return await ListFactory.Create(DbContext, request, token);
         }
         
-        [HttpGet("{id}")]
+        [HttpGet("~/auctions/{id}")]
         public async Task<BaseResponse<AuctionModel>> Get([FromQuery]int id, CancellationToken token)
         {
             var auc = AuctionModel.Map(await PagesLoader.LoadAuction(id, token));
