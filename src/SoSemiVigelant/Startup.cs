@@ -53,6 +53,11 @@ namespace SoSemiVigelant
             services.AddEntityFrameworkNpgsql()
                     .AddDbContext<DatabaseContext>(options => options.UseNpgsql(
                     DatabaseContextFactory.ConnectionString, b => b.MigrationsAssembly("SoSemiVigelant.Data")));
+
+            services.AddNodeServices();
+
+            var provider = services.BuildServiceProvider();
+            var loader = provider.GetRequiredService(typeof(IPagesLoader));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -61,7 +66,7 @@ namespace SoSemiVigelant
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            MigrateDatabase();
+            //MigrateDatabase();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowCredentials().AllowAnyMethod().AllowAnyHeader());
            

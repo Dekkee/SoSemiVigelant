@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
 using HtmlAgilityPack;
+using Microsoft.AspNetCore.NodeServices;
 using Microsoft.EntityFrameworkCore;
 using SoSemiVigelant.Data.Data;
 using SoSemiVigelant.Data.Entities;
@@ -25,46 +26,48 @@ namespace SoSemiVigelant.Provider
 
         private readonly Timer _syncTimer;
 
-        private readonly Dictionary<int, Auction> _cachedAuctions = new Dictionary<int, Auction>();
+        private readonly Dictionary<int, Data.Entities.Auction> _cachedAuctions = new Dictionary<int, Data.Entities.Auction>();
         private readonly Dictionary<string, User> _cachedUsers = new Dictionary<string, User>();
 
-        public PagesLoader()
+        private readonly INodeServices _nodeServices;
+
+        public PagesLoader(INodeServices nodeServices)
         {
             _adapter = new WebAdapter();
             
             SetCredentials("dekker25@gmail.com", "67251425");
             Authorise();
 
+            _nodeServices = nodeServices;
+
             _syncTimer = new Timer(SyncTopics, null, 0, (int)TimeSpan.FromMinutes(1).TotalMilliseconds);
         }
         
-        private void SyncTopics(object obj)
+        private async void SyncTopics(object obj)
         {
             try
             {
-                var topics = LoadTopics();
-
+                var result = await _nodeServices.InvokeAsync<Entities.Auction[]>("../SoSemiVigelant.Provider/Parser/parser");
+                
                 _cachedAuctions.Clear();
                 _cachedUsers.Clear();
 
                 using (var db = new DatabaseContextFactory().Create())
                 {
-                    foreach (var topic in topics)
+                    foreach (var auction in result)
                     {
-                        if (!topic.Topic.HasValue) continue;
+                        var auc = SelectAuction(db, auction.Id);
+                        auc.Name = auction.Lot;
+                        auc.City = auction.City;
+                        auc.Bet = auction.CurrentBid;
+                        //auc.BuyOut = auction.BuyOut;
+                        auc.TimeLeft = auction.Estimated.Ticks;
+                        auc.TotalBets = auction.BidAmount;
+                        //auc.IsFinished = auction.IsFinished;
+                        auc.CurrentBet = auction.CurrentBid;
 
-                        var auc = SelectAuction(db, topic.Topic.Value);
-                        auc.Name = topic.Name;
-                        auc.City = topic.City;
-                        auc.Bet = topic.Bet;
-                        auc.BuyOut = topic.BuyOut;
-                        auc.TimeLeft = topic.TimeLeft?.Ticks;
-                        auc.TotalBets = topic.TotalBets;
-                        auc.IsFinished = topic.IsFinished;
-                        auc.CurrentBet = topic.CurrentBet;
-
-                        auc.Creator = SelectUser(db, topic.Creator);
-                        auc.Creator.OriginId = topic.CreatorId ?? 0;
+                        auc.Creator = SelectUser(db, auction.Seller);
+                        //auc.Creator.OriginId = auction.CreatorId ?? 0;
                     }
 
                     db.SaveChanges();
@@ -76,14 +79,14 @@ namespace SoSemiVigelant.Provider
             }
         }
 
-        private Auction SelectAuction(DatabaseContext db, int auctionId)
+        private Data.Entities.Auction SelectAuction(DatabaseContext db, int auctionId)
         {
-            if (!_cachedAuctions.TryGetValue(auctionId, out Auction auction))
+            if (!_cachedAuctions.TryGetValue(auctionId, out Data.Entities.Auction auction))
             {
                 auction = db.Auctions.FirstOrDefault(_ => _.AuctionId == auctionId);
                 if (auction == null)
                 {
-                    auction = new Auction
+                    auction = new Data.Entities.Auction
                     {
                         AuctionId = auctionId
                     };
@@ -95,22 +98,23 @@ namespace SoSemiVigelant.Provider
             return auction;
         }
 
-        private User SelectUser(DatabaseContext db, string name)
+        private User SelectUser(DatabaseContext db, Seller seller)
         {
-            if (string.IsNullOrEmpty(name)) return null;
+            if (string.IsNullOrEmpty(seller.Name)) return null;
 
-            if (!_cachedUsers.TryGetValue(name, out User user))
+            if (!_cachedUsers.TryGetValue(seller.Name, out User user))
             {
-                user = db.Users.FirstOrDefault(_ => _.Name == name);
+                user = db.Users.FirstOrDefault(_ => _.Name == seller.Name);
                 if (user == null)
                 {
                     user = new User
                     {
-                        Name = name
+                        Name = seller.Name,
+                        OriginId = seller.Id
                     };
                     db.Users.Add(user);
                 }
-                _cachedUsers[name] = user;
+                _cachedUsers[seller.Name] = user;
             }
 
             return user;
@@ -124,7 +128,7 @@ namespace SoSemiVigelant.Provider
             return topics;
         }
 
-        public async Task<Auction> LoadAuction(int id, CancellationToken token)
+        public async Task<Data.Entities.Auction> LoadAuction(int id, CancellationToken token)
         {
             var entry = new AuctionEntry { Url = $"{Settings.Url}forum/index.php?showtopic={id}" };
             await new TaskFactory().StartNew(() => { LoadAuction(entry); }, token);
@@ -140,12 +144,12 @@ namespace SoSemiVigelant.Provider
 
                 entity.Description = entry.RawHtml;
 
-                var winner = SelectUser(db, entry.WinnerName);
-                if (winner != null)
-                {
-                    winner.OriginId = entry.WinnedId ?? 0;
-                    entity.WinnerBet = entry.WinnerBet;
-                }
+                //var winner = SelectUser(db, entry.WinnerName);
+                //if (winner != null)
+                //{
+                //    winner.OriginId = entry.WinnedId ?? 0;
+                //    entity.WinnerBet = entry.WinnerBet;
+                //}
 
                 return entity;
             }
@@ -239,7 +243,7 @@ namespace SoSemiVigelant.Provider
 
                 entry.RawHtml = content.InnerHtml;
 
-                LoadAuctionData(entry);
+                //LoadAuctionData(entry);
             }
             catch(Exception e)
             {
@@ -303,7 +307,7 @@ namespace SoSemiVigelant.Provider
                     dictionary[currentName] = sb.ToString();
                 }
 
-                BuildAuctionEntry(dictionary, entry);
+                //BuildAuctionEntry(dictionary, entry);
             }
             catch(Exception e)
             {

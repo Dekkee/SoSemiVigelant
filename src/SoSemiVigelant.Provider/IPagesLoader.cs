@@ -11,6 +11,6 @@ namespace SoSemiVigelant.Provider
     public interface IPagesLoader
     {
         IEnumerable<AuctionEntry> LoadTopics();
-        Task<Auction> LoadAuction(int id, CancellationToken token);
+        Task<Data.Entities.Auction> LoadAuction(int id, CancellationToken token);
     }
 }
