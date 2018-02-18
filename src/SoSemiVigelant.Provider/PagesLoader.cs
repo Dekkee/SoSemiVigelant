@@ -40,39 +40,45 @@ namespace SoSemiVigelant.Provider
         
         private void SyncTopics(object obj)
         {
-            var topics = LoadTopics();
-
-            _cachedAuctions.Clear();
-            _cachedUsers.Clear();
-
-            using (var db = new DatabaseContextFactory().Create())
+            try
             {
-                foreach (var topic in topics)
+                var topics = LoadTopics();
+
+                _cachedAuctions.Clear();
+                _cachedUsers.Clear();
+
+                using (var db = new DatabaseContextFactory().Create())
                 {
-                    if (!topic.Topic.HasValue) continue;
+                    foreach (var topic in topics)
+                    {
+                        if (!topic.Topic.HasValue) continue;
 
-                    var auc = SelectAuction(db, topic.Topic.Value);
-                    auc.Name = topic.Name;
-                    auc.City = topic.City;
-                    auc.Bet = topic.Bet;
-                    auc.BuyOut = topic.BuyOut;
-                    auc.TimeLeft = topic.TimeLeft?.Ticks;
-                    auc.TotalBets = topic.TotalBets;
-                    auc.IsFinished = topic.IsFinished;
-                    auc.CurrentBet = topic.CurrentBet;
+                        var auc = SelectAuction(db, topic.Topic.Value);
+                        auc.Name = topic.Name;
+                        auc.City = topic.City;
+                        auc.Bet = topic.Bet;
+                        auc.BuyOut = topic.BuyOut;
+                        auc.TimeLeft = topic.TimeLeft?.Ticks;
+                        auc.TotalBets = topic.TotalBets;
+                        auc.IsFinished = topic.IsFinished;
+                        auc.CurrentBet = topic.CurrentBet;
 
-                    auc.Creator = SelectUser(db, topic.Creator);
-                    auc.Creator.OriginId = topic.CreatorId ?? 0;
+                        auc.Creator = SelectUser(db, topic.Creator);
+                        auc.Creator.OriginId = topic.CreatorId ?? 0;
+                    }
+
+                    db.SaveChanges();
                 }
-                
-                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.Error.Write($"Failed sync auctions: {e.Message}:{e.StackTrace}");
             }
         }
 
         private Auction SelectAuction(DatabaseContext db, int auctionId)
         {
-            Auction auction;
-            if (!_cachedAuctions.TryGetValue(auctionId, out auction))
+            if (!_cachedAuctions.TryGetValue(auctionId, out Auction auction))
             {
                 auction = db.Auctions.FirstOrDefault(_ => _.AuctionId == auctionId);
                 if (auction == null)
@@ -93,8 +99,7 @@ namespace SoSemiVigelant.Provider
         {
             if (string.IsNullOrEmpty(name)) return null;
 
-            User user;
-            if (!_cachedUsers.TryGetValue(name, out user))
+            if (!_cachedUsers.TryGetValue(name, out User user))
             {
                 user = db.Users.FirstOrDefault(_ => _.Name == name);
                 if (user == null)
@@ -387,8 +392,6 @@ namespace SoSemiVigelant.Provider
                         int totalBet;
                         if (cells.Length == 7)
                         {
-                            int currentBet;
-                            int buyOut;
                             return new AuctionEntry
                             {
                                 Url = cell0A.Attributes["href"].Value,
@@ -399,8 +402,8 @@ namespace SoSemiVigelant.Provider
                                 CreatorRatingUrl = new Uri(Settings.Url + cell1A[1].Attributes["href"].Value),
                                 City = HtmlEntity.DeEntitize(cells[2].InnerText),
                                 TimeLeft = timeLeft,
-                                CurrentBet = int.TryParse(cells[4].InnerText, out currentBet) ? currentBet : 0,
-                                BuyOut = int.TryParse(cells[5].InnerText, out buyOut) ? (int?) buyOut : null,
+                                CurrentBet = int.TryParse(cells[4].InnerText, out int currentBet) ? currentBet : 0,
+                                BuyOut = int.TryParse(cells[5].InnerText, out int buyOut) ? (int?)buyOut : null,
                                 TotalBets = int.TryParse(cells[6].InnerText, out totalBet) ? totalBet : 0,
                                 IsFinished = !timeLeft.HasValue
                             };
@@ -408,8 +411,6 @@ namespace SoSemiVigelant.Provider
                         else
                         {
                             var cell3A = cells[3].SelectNodes(".//a")?.ToArray();
-                            DateTime finishTime;
-                            int winnerBet;
                             return new AuctionEntry
                             {
                                 Url = cell0A.Attributes["href"].Value,
@@ -418,9 +419,9 @@ namespace SoSemiVigelant.Provider
                                 CreatorUrl = new Uri(cell1A[0].Attributes["href"].Value),
                                 CreatorRating = HtmlEntity.DeEntitize(cell1A[1].InnerText),
                                 CreatorRatingUrl = new Uri(Settings.Url + cell1A[1].Attributes["href"].Value),
-                                FinishTime = DateTime.TryParse(cells[2].InnerText, out finishTime) ? (DateTime?)finishTime : null,
+                                FinishTime = DateTime.TryParse(cells[2].InnerText, out DateTime finishTime) ? (DateTime?)finishTime : null,
                                 WinnerName = cell3A?.Length == 2 ? cell3A[0].InnerText : string.Empty,
-                                WinnerBet = cells[4] != null && int.TryParse(cells[4].InnerText, out winnerBet) ? (int?)winnerBet : null,
+                                WinnerBet = cells[4] != null && int.TryParse(cells[4].InnerText, out int winnerBet) ? (int?)winnerBet : null,
                                 TotalBets = int.TryParse(cells[5].InnerText, out totalBet) ? totalBet : 0,
                                 IsFinished = true
                             };
