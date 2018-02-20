@@ -1,6 +1,6 @@
 const request = require('request'),
     cheerio = require('cheerio'),
-    requirejs = require('requirejs'),
+    requirejs = require('./libs/require.min'),
     localStorage = require("localstorage-ponyfill").createLocalStorage({ mode: "node" });
 
 localStorage.setItem("toptrade:auctions:compact", {});
