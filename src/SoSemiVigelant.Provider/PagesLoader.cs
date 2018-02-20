@@ -47,7 +47,7 @@ namespace SoSemiVigelant.Provider
         {
             try
             {
-                var result = await _nodeServices.InvokeAsync<Entities.Auction[]>("./bin/Parser/parser");
+                var result = await _nodeServices.InvokeAsync<Entities.Auction[]>("./Parser/dist/bundle");
                 
                 _cachedAuctions.Clear();
                 _cachedUsers.Clear();
