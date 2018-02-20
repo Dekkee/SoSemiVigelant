@@ -1507,6 +1507,12 @@ node-pre-gyp@^0.6.39:
     tar "^2.2.1"
     tar-pack "^3.4.0"
 
+node-requirejs@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/node-requirejs/-/node-requirejs-0.1.1.tgz#92fe26ed6f8ce241a9f5d356639a470ee1e38cfc"
+  dependencies:
+    requirejs "^2.1.16"
+
 nopt@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-4.0.1.tgz#d0d4685afd5415193c8c7505602d0d17cd64474d"
@@ -1923,7 +1929,7 @@ require-main-filename@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"
 
-requirejs@^2.3.5:
+requirejs@^2.1.16:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/requirejs/-/requirejs-2.3.5.tgz#617b9acbbcb336540ef4914d790323a8d4b861b0"
 
