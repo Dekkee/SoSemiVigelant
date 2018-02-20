@@ -6,6 +6,21 @@ module.exports = {
     target: 'node',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        libraryTarget: "commonjs"
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'shebang-loader',
+                include: [/node_modules[/\\]requirejs/]
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: [/node_modules/]
+            }
+        ]
     }
 }
