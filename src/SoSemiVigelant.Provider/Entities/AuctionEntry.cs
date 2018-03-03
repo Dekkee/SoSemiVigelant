@@ -1,0 +1,199 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using SoSemiVigelant.Core.Extensions;
+
+namespace SoSemiVigelant.Provider.Entities
+{
+    public class AuctionEntry
+    {
+        public AuctionEntry()
+        {
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Name { get; set; }
+        public string Creator { get; set; }
+        public Uri CreatorUrl { get; set; }
+        public string CreatorRating { get; set; }
+        public Uri CreatorRatingUrl { get; set; }
+        public int? CreatorId
+        {
+            get
+            {
+                var match = Regex.Match(CreatorUrl.AbsoluteUri, "showuser=(\\d+)$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    int creator;
+                    if (int.TryParse(match.Groups[1].Value, out
+                        creator))
+                        return creator;
+                }
+
+                return null;
+            }
+        }
+        public string City { get; set; }
+        public string Url { get; set; }
+        public int? Topic
+        {
+            get
+            {
+                var match = Regex.Match(Url, "showtopic=(\\d+)$", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    int topic;
+                    if (int.TryParse(match.Groups[1].Value,
+                        out topic))
+                        return topic;
+                }
+
+                return null;
+            }
+        }
+        public int Id { get; set; }
+        public int? Bid { get; set; }
+        public bool IsFinished { get; set; }
+
+        private int _currentBet;
+        private int _yourBet;
+        private int _totalBets;
+        private int _step;
+        private int? _buyOut;
+        private TimeSpan? _timeLeft;
+        private DateTime? _finishTime;
+
+        public int Bet => IsFinished && WinnerBet != null ? WinnerBet.Value : CurrentBet;
+        public int CurrentBet
+        {
+            get { return _currentBet; }
+            set
+            {
+                if (_currentBet != value)
+                {
+                    _currentBet = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this,
+                            new PropertyChangedEventArgs("CurrentBet"));
+                    }
+                }
+            }
+        }
+        public int YourBet
+        {
+            get { return _yourBet; }
+            set
+            {
+                if (_yourBet != value)
+                {
+                    _yourBet = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this,
+                            new PropertyChangedEventArgs("YourBet"));
+                    }
+                }
+            }
+        }
+        public int TotalBets
+        {
+            get { return _totalBets; }
+            set
+            {
+                if (_totalBets != value)
+                {
+                    _totalBets = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this,
+                            new PropertyChangedEventArgs("TotalBets"));
+                    }
+                }
+            }
+        }
+        public int Step
+        {
+            get { return _step; }
+            set
+            {
+                if (_step != value)
+                {
+                    _step = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this,
+                            new PropertyChangedEventArgs("Step"));
+                    }
+                }
+            }
+        }
+        public int? BuyOut
+        {
+            get { return _buyOut; }
+            set
+            {
+                if (_buyOut != value)
+                {
+                    _buyOut = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this,
+                            new PropertyChangedEventArgs("BuyOut"));
+                    }
+                }
+            }
+        }
+        public TimeSpan? TimeLeft
+        {
+            get { return _timeLeft; }
+            set
+            {
+                if (_timeLeft != value)
+                {
+                    _timeLeft = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this,
+                            new PropertyChangedEventArgs("TimeLeft"));
+                    }
+                }
+            }
+        }
+        public DateTime? FinishTime
+        {
+            get { return _finishTime; }
+            set
+            {
+                if (_finishTime != value)
+                {
+                    _finishTime = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this,
+                            new PropertyChangedEventArgs("FinishTime"));
+                    }
+                }
+            }
+        }
+        public string PrettyTimeLeft => TimeLeft.ToPrettyFormat();
+        public string PrettyFinishTime => FinishTime?.ToString("G");
+
+        public string RawHtml { get; set; }
+
+        public int? WinnerBet { get; set; }
+        public string WinnerName { get; set; }
+        public int? WinnedId { get; set; }
+    }
+}
