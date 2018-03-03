@@ -5,10 +5,10 @@ WORKDIR /source
 
 # caches restore result by copying sln and csproj file separately
 COPY *.sln .
-COPY src/SoSemiVigelant/*.csproj src/SoSemiVigelant/
-COPY src/SoSemiVigelant.Data/*.csproj src/SoSemiVigelant.Data/
-COPY src/SoSemiVigelant.Core/*.csproj src/SoSemiVigelant.Core/
-COPY src/SoSemiVigelant.Provider/*.csproj src/SoSemiVigelant.Provider/
+COPY SoSemiVigelant/*.csproj SoSemiVigelant/
+COPY SoSemiVigelant.Data/*.csproj SoSemiVigelant.Data/
+COPY SoSemiVigelant.Core/*.csproj SoSemiVigelant.Core/
+COPY SoSemiVigelant.Provider/*.csproj SoSemiVigelant.Provider/
 RUN dotnet restore
 
 # copies the rest of your code

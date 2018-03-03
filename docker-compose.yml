@@ -1,9 +1,8 @@
-version: '2'
+version: '3'
 
 services:
   sosemivigelant.api:
     image: dekker/sosemivigelant.api
-    container_name: sosemivigelant.api
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,20 +12,43 @@ services:
 
   sosemivigelant:
     image: dekker/sosemivigelant
-    container_name: sosemivigelant
     build:
-      context: ./src/SoSemiVigelant.FrontEnd
+      context: ./SoSemiVigelant.FrontEnd
       dockerfile: Dockerfile
     restart: always
       
   sql.data:
-    container_name: sql.data
     image: postgres:9.6-alpine
     volumes:
       - sql.data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: SoPostMuchGreWow!1
     restart: always
+
+  sesemivigelant-auctioneer:
+    build: ./SoSemiVigelant.Auctioneer
+    ports:
+        - 8000:8000
+    links:
+        - sesemivigelant-mongo
+    depends_on:
+        - sesemivigelant-mongo
+    environment:
+        - NODE_ENV=development
+        - MONGO_HOST=sesemivigelant-mongo
+
+  sesemivigelant-mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGODB_USER=SuchMongo
+      - MONGODB_PASS=VeryPassword
+    volumes:
+      - ./data/db:/data/db
+    ports:
+        - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
 
 volumes:
   sql.data:

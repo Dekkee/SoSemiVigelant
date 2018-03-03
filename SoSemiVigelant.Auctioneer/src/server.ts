@@ -12,7 +12,11 @@ const app = express()
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/sosemimongo');
+const mongoHost = process.env.MONGO_HOST || 'localhost';
+const mongoPort = process.env.MONGO_PORT || '27017';
+const mongoDb = process.env.MONGO_DB || 'sosemimongo';
+
+mongoose.connect(`mongodb://${mongoHost}:${mongoPort}/${mongoDb}`);
 
 setup(app);
 
