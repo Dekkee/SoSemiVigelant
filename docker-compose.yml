@@ -29,14 +29,12 @@ services:
     build: ./SoSemiVigelant.Auctioneer
     ports:
         - 8000:8000
-    links:
-        - sesemivigelant-mongo
     depends_on:
         - sesemivigelant-mongo
     environment:
         - NODE_ENV=development
         - MONGO_HOST=sesemivigelant-mongo
-
+        
   sesemivigelant-mongo:
     image: mongo:latest
     environment:
@@ -48,7 +46,6 @@ services:
       - ./data/db:/data/db
     ports:
         - 27017:27017
-    command: mongod --smallfiles --logpath=/dev/null # --quiet
 
 volumes:
   sql.data:
