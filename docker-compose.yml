@@ -34,7 +34,9 @@ services:
     environment:
         - NODE_ENV=development
         - MONGO_HOST=sesemivigelant-mongo
-        
+        - RABBIT_HOST=sesemivigelant-rabbit
+        - RABBIT_USER=SuchRabbit
+        - RABBIT_PASS=VeryPassword
   sesemivigelant-mongo:
     image: mongo:latest
     environment:
@@ -48,20 +50,18 @@ services:
         - 27017:27017
 
   sesemivigelant-rabbit:
-  image: "rabbitmq:3-alpine"
-  hostname: "rabbit"
-  environment:
-    RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-    RABBITMQ_DEFAULT_USER: "rabbitmq"
-    RABBITMQ_DEFAULT_PASS: "rabbitmq"
-    RABBITMQ_DEFAULT_VHOST: "/"
-  ports:
-    - "15672:15672"
-    - "5672:5672"
-  labels:
-    NAME: "rabbitmq"
-  volumes:
-    - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    image: "rabbitmq:3-alpine"
+    hostname: "sesemivigelant-rabbit"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "SuchRabbit"
+      RABBITMQ_DEFAULT_PASS: "VeryPassword"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
 
 volumes:
   sql.data:

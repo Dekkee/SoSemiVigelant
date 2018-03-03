@@ -16,8 +16,11 @@ const app = express()
 const mongoHost = process.env.MONGO_HOST || 'localhost';
 const mongoPort = process.env.MONGO_PORT || '27017';
 const mongoDb = process.env.MONGO_DB || 'sosemimongo';
+const mongoCredentials = process.env.MONGO_USER && process.env.MONGO_PASS
+    ? `${process.env.MONGO_USER}:${process.env.MONGO_PASS}@`
+    : '';
 
-mongoose.connect(`mongodb://${mongoHost}:${mongoPort}/${mongoDb}`);
+mongoose.connect(`mongodb://${mongoCredentials}${mongoHost}:${mongoPort}/${mongoDb}`);
 
 setup(app);
 
@@ -34,8 +37,11 @@ app.get('*', function (req, resp) {
 
 const rabbitHost = process.env.RABBIT_HOST || 'localhost';
 const rabbitPort = process.env.RABBIT_PORT || '5672';
+const rabbitCredentials = process.env.RABBIT_USER && process.env.RABBIT_PASS
+    ? `${process.env.RABBIT_USER}:${process.env.RABBIT_PASS}@`
+    : '';
 
-connectToRabbit(`amqp://${rabbitHost}:${rabbitPort}`);
+connectToRabbit(`amqp://${rabbitCredentials}${rabbitHost}:${rabbitPort}`);
 
 const args = yargs.option(
     'port', { alias: 'p', default: 8000, type: 'number' }
