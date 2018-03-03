@@ -1,0 +1,375 @@
+body {
+    background-color: #fafafa;
+    color: #757575;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+button {
+    background: 0 0;
+    border: none;
+    border-radius: 2px;
+    color: #757575;
+    position: relative;
+    height: 36px;
+    margin: 0;
+    min-width: 64px;
+    padding: 0 16px;
+    display: inline-block;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    overflow: hidden;
+    will-change: box-shadow;
+    transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+}
+
+button:hover {
+    background-color: rgba(158, 158, 158, .2);
+}
+
+button:active {
+    background-color: rgba(158, 158, 158, .4);
+}
+
+button.icon {
+    border-radius: 50%;
+    font-size: 24px;
+    height: 32px;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 32px;
+    width: 32px;
+    padding: 0;
+    overflow: hidden;
+    line-height: normal;
+}
+
+button .material-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-12px, -12px);
+    line-height: 24px;
+    width: 24px;
+    vertical-align: middle;
+}
+
+input {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    color: #757575;
+    padding: .5em;
+    border-radius: 2px;
+    border: 1px solid lightgray;
+    outline: none;
+}
+
+main {
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    color: white;
+    background-color: #222;
+    text-align: center;
+}
+
+header h1 {
+    display: inline-block;
+    color: #00d8ff;
+    margin: 1rem auto;
+}
+
+section.aucs {
+    margin: 20px 20px;
+}
+
+
+/* Loading */
+
+.loading {
+    display: block;
+    margin: auto;
+}
+
+.loading::before {
+    font-family: 'Material Icons';
+    content: "sync";
+}
+
+
+/* AuctionList */
+
+.auctionList {
+    max-width: 1500px;
+    margin: auto;
+}
+
+
+/* AuctionList Header */
+
+.auctionList-header {
+    background: #fff;
+    box-sizing: border-box;
+    display: flex;
+    padding: 0px 10px;
+    line-height: 32px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: -1px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.auctionList-header-item {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auctionList-header-item:hover {
+    text-decoration: underline;
+}
+
+
+/* auctionItem */
+
+.auctionItem {
+    display: flex;
+    font-size: 1rem;
+    background-color: #fff;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    transition: all .2s;
+    -webkit-user-select: none;
+    user-select: none;
+    padding: 0px 10px;
+    align-items: center;
+    line-height: 32px;
+}
+
+.auctionItem:hover {
+    background-color: rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+
+.auctionItem.completed .auction-column-name {
+    text-decoration: line-through;
+}
+
+.auctionList-header-item.sort-by::after {
+    font-family: 'Material Icons';
+    content: "arrow_drop_up";
+}
+
+.auctionList-header-item.sort-by-desc::after {
+    font-family: 'Material Icons';
+    content: "arrow_drop_down";
+}
+
+.auction-column-name {
+    margin-right: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.auction-column-currentBet {
+    width: 10%;
+    min-width: 70px;
+    text-align: right;
+}
+
+
+/* auctionItem form */
+
+.auctionItem-form {
+    display: flex;
+    background-color: #FAFAFA;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    padding: 10px;
+}
+
+.auctionItem-form input {
+    flex: 1;
+    outline: none;
+    transition: all .2s;
+}
+
+.auctionItem-form input:focus {
+    border: 1px solid #00d8ff;
+}
+
+.auctionItem-form button {
+    margin-left: 10px;
+}
+
+
+/* ReactModal */
+
+.ReactModal__Overlay {
+    perspective: 600;
+    opacity: 0;
+    z-index: 100;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+    transition: opacity 150ms ease-out;
+}
+
+.ReactModal__Content {
+    transform: scale(0.5) rotateX(-30deg);
+}
+
+.ReactModal__Content--after-open {
+    transform: scale(1) rotateX(0deg);
+    transition: all 150ms ease-in;
+}
+
+.ReactModal__Content--before-close {
+    opacity: 0;
+    transform: scale(0.5) rotateX(30deg);
+    transition: all 150ms ease-in;
+}
+
+.modal-container__close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 20;
+}
+
+.modal-header {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.modal-header-title {
+    padding: 0px 10px;
+    margin-right: auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.modal-body {
+    padding: 0px 10px;
+}
+
+
+/* pagination */
+
+.pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
+}
+
+.pagination {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: flex-end;
+}
+
+.pagination-page-size-select {
+    height: 30px;
+    padding: 2px 5px;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.pagination,
+.pagination-page-size-select,
+.pagination-count,
+.pagination-search-input {
+    padding: 0;
+    margin: 10px;
+    line-height: 24px;
+    font-family: inherit;
+    color: inherit;
+    font-size: inherit;
+}
+
+.pagination,
+.pagination-page-size-select,
+.pagination-search-input {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.pagination-count,
+.pagination-search-input {
+    margin-right: auto;
+}
+
+.pagination-search-input {
+    position: relative;
+}
+
+.pagination-search-input input {
+    padding: 0 30px 0 5px;
+    height: 28px;
+    min-width: 100px;
+    width: 250px;
+}
+
+.pagination-search-input .material-icons {
+    position: absolute;
+    right: 0px;
+    padding: 3px;
+    pointer-events: none;
+}
+
+.pagination li {
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, .1);
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.pagination li:hover:not(.current):not(.disabled) {
+    background: rgba(0, 0, 0, .1);
+}
+
+.pagination li.current {
+    color: #fff;
+    background: #00d8ff;
+    font-weight: bold;
+}
+
+.pagination li.break {
+    cursor: default;
+}
+
+.pagination li.disabled {
+    color: rgba(0, 0, 0, .1);
+    cursor: default;
+}
+
+.pagination a {
+    text-align: center;
+    display: block;
+    min-width: 16px;
+    line-height: 24px;
+    padding: 2px 5px;
+}
+
+.pagination .material-icons {
+    display: block;
+}
