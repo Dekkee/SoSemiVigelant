@@ -1,6 +1,7 @@
 import { ObjectID } from 'mongodb';
 
 import { Model, Document } from 'mongoose';
+import * as colors from 'colors';
 
 export type Key = string | number;
 
@@ -8,24 +9,46 @@ export default abstract class CrudRepository<T extends Document> implements ICru
     constructor (private model: Model<T>) {
     }
 
-    async update (id: any, item: T) {
-        await this.model.updateOne({ '_id': new ObjectID(id) }, item);
+    async update (item: T) {
+        try {
+            await this.model.update({ id: item.id }, item);
+        } catch (e) {
+            console.error(colors.red(e.message));
+        }
     }
 
     async delete (id: Key) {
-        await this.model.deleteOne({ '_id': new ObjectID(id) });
+        try {
+            await this.model.deleteOne({ '_id': new ObjectID(id) });
+        } catch (e) {
+            console.error(colors.red(e.message));
+        }
     }
 
     async put (item: T) {
-        await this.model.create(item);
+        try {
+            await this.model.create(item);
+        } catch (e) {
+            console.error(colors.red(e.message));
+        }
     }
 
     async get (id: Key): Promise<T | null> {
-        return await this.model.findById(id);
+        try {
+            return await this.model.findOne({ id: id });
+        } catch (e) {
+            console.error(colors.red(e.message));
+            throw e;
+        }
     }
 
     async list (query: any = {}): Promise<T[]> {
-        return await this.model.find(query);
+        try {
+            return await this.model.find(query);
+        } catch (e) {
+            console.error(colors.red(e.message));
+            throw e;
+        }
     }
 }
 
@@ -38,5 +61,5 @@ export interface ICrudRepository<T, K extends Key> {
 
     delete(id: K): void;
 
-    update(id: K, item: T): void;
+    update(item: T): void;
 }

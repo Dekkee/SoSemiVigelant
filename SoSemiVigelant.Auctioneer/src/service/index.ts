@@ -11,7 +11,7 @@ export const connectToRabbit = async (url: string) => {
     await channel.assertQueue(q, { durable: false });
     await channel.prefetch(1);
     console.log(colors.cyan(' [x] Awaiting RPC requests'));
-    await channel.consume(q, (msg) => {
+    await channel.consume(q, async (msg) => {
         if (msg) {
             const content = msg.content.toString();
             console.log(colors.cyan(' [x] Message received: ') + content);
@@ -19,7 +19,9 @@ export const connectToRabbit = async (url: string) => {
                 const auctions = JSON.parse(content);
                 const rep = new AuctionRepository();
                 for (const auction of auctions) {
-                    rep.put(auction as any);
+                    await rep.get(auction.id) === null
+                        ? rep.put(auction as any)
+                        : rep.update(auction as any)
                 }
             } catch (e) {
                 console.log(colors.red(e.message));
