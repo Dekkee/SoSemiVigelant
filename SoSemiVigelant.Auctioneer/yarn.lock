@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+"@types/amqplib@^0.5.6":
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@types/amqplib/-/amqplib-0.5.6.tgz#75ce568f8ebd71f0b0247f9fc7feaf7d337d480f"
+  dependencies:
+    "@types/bluebird" "*"
+    "@types/events" "*"
+    "@types/node" "*"
+
+"@types/bluebird@*":
+  version "3.5.20"
+  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.20.tgz#f6363172add6f4eabb8cada53ca9af2781e8d6a1"
+
 "@types/body-parser@*", "@types/body-parser@^1.16.5":
   version "1.16.8"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.16.8.tgz#687ec34140624a3bec2b1a8ea9268478ae8f3be3"

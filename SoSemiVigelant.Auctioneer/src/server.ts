@@ -6,6 +6,7 @@ import * as colors from 'colors';
 import * as mongoose from 'mongoose';
 
 import { setup } from './api';
+import { connectToRabbit } from './service';
 
 const app = express()
     .use(morgan(':method :url -> :status'))
@@ -30,6 +31,11 @@ app.get('*', function (req, resp) {
         url: req.url
     });
 });
+
+const rabbitHost = process.env.RABBIT_HOST || 'localhost';
+const rabbitPort = process.env.RABBIT_PORT || '5672';
+
+connectToRabbit(`amqp://${rabbitHost}:${rabbitPort}`);
 
 const args = yargs.option(
     'port', { alias: 'p', default: 8000, type: 'number' }

@@ -18,7 +18,9 @@
     "@types/mongoose": "^5.0.5",
     "@types/morgan": "^1.7.33",
     "@types/node-fetch": "^1.6.7",
-    "@types/yargs": "^8.0.2"},
+    "@types/yargs": "^8.0.2",
+    "@types/amqplib": "^0.5.6"
+  },
   "dependencies": {
     "amqplib": "^0.5.2",
     "body-parser": "^1.18.2",
