@@ -13,7 +13,7 @@ services:
   sosemivigelant:
     image: dekker/sosemivigelant
     build:
-      context: ./SoSemiVigelant.FrontEnd
+      context: ./src/SoSemiVigelant.FrontEnd
       dockerfile: Dockerfile
     restart: always
       
