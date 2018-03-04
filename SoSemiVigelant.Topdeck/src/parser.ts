@@ -44,6 +44,10 @@ export const parse = (): Promise<{}> => {
 
             request({ uri: url, method: 'GET', encoding: 'binary' },
                 function (err, res, page) {
+                    if (page === undefined) {
+                        console.error('Page is undefined!', err, res);
+                        return;
+                    }
                     const cheer = cheerio.load(page);
                     const scripts = cheer('script');
                     for (let index in scripts) {
