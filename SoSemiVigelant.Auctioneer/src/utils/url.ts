@@ -14,7 +14,7 @@ export class Url {
     }
 
     toString() {
-        const protocol = this.config.protocol ? `:${this.config.protocol}`: '';
+        const protocol = this.config.protocol ? `${this.config.protocol}`: '';
         const port = this.config.port ? `:${this.config.port}`: '';
         const path = this.config.path ? `/${this.config.path}`: '';
         const query = this.config.query ? `?${this.config.query}`: '';
