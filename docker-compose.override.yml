@@ -7,4 +7,4 @@ services:
 
   sesemivigelant-auctioneer:
     ports:
-      - "61507:8080"
+      - "65107:8000"
