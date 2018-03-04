@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as colors from 'colors';
 import * as mongoose from 'mongoose';
+import * as cors from 'cors';
 
 import { setup } from './api';
 import { connectToRabbit } from './service';
@@ -13,6 +14,12 @@ const app = express()
     .use(morgan(':method :url -> :status'))
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json());
+
+const nodeEnv = process.env.NODE_ENV;
+
+if (nodeEnv !== 'produnction') {
+    app.use(cors());
+}
 
 const mongoUrl = new Url({
     protocol: 'mongodb',

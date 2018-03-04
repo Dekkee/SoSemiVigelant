@@ -2,6 +2,7 @@ import { ObjectID } from 'mongodb';
 
 import { Model, Document } from 'mongoose';
 import * as colors from 'colors';
+import * as _ from 'lodash';
 
 export type Key = string | number;
 
@@ -44,7 +45,26 @@ export default abstract class CrudRepository<T extends Document> implements ICru
 
     async list (query: any = {}): Promise<T[]> {
         try {
-            return await this.model.find(query);
+            let docQuery = this.model.find();
+            if (query.take) {
+                docQuery = docQuery.limit(parseInt(query.take));
+            }
+            if (query.skip) {
+                docQuery = docQuery.skip(parseInt(query.skip));
+            }
+            if (query.order) {
+                docQuery = docQuery.sort([[query.order, query.asc === 'asc' ? 'ascending' : 'descending']]);
+            }
+            return await docQuery.exec();
+        } catch (e) {
+            console.error(colors.red(e.message));
+            throw e;
+        }
+    }
+
+    async count (query: any = {}): Promise<number> {
+        try {
+            return await this.model.count(_.omit(query, ['take', 'skip', 'order', 'asc']));
         } catch (e) {
             console.error(colors.red(e.message));
             throw e;

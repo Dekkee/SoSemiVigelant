@@ -40,6 +40,19 @@ export var AuctionSchema: Schema = new Schema({
     city: String,
     seller_ip: String,
     seller: String
+}, {
+    toObject: {
+        transform: function (doc, ret) {
+            delete ret._id;
+            delete ret.__v;
+        }
+    },
+    toJSON: {
+        transform: function (doc, ret) {
+            delete ret._id;
+            delete ret.__v;
+        }
+    }
 });
 
 export const Auction: Model<AuctionModel> = model<AuctionModel>('auctions', AuctionSchema);

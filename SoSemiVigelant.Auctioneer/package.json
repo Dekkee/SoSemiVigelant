@@ -22,11 +22,15 @@
     "@types/yargs": "^8.0.2"
   },
   "dependencies": {
+    "@types/cors": "^2.8.3",
+    "@types/lodash": "^4.14.104",
     "@types/normalizr": "^2.0.18",
     "amqplib": "^0.5.2",
     "body-parser": "^1.18.2",
     "colors": "^1.1.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
+    "lodash": "^4.17.5",
     "mongodb": "^3.0.3",
     "mongoose": "^5.0.7",
     "morgan": "^1.9.0",
