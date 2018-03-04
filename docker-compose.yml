@@ -31,12 +31,24 @@ services:
         - 8000:8000
     depends_on:
         - sesemivigelant-mongo
+        - sesemivigelant-rabbit
     environment:
         - NODE_ENV=development
         - MONGO_HOST=sesemivigelant-mongo
         - RABBIT_HOST=sesemivigelant-rabbit
         - RABBIT_USER=SuchRabbit
         - RABBIT_PASS=VeryPassword
+
+  sesemivigelant-topdeck:
+    build: ./SoSemiVigelant.Topdeck
+    depends_on:
+        - sesemivigelant-rabbit
+    environment:
+        - NODE_ENV=development
+        - RABBIT_HOST=sesemivigelant-rabbit
+        - RABBIT_USER=SuchRabbit
+        - RABBIT_PASS=VeryPassword
+
   sesemivigelant-mongo:
     image: mongo:latest
     environment:
