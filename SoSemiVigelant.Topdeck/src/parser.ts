@@ -1,4 +1,6 @@
-const requirejs = require('requirejs');
+const requirejs = require('requirejs'),
+    jsdom = { ...require('jsdom') },
+    jquery = require('jquery');
 
 import * as request from 'request';
 import * as cheerio from 'cheerio';
@@ -15,12 +17,13 @@ const url = 'https://topdeck.ru/apps/toptrade/auctions';
 
 export const parse = (): Promise<{}> => {
     return new Promise((resolve, reject) => {
-        require('jsdom').env('', (err: any, window: any) => {
+        jsdom.env('', (err: any, window: any) => {
             if (err) {
                 reject(err);
                 return;
             }
-            requirejs.define('jquery', [], () => require('jquery')(window))
+            requirejs.define('jquery', [], () => jquery(window));
+            requirejs.undef('knockout');
             requirejs.define('knockout', [], () => ({
                 applyBindings: (AucVM: any) => resolve(AucVM.aucs),
                 observable: (a: any) => {

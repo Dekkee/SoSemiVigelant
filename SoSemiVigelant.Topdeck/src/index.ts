@@ -16,7 +16,7 @@ const load = async() => {
     try {
         console.log(colors.cyan(`Performing topdeck request`));
         const aucs: any = await parse();
-        console.log(colors.cyan('Auctions received. Count: ' + aucs.length));
+        console.log(colors.cyan('Auctions received. Count: ') + aucs.length);
 
         console.log(colors.cyan(`Putting into rabbit`));
         const connection = await amqp.connect(rabbitUrl.toString());
