@@ -1,0 +1,24 @@
+version: "3"
+services:
+  sesemivigelant-auctioneer:
+    build: .
+    ports:
+        - 8000:80
+    links:
+        - sesemivigelant-mongo
+    depends_on:
+        - sesemivigelant-mongo
+    environment:
+        - NODE_ENV=development
+  sesemivigelant-mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGODB_USER=SuchMongo
+      - MONGODB_PASS=VeryPassword
+    volumes:
+      - ./data/db:/data/db
+    ports:
+        - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet
