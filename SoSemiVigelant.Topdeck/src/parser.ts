@@ -4,6 +4,7 @@ const requirejs = require('requirejs'),
 
 import * as request from 'request';
 import * as cheerio from 'cheerio';
+import * as colors from 'colors';
 
 const localStorage = {
     setItem: () => {
@@ -13,7 +14,7 @@ const localStorage = {
 
 (global as any).localStorage = localStorage;
 
-const url = 'https://topdeck.ru/apps/toptrade/auctions';
+const url = 'http://topdeck.ru/apps/toptrade/auctions';
 
 export const parse = (): Promise<{}> => {
     return new Promise((resolve, reject) => {
@@ -44,8 +45,8 @@ export const parse = (): Promise<{}> => {
 
             request({ uri: url, method: 'GET', encoding: 'binary' },
                 function (err, res, page) {
-                    if (page === undefined) {
-                        console.error('Page is undefined!', err, res);
+                    if (err) {
+                        console.error(colors.red('Error requestinf data: ') + err);
                         return;
                     }
                     const cheer = cheerio.load(page);
