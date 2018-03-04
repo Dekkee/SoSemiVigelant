@@ -6,7 +6,7 @@ export const setup = (app: express.Application) => {
         resp.send({ version: require('../../package.json').version });
     });
 
-    app.get('/mongo', async (req, resp) => {
+    app.get('/auctions', async (req, resp) => {
         try {
             resp.send(await new AuctionRepository().list());
         } catch (e) {
@@ -14,7 +14,7 @@ export const setup = (app: express.Application) => {
         }
     });
 
-    app.get('/mongo/:id', async (req, resp) => {
+    app.get('/auctions/:id', async (req, resp) => {
         try {
             resp.send(await new AuctionRepository().get(req.params.id));
         } catch (e) {
@@ -22,7 +22,7 @@ export const setup = (app: express.Application) => {
         }
     });
 
-    app.put('/mongo', async (req, resp) => {
+    app.put('/auctions', async (req, resp) => {
         try {
             resp.send(await new AuctionRepository().put(req.body));
         } catch (e) {
@@ -30,7 +30,7 @@ export const setup = (app: express.Application) => {
         }
     });
 
-    app.delete('/mongo/:id', async (req, resp) => {
+    app.delete('/auctions/:id', async (req, resp) => {
         try {
             resp.send(await new AuctionRepository().delete(req.params.id));
         } catch (e) {

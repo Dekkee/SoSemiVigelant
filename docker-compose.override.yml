@@ -1,20 +1,15 @@
 version: '3'
 
 services:
-  sosemivigelant:
+  sosemivigelant-webapp:
     ports:
       - "8080:8080"
 
-  sosemivigelant.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:5101
-      - ConnectionString=Server=sql.data;Database=SoSemiDatabase;User Id=sa;Password=D0ckSql!
-      - ExternalCatalogBaseUrl=http://localhost:5101    #Local: You need to open your local dev-machine firewall at range 5100-5105.  at range 5100-5105.
+  sosemivigelant-auctioneer:
     ports:
-      - "65107:5101"
+      - "61507:8080"
 
-  sql.data:
-    environment:
-      - SA_PASSWORD=D0ckSql!
-      - ACCEPT_EULA=Y
+  # sql.data:
+  #   environment:
+  #     - SA_PASSWORD=D0ckSql!
+  #     - ACCEPT_EULA=Y

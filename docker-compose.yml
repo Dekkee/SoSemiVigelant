@@ -1,15 +1,6 @@
 version: '3'
 
 services:
-  sosemivigelant.api:
-    image: dekker/sosemivigelant.api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - sql.data
-    restart: always
-
   sosemivigelant:
     image: dekker/sosemivigelant
     build:
@@ -17,13 +8,13 @@ services:
       dockerfile: Dockerfile
     restart: always
       
-  sql.data:
-    image: postgres:9.6-alpine
-    volumes:
-      - sql.data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: SoPostMuchGreWow!1
-    restart: always
+  # sql.data:
+  #   image: postgres:9.6-alpine
+  #   volumes:
+  #     - sql.data:/var/lib/postgresql/data
+  #   environment:
+  #     POSTGRES_PASSWORD: SoPostMuchGreWow!1
+  #   restart: always
 
   sesemivigelant-auctioneer:
     build: ./SoSemiVigelant.Auctioneer
@@ -75,6 +66,6 @@ services:
     labels:
       NAME: "rabbitmq"
 
-volumes:
-  sql.data:
-    external: true
+# volumes:
+#   sql.data:
+#     external: true

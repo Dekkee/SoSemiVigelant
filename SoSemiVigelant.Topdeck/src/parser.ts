@@ -4,7 +4,6 @@ const requirejs = require('requirejs'),
 
 import { request } from 'https';
 import * as cheerio from 'cheerio';
-import * as colors from 'colors';
 
 const localStorage = {
     setItem: () => {
