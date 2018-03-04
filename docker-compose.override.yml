@@ -5,11 +5,6 @@ services:
     ports:
       - "8080:8080"
 
-  sosemivigelant-auctioneer:
+  sesemivigelant-auctioneer:
     ports:
       - "61507:8080"
-
-  # sql.data:
-  #   environment:
-  #     - SA_PASSWORD=D0ckSql!
-  #     - ACCEPT_EULA=Y
