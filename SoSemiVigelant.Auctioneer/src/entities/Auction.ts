@@ -1,6 +1,6 @@
 import { Schema, Document, Model, model } from 'mongoose';
 
-export interface IAuctionModel extends Document {
+export interface AuctionModel extends Document {
     id: number;
     lot: string;
     date_estimated: Date;
@@ -42,4 +42,4 @@ export var AuctionSchema: Schema = new Schema({
     seller: String
 });
 
-export const Auction: Model<IAuctionModel> = model<IAuctionModel>('auctions', AuctionSchema);
+export const Auction: Model<AuctionModel> = model<AuctionModel>('auctions', AuctionSchema);

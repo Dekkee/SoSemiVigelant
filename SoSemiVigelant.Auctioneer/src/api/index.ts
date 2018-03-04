@@ -1,5 +1,5 @@
 import * as express from 'express';
-import AuctionRepository from '../AuctionRepository';
+import AuctionRepository from '../entities/AuctionRepository';
 
 export const setup = (app: express.Application) => {
     app.use('/version', (req, resp) => {
