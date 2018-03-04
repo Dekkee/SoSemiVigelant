@@ -7,20 +7,23 @@ import * as mongoose from 'mongoose';
 
 import { setup } from './api';
 import { connectToRabbit } from './service';
+import { Url } from './utils/url';
 
 const app = express()
     .use(morgan(':method :url -> :status'))
     .use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json());
 
-const mongoHost = process.env.MONGO_HOST || 'localhost';
-const mongoPort = process.env.MONGO_PORT || '27017';
-const mongoDb = process.env.MONGO_DB || 'sosemimongo';
-const mongoCredentials = process.env.MONGO_USER && process.env.MONGO_PASS
-    ? `${process.env.MONGO_USER}:${process.env.MONGO_PASS}@`
-    : '';
+const mongoUrl = new Url({
+    protocol: 'mongodb',
+    host: process.env.MONGO_HOST || 'localhost',
+    port: process.env.MONGO_PORT || '27017',
+    path: process.env.MONGO_DB || 'sosemimongo',
+    user: process.env.MONGO_USER,
+    password: process.env.MONGO_PASS,
+});
 
-mongoose.connect(`mongodb://${mongoCredentials}${mongoHost}:${mongoPort}/${mongoDb}`);
+mongoose.connect(mongoUrl.toString());
 
 setup(app);
 
@@ -35,13 +38,15 @@ app.get('*', function (req, resp) {
     });
 });
 
-const rabbitHost = process.env.RABBIT_HOST || 'localhost';
-const rabbitPort = process.env.RABBIT_PORT || '5672';
-const rabbitCredentials = process.env.RABBIT_USER && process.env.RABBIT_PASS
-    ? `${process.env.RABBIT_USER}:${process.env.RABBIT_PASS}@`
-    : '';
+const rabbitUrl = new Url({
+    protocol: 'amqp',
+    host: process.env.RABBIT_HOST || 'localhost',
+    port: process.env.RABBIT_PORT || '5672',
+    user: process.env.RABBIT_USER,
+    password: process.env.RABBIT_PASS
+});
 
-connectToRabbit(`amqp://${rabbitCredentials}${rabbitHost}:${rabbitPort}`);
+connectToRabbit(rabbitUrl.toString());
 
 const args = yargs.option(
     'port', { alias: 'p', default: 8000, type: 'number' }
