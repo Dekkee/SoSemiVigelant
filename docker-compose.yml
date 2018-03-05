@@ -6,6 +6,10 @@ services:
       context: ./SoSemiVigelant.FrontEnd
       dockerfile: Dockerfile
     restart: always
+    environment:
+        - NODE_ENV=development
+        - API_HOST=localhost
+        - API_PORT=8000
 
   sesemivigelant-auctioneer:
     build: ./SoSemiVigelant.Auctioneer
