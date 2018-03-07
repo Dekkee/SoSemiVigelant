@@ -2,7 +2,7 @@ import * as amqp from 'amqplib';
 import { normalize, schema } from 'normalizr';
 import * as colors from 'colors';
 
-import {AuctionsStorage, UsersStorage} from '../data';
+import {AuctionsStorage, UsersStorage} from '../storage';
 
 const auctionsStorage = new AuctionsStorage();
 const usersStorage = new UsersStorage();
