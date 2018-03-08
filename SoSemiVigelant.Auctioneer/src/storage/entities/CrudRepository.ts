@@ -53,7 +53,7 @@ export default abstract class CrudRepository<T extends Document> implements ICru
                 docQuery = docQuery.skip(parseInt(query.skip));
             }
             if (query.order) {
-                docQuery = docQuery.sort([[query.order, query.asc === 'asc' ? 'ascending' : 'descending']]);
+                docQuery = docQuery.sort([[query.order, Boolean(query.asc) ? 'ascending' : 'descending']]);
             }
             return await docQuery.exec();
         } catch (e) {

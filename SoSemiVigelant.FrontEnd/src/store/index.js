@@ -17,7 +17,7 @@ const store = createStore(
             page: 0,
             perPage: 20,
             sortOrder: 'estimated',
-            sortDirection: false
+            sortDirection: true
         }
     },
     applyMiddleware(...middleware)
