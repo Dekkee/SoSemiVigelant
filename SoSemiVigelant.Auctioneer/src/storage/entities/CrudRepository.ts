@@ -55,6 +55,9 @@ export default abstract class CrudRepository<T extends Document> implements ICru
             if (query.order) {
                 docQuery = docQuery.sort([[query.order, Boolean(query.asc) ? 'ascending' : 'descending']]);
             }
+            if (query.name) {
+                docQuery = docQuery.find({'name': { "$regex": query.name, "$options": "i" }})
+            }
             return await docQuery.exec();
         } catch (e) {
             console.error(colors.red(e.message));
@@ -64,7 +67,7 @@ export default abstract class CrudRepository<T extends Document> implements ICru
 
     async count (query: any = {}): Promise<number> {
         try {
-            return await this.model.count(_.omit(query, ['take', 'skip', 'order', 'asc']));
+            return await this.model.count(query.name ? {'name': { "$regex": query.name, "$options": "i" }} : {});
         } catch (e) {
             console.error(colors.red(e.message));
             throw e;
