@@ -28,11 +28,11 @@ class AuctionList extends React.Component {
                 label: 'Название'
             },
             {
-                name: 'timeLeft',
+                name: 'estimated',
                 label: 'До конца'
             },
             {
-                name: 'currentBet',
+                name: 'currentBid',
                 label: 'Ставка'
             }
         ];

@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux'
 
 import reducer from '../reducers'
 
-const middleware = [thunk]
+const middleware = [thunk];
 if (process.env.NODE_ENV !== 'production') {
     middleware.push(createLogger())
 }
@@ -16,11 +16,11 @@ const store = createStore(
             items: [],
             page: 0,
             perPage: 20,
-            sortOrder: 'timeLeft',
-            sortDirection: true
+            sortOrder: 'estimated',
+            sortDirection: false
         }
     },
     applyMiddleware(...middleware)
-)
+);
 
 export default store;

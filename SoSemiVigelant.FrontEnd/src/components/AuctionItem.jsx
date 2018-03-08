@@ -7,7 +7,7 @@ class AuctionItem extends React.Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
         id: PropTypes.number.isRequired,
-        timeLeft: PropTypes.number,
+        estimated: PropTypes.number,
         currentBid: PropTypes.number
     };
 
@@ -22,11 +22,12 @@ class AuctionItem extends React.Component {
     }
 
     render() {
+        const {name, estimated, currentBid} = this.props;
         return (
             <div className="auctionItem" onClick={this.handleView}>
-                <span className="auction-column auction-column-name">{this.props.name}</span>
-                <Ticker className="auction-column auction-column-timeLeft" initialTime={this.props.timeLeft}/>
-                <span className="auction-column auction-column-currentBet">{this.props.currentBid}</span>
+                <span className="auction-column auction-column-name">{name}</span>
+                <Ticker className="auction-column auction-column-timeLeft" initialTime={estimated}/>
+                <span className="auction-column auction-column-currentBet">{currentBid}</span>
             </div>
         );
     }

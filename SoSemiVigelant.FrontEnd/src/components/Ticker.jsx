@@ -1,6 +1,7 @@
 import React from 'react';
 
 import moment from 'moment';
+
 require("moment-duration-format");
 
 class Ticker extends React.Component {
@@ -10,7 +11,7 @@ class Ticker extends React.Component {
         this._interval = 1000;
 
         this.state = {
-            ticks: moment.duration(props.initialTime / 10000)
+            ticks: moment.duration(new Date(props.initialTime) - new Date())
         };
 
         this.tick = this.tick.bind(this);
@@ -22,7 +23,7 @@ class Ticker extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props !== nextProps) {
-            this.setState({ticks: moment.duration(nextProps.initialTime / 10000)})
+            this.setState({ticks: moment.duration(new Date(nextProps.initialTime) - new Date())})
         }
     }
 
@@ -50,12 +51,15 @@ class Ticker extends React.Component {
             return duration.format('h[ч] mm[м] ss[с]');
         }
     }
-    
-    render() { 
-        const time = this.format(this.state.ticks);
+
+    render() {
+        const {ticks} = this.state;
+        const time = this.format(ticks);
 
         return (
-            <div className="ticker">{time}</div>
+            ticks > 0
+                ? <div className="ticker">{time}</div>
+                : 'Завершен'
         );
     }
 }
