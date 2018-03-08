@@ -34,7 +34,7 @@ export var UserSchema: Schema = new Schema({
 export const User: Model<UserModel & Document> = model<UserModel & Document>('users', UserSchema);
 
 export const UserMap: Record<keyof UserModel, string> = {
-    id: 'iod',
+    id: 'id',
     name: 'name',
     city: 'city',
     refs: 'refs',
