@@ -25,7 +25,7 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
     }
 
     private parse(entrys: E[]): D[]{
-        return [...entrys].map((entry)=> {
+        return entrys.map((entry)=> {
             const model: D = {} as D;
             const keys = Object.keys(entry);
             for (const key of keys) {
