@@ -11,13 +11,12 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
     constructor(private readonly repository: ICrudRepository<D, Key>, private readonly map: {[index: string]: any}) {
     }
 
-    async syncData(data: Record<string, (any & {id: Key})>) {
-        const keys = Object.keys(data);
-        console.log(colors.cyan(`Syncing entities: `) + keys.length)
-        for (const key of keys) {
-            await this.repository.get(data[key].id) === null
-                ? this.repository.put(data[key])
-                : this.repository.update(data[key])
+    async syncData(data: (any & {id: Key})[]) {
+        console.log(colors.cyan(`Syncing entities: `) + data.length)
+        for (const entry of data) {
+            await this.repository.get(entry.id) === null
+                ? this.repository.put(entry)
+                : this.repository.update(entry)
         }
     };
 

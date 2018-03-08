@@ -31,8 +31,8 @@ export const connectToRabbit = async (url: string) => {
             try {
                 const parsed = normalizeData(JSON.parse(content));
                 console.log(colors.cyan('Data received. Count: ') + parsed.result.length);
-                await usersStorage.bulkAdd(parsed.entities.users);
-                await auctionsStorage.bulkAdd(parsed.entities.auctions);
+                await usersStorage.bulkAdd(Object.values(parsed.entities.users));
+                await auctionsStorage.bulkAdd(Object.values(parsed.entities.auctions));
                 console.log(colors.cyan('Done!'));
             } catch (e) {
                 console.log(colors.red(e.message));
