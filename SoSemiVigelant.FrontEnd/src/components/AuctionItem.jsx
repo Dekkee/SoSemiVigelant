@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from './Button'
 import Ticker from './Ticker'
-import { fetchAucInfo } from '../actions'
 
 class AuctionItem extends React.Component {
     static propTypes = {
         name: PropTypes.string.isRequired,
         id: PropTypes.number.isRequired,
         timeLeft: PropTypes.number,
-        currentBet: PropTypes.number
-    }
+        currentBid: PropTypes.number
+    };
 
     constructor(props) {
         super(props);
@@ -28,7 +26,7 @@ class AuctionItem extends React.Component {
             <div className="auctionItem" onClick={this.handleView}>
                 <span className="auction-column auction-column-name">{this.props.name}</span>
                 <Ticker className="auction-column auction-column-timeLeft" initialTime={this.props.timeLeft}/>
-                <span className="auction-column auction-column-currentBet">{this.props.currentBet}</span>
+                <span className="auction-column auction-column-currentBet">{this.props.currentBid}</span>
             </div>
         );
     }

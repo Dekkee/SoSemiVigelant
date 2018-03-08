@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 
 import { Pagination } from './pagination'
 
@@ -13,7 +13,7 @@ class AuctionListControls extends React.Component{
         onPageSizeChanged: PropTypes.func,
         onPageChanged: PropTypes.func,
         onSearchTextChange: PropTypes.func,
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -27,7 +27,7 @@ class AuctionListControls extends React.Component{
             //{ value: null, label: 'Все' },
          ];
 
-        this.onSearchTextChange = _.debounce((val) => 
+        this.onSearchTextChange = debounce((val) =>
         {
             this.props.onSearchTextChange(val);
         }, 200);

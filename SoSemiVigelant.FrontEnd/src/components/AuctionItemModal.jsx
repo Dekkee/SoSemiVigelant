@@ -11,10 +11,10 @@ class AuctionItemModal extends React.Component{
         }),
         isFetching: PropTypes.bool.isRequired,
         lastUpdated: PropTypes.number
-    }
+    };
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.closeModal = this.closeModal.bind(this);
   }
@@ -25,7 +25,7 @@ class AuctionItemModal extends React.Component{
   }
 
   render() {
-    const { auction, isFetching, lastUpdated, modalIsOpen } = this.props;
+    const { auction, isFetching, modalIsOpen } = this.props;
         return (
             <div>
                 <Modal

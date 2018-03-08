@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames'
 
-import {fetchAucsIfNeeded} from '../actions'
 import AuctionItemContainer from '../containers/AuctionItemContainer'
 import AuctionListControlsContainer from '../containers/AuctionListControlsContainer'
-import {Modal} from './modal'
 
 class AuctionList extends React.Component {
     static propTypes = {
@@ -17,10 +15,10 @@ class AuctionList extends React.Component {
         sortOrder: PropTypes.string.isRequired,
         sortDirection: PropTypes.bool.isRequired,
         searchText: PropTypes.string
-    }
+    };
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.perPage = 20;
 
@@ -54,17 +52,6 @@ class AuctionList extends React.Component {
             sortDirection,
             searchText
         });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (/*nextProps.selectedReddit !== this.props.selectedReddit*/true) {
-            // const { loadAucs } = this.props;
-            // const request = {
-            //   page: this.page,
-            //   perPage: this.perPage
-            // }
-            //loadAucs(request);
-        }
     }
 
     handlePageChange(page) {
