@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import renderHTML from 'react-render-html';
 
-import { fetchAucsIfNeeded } from '../actions'
-import AuctionItemContainer from '../containers/AuctionItemContainer'
 import { Modal } from './modal'
 
 class AuctionItemModal extends React.Component{
