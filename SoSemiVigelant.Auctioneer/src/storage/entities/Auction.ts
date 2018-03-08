@@ -67,13 +67,13 @@ export const AuctionMap: Record<keyof AuctionModel, string> = {
     startBid: 'start_bid',
     currentBid: 'current_bid',
     bidAmount: 'bid_amount',
-    shippingInfoShort: 'shipping_short_quick',
-    shippingInfo: 'shipping_short',
+    shippingInfoShort: 'shipping_info_quick',
+    shippingInfo: 'shipping_info',
     binValue: 'bin_value',
     published: 'date_published',
     thumbIsGeneric: 'thumb_is_generic',
     withPost: 'with_post',
     city: 'city',
-    sellerIp: 'sellep_ip',
+    sellerIp: 'seller_ip',
     seller: 'seller'
 };
