@@ -4,12 +4,16 @@ import { Auction, AuctionMap, AuctionModel } from './entities/Auction';
 import { ICrudRepository, Key } from './entities/CrudRepository';
 import * as colors from 'colors';
 import AuctionRepository from './entities/AuctionRepository';
-import { UserModel, UserMap } from './entities/User';
+import { UserModel, UserMap, User } from './entities/User';
 import UserRepository from './entities/UserRepository';
+import { Model, Document } from 'mongoose';
 
 export abstract class DataStorage<D extends {[index: string]: any}, E extends {[index: string]: any}> {
-    constructor(private readonly repository: ICrudRepository<D, Key>, private readonly map: {[index: string]: any}) {
-    }
+    constructor(
+        private readonly repository: ICrudRepository<D, Key>,
+        private readonly map: {[index: string]: any},
+        private readonly model: Model<D & Document>
+    ) {    }
 
     async syncData(data: (any & {id: Key})[]) {
         console.log(colors.cyan(`Syncing entities: `) + data.length)
@@ -28,9 +32,12 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
         return entrys.map((entry)=> {
             const model: D = {} as D;
             const keys = Object.keys(this.map);
-            console.log(keys);
             for (const key of keys) {
-                model[key] = entry[this.map[key]];
+                if (this.model.schema.obj[key] === Date) {
+                    model[key] = new Date(entry[this.map[key]] * 1000);
+                } else {
+                    model[key] = entry[this.map[key]];
+                }
             }
             return model;
         })
@@ -39,13 +46,13 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
 
 export class AuctionsStorage extends DataStorage<AuctionModel, AuctionEntity> {
     constructor() {
-        super(new AuctionRepository(), AuctionMap);
+        super(new AuctionRepository(), AuctionMap, Auction);
     }
 }
 
 export class UsersStorage extends DataStorage<UserModel, UserEntity> {
     constructor() {
-        super(new UserRepository(), UserMap);
+        super(new UserRepository(), UserMap, User);
     }
 }
 
