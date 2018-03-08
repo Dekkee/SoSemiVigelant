@@ -19,7 +19,7 @@ function reducer(state = {}, action) {
             return {
                 ...state,
                 isFetching: false,
-                items: action.result,
+                items: action.values,
                 count: action.count,
                 lastUpdated: action.receivedAt
             }
