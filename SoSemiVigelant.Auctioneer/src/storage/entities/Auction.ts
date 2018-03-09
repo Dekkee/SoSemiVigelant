@@ -19,6 +19,7 @@ export interface AuctionModel {
     city: string;
     sellerIp: string;
     seller: string;
+    description: string;
 }
 
 export const AuctionSchema: Schema = new Schema({
@@ -41,7 +42,8 @@ export const AuctionSchema: Schema = new Schema({
     withPost: Boolean,
     city: String,
     sellerIp: String,
-    seller: String
+    seller: String,
+    description: String
 }, {
     toObject: {
         transform: function (doc, ret) {

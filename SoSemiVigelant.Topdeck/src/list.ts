@@ -13,9 +13,7 @@ const localStorage = {
 
 (global as any).localStorage = localStorage;
 
-const url = 'https://topdeck.ru/apps/toptrade/auctions';
-
-export const parse = (): Promise<{}> => {
+export const list = (): Promise<{}> => {
     return new Promise((resolve, reject) => {
         jsdom.env('', (err: any, window: any) => {
             if (err) {
@@ -37,7 +35,7 @@ export const parse = (): Promise<{}> => {
             }));
 
             (global as any).topdeck = {
-                requirejs: requirejs,
+                requirejs,
                 require: requirejs,
                 define: requirejs.define
             };

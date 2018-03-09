@@ -8,7 +8,7 @@ import * as cors from 'cors';
 
 import { setup } from './api';
 import { connectToRabbit } from './service';
-import { Url } from './utils/url';
+import { mongoUrl, rabbitUrl } from './config';
 
 const app = express()
     .use(morgan(':method :url -> :status'))
@@ -20,15 +20,6 @@ const nodeEnv = process.env.NODE_ENV;
 if (nodeEnv !== 'produnction') {
     app.use(cors());
 }
-
-const mongoUrl = new Url({
-    protocol: 'mongodb',
-    host: process.env.MONGO_HOST || 'localhost',
-    port: process.env.MONGO_PORT || '27017',
-    path: process.env.MONGO_DB || 'sosemimongo',
-    user: process.env.MONGO_USER,
-    password: process.env.MONGO_PASS,
-});
 
 mongoose.connect(mongoUrl.toString());
 
@@ -43,14 +34,6 @@ app.get('*', function (req, resp) {
         method: req.method,
         url: req.url
     });
-});
-
-const rabbitUrl = new Url({
-    protocol: 'amqp',
-    host: process.env.RABBIT_HOST || 'localhost',
-    port: process.env.RABBIT_PORT || '5672',
-    user: process.env.RABBIT_USER,
-    password: process.env.RABBIT_PASS
 });
 
 connectToRabbit(rabbitUrl.toString());

@@ -1,5 +1,6 @@
 import * as express from 'express';
 import AuctionRepository from '../storage/entities/AuctionRepository';
+import { requestDescription } from '../service';
 
 export const setup = (app: express.Application) => {
     app.get('/version', (req, resp) => {
@@ -20,7 +21,9 @@ export const setup = (app: express.Application) => {
 
     app.get('/auctions/:id', async (req, resp) => {
         try {
-            resp.send(await new AuctionRepository().get(req.params.id));
+            const { id } = req.params;
+            requestDescription(id);
+            resp.send(await new AuctionRepository().get(id));
         } catch (e) {
             resp.status(500).send(e.message);
         }

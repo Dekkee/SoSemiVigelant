@@ -10,7 +10,7 @@ import { Model, Document } from 'mongoose';
 
 export abstract class DataStorage<D extends {[index: string]: any}, E extends {[index: string]: any}> {
     constructor(
-        private readonly repository: ICrudRepository<D, Key>,
+        protected readonly repository: ICrudRepository<D, Key>,
         private readonly map: {[index: string]: any},
         private readonly model: Model<D & Document>
     ) {    }
@@ -47,6 +47,16 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
 export class AuctionsStorage extends DataStorage<AuctionModel, AuctionEntity> {
     constructor() {
         super(new AuctionRepository(), AuctionMap, Auction);
+    }
+
+
+    public async updateDescription(id: Key, description: string) {
+        const entity = await this.repository.get(id);
+        if (!entity) {
+            throw new Error(`Entity ${id} not found`)
+        }
+        entity.description = description;
+        await this.repository.update(entity);
     }
 }
 

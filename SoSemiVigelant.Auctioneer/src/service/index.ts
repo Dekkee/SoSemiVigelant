@@ -3,6 +3,8 @@ import { normalize, schema } from 'normalizr';
 import * as colors from 'colors';
 
 import {AuctionsStorage, UsersStorage} from '../storage';
+import { Message } from 'amqplib/properties';
+import { rabbitUrl } from '../config';
 
 const auctionsStorage = new AuctionsStorage();
 const usersStorage = new UsersStorage();
@@ -16,28 +18,63 @@ const normalizeData = (data: any[]) => {
     return normalize(data, [auctionSchema]);
 };
 
-export const connectToRabbit = async (url: string) => {
-    const connection = await amqp.connect(url);
+const exchange = 'topdeck';
+
+export const connectToRabbit = async () => {
+    const connection = await amqp.connect(rabbitUrl.toString());
     const channel = await connection.createChannel();
 
-    const q = 'auctions';
-
-    await channel.assertQueue(q, { durable: false });
+    await channel.assertExchange(exchange, 'topic', { durable: false });
+    const listQueue = await channel.assertQueue('', {exclusive: true});
     await channel.prefetch(1);
+    await channel.bindQueue(listQueue.queue, exchange, '*.list');
+    const descQueue = await channel.assertQueue('', {exclusive: true});
+    await channel.bindQueue(descQueue.queue, exchange, '*.description.response');
     console.log(colors.cyan('Awaiting for data'));
-    await channel.consume(q, async (msg) => {
+    await channel.consume(listQueue.queue, async (msg) => {
         if (msg) {
-            const content = msg.content.toString();
-            try {
-                const parsed = normalizeData(JSON.parse(content));
-                console.log(colors.cyan('Data received. Count: ') + parsed.result.length);
-                await usersStorage.bulkAdd(Object.values(parsed.entities.users));
-                await auctionsStorage.bulkAdd(Object.values(parsed.entities.auctions));
-                console.log(colors.cyan('Done!'));
-            } catch (e) {
-                console.log(colors.red(e.message));
-            }
+            await onListRequest(msg);
             channel.ack(msg);
         }
     });
+    await channel.consume(descQueue.queue, async (msg) => {
+        if (msg) {
+            await onDescriptionRequest(msg);
+            channel.ack(msg);
+        }
+    });
+};
+
+const onListRequest = async(msg: Message) => {
+    const content = msg.content.toString();
+    try {
+        const parsed = normalizeData(JSON.parse(content));
+        console.log(colors.cyan('List received. Count: ') + parsed.result.length);
+        await usersStorage.bulkAdd(Object.values(parsed.entities.users));
+        await auctionsStorage.bulkAdd(Object.values(parsed.entities.auctions));
+        console.log(colors.cyan('Done!'));
+    } catch (e) {
+        console.log(colors.red(e.message));
+    }
+};
+
+const onDescriptionRequest = async(msg: Message) => {
+    const content = msg.content.toString();
+    try {
+        const parsed = (JSON.parse(content));
+        console.log(colors.cyan('Description received. Id: ') + parsed.id);
+        await auctionsStorage.updateDescription(parsed.id, parsed.description);
+        console.log(colors.cyan('Done!'));
+    } catch (e) {
+        console.log(colors.red(e.message));
+    }
+};
+
+export const requestDescription = async (id: number) => {
+    const connection = await amqp.connect(rabbitUrl.toString());
+    const channel = await connection.createChannel();
+
+    await channel.assertExchange(exchange, 'topic', { durable: false });
+    channel.publish(exchange, 'auctions.description.request', new Buffer(JSON.stringify({id})), { persistent: true });
+    console.log(colors.cyan('Requesting description for: ') + id);
 };
