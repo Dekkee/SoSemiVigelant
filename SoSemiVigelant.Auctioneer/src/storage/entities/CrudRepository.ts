@@ -2,7 +2,6 @@ import { ObjectID } from 'mongodb';
 
 import { Model, Document } from 'mongoose';
 import * as colors from 'colors';
-import * as _ from 'lodash';
 
 export type Key = string | number;
 
@@ -34,18 +33,25 @@ export default abstract class CrudRepository<T extends Document> implements ICru
         }
     }
 
-    async get (id: Key): Promise<T | null> {
+    async get (id: Key, populate?: string): Promise<T | null> {
         try {
-            return await this.model.findOne({ id: id });
+            let query = this.model.findOne({ id: id });
+            if (populate) {
+                query = query.populate(populate);
+            }
+            return await query.exec();
         } catch (e) {
             console.error(colors.red(e.message));
             throw e;
         }
     }
 
-    async list (query: any = {}): Promise<T[]> {
+    async list (query: any = {}, populate?: string): Promise<T[]> {
         try {
             let docQuery = this.model.find();
+            if (populate) {
+                docQuery = docQuery.populate(populate);
+            }
             if (query.take) {
                 docQuery = docQuery.limit(parseInt(query.take));
             }

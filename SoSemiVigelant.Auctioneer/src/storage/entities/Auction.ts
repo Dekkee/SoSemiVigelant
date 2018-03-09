@@ -1,4 +1,5 @@
-import { Schema, Document, Model, model } from 'mongoose';
+import { Schema, Document, Model, model, Types } from 'mongoose';
+import { User } from './User';
 
 export interface AuctionModel {
     [index: string]: any;
@@ -18,7 +19,7 @@ export interface AuctionModel {
     withPost: boolean;
     city: string;
     sellerIp: string;
-    seller: string;
+    seller: number;
     description: string;
 }
 
@@ -42,7 +43,7 @@ export const AuctionSchema: Schema = new Schema({
     withPost: Boolean,
     city: String,
     sellerIp: String,
-    seller: String,
+    seller: { type: Schema.Types.ObjectId, ref: 'users' },
     description: String
 }, {
     toObject: {
@@ -61,7 +62,7 @@ export const AuctionSchema: Schema = new Schema({
 
 export const Auction: Model<AuctionModel & Document> = model<AuctionModel & Document>('auctions', AuctionSchema);
 
-export const AuctionMap: Record<keyof AuctionModel, string> = {
+export const AuctionMap: Record<keyof AuctionModel, string | {model: Model<Document>, path: string, key: string}> = {
     id: 'id',
     name: 'lot',
     estimated: 'date_estimated',
@@ -77,5 +78,5 @@ export const AuctionMap: Record<keyof AuctionModel, string> = {
     withPost: 'with_post',
     city: 'city',
     sellerIp: 'seller_ip',
-    seller: 'seller'
+    seller: { model: User, path: 'id', key: 'seller' }
 };

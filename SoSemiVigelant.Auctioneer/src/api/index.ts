@@ -22,10 +22,10 @@ export const setup = (app: express.Application) => {
     app.get('/auctions/:id', async (req, resp) => {
         try {
             const { id } = req.params;
-            let auc = await new AuctionRepository().get(id);
+            let auc = await new AuctionRepository().get(id, 'seller');
             if (auc && !auc.description) {
                 await requestDescription(id);
-                auc = await new AuctionRepository().get(id);
+                auc = await new AuctionRepository().get(id, 'seller');
             }
             resp.send(auc);
         } catch (e) {

@@ -16,7 +16,7 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
     ) {    }
 
     async syncData(data: (any & {id: Key})[]) {
-        console.log(colors.cyan(`Syncing entities: `) + data.length)
+        console.log(colors.cyan(`Syncing entities: `) + data.length);
         for (const entry of data) {
             await this.repository.get(entry.id) === null
                 ? this.repository.put(entry)
@@ -25,22 +25,27 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
     };
 
     public async bulkAdd(entrys: E[]) {
-        await this.syncData(this.parse(entrys));
+        await this.syncData(await this.parse(entrys));
     }
 
-    private parse(entrys: E[]): D[]{
-        return entrys.map((entry)=> {
+    private async parse(entrys: E[]): Promise<D[]>{
+        return Promise.all(entrys.map(async (entry) => {
             const model: D = {} as D;
             const keys = Object.keys(this.map);
             for (const key of keys) {
                 if (this.model.schema.obj[key] === Date) {
                     model[key] = new Date(entry[this.map[key]] * 1000);
+                } else if (typeof this.map[key] === 'object') {
+                    const rule = this.map[key];
+                    const query = {[rule.path]: entry[rule.key]};
+                    const object = await rule.model.findOne(query).exec();
+                    model[key] = object._id;
                 } else {
                     model[key] = entry[this.map[key]];
                 }
             }
             return model;
-        })
+        }));
     }
 }
 
@@ -65,4 +70,3 @@ export class UsersStorage extends DataStorage<UserModel, UserEntity> {
         super(new UserRepository(), UserMap, User);
     }
 }
-

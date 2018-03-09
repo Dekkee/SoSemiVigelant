@@ -19,7 +19,7 @@ export var UserSchema: Schema = new Schema({
 }, {
     toObject: {
         transform: function (doc, ret) {
-            delete ret._id;
+            //delete ret._id;
             delete ret.__v;
         }
     },
