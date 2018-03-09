@@ -22,8 +22,12 @@ export const setup = (app: express.Application) => {
     app.get('/auctions/:id', async (req, resp) => {
         try {
             const { id } = req.params;
-            requestDescription(id);
-            resp.send(await new AuctionRepository().get(id));
+            let auc = await new AuctionRepository().get(id);
+            if (auc && !auc.description) {
+                await requestDescription(id);
+                auc = await new AuctionRepository().get(id);
+            }
+            resp.send(auc);
         } catch (e) {
             resp.status(500).send(e.message);
         }

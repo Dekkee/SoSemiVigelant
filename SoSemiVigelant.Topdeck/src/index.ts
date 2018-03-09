@@ -36,9 +36,8 @@ const listen = async() => {
         const connection = await amqp.connect(url.toString());
         const channel = await connection.createChannel();
 
-        await channel.assertExchange(exchange, 'topic', { durable: false });
-        const q = await channel.assertQueue('', {exclusive: true});
-        await channel.bindQueue(q.queue, exchange, 'auctions.description.request');
+        const q = await channel.assertQueue('description', {exclusive: true});
+        await channel.prefetch(1);
         await channel.consume(q.queue, async (msg) => {
             if (msg) {
                 const { id } = JSON.parse(msg.content.toString());
@@ -48,9 +47,12 @@ const listen = async() => {
                     description: await description(id)
                 };
                 console.log(colors.cyan(`Description received: `) + data.description);
-                channel.publish(exchange, 'auctions.description.response', new Buffer(JSON.stringify(data)), { persistent: true });
-                channel.ack(msg);
+                channel.sendToQueue(
+                    msg.properties.replyTo,
+                    new Buffer(JSON.stringify(data)),
+                    {correlationId: msg.properties.correlationId});
                 console.log(colors.cyan(`Done`));
+                channel.ack(msg);
             }
         });
     }
