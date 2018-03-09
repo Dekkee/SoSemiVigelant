@@ -11,9 +11,10 @@ function reducer(state = {
         case REQUEST_AUC:
             return {
                 ...state,
+                auction: null,
                 isFetching: true,
                 modalIsOpen: true
-            }
+            };
         case RECEIVE_AUC:
             return {
                 ...state,
@@ -21,13 +22,14 @@ function reducer(state = {
                 modalIsOpen: true,
                 auction: action.auction,
                 lastUpdated: action.receivedAt
-            }
+            };
         case CLOSE_AUC_MODAL:
             return {
                 ...state,
+                auction: null,
                 isFetching: false,
                 modalIsOpen: false,
-            }
+            };
         default:
             return state
     }

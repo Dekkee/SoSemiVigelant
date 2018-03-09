@@ -27,7 +27,7 @@ const requestAuc = (id) => ({
 const receiveAuc = (id, json) => ({
     type: RECEIVE_AUC,
     id,
-    auction: json.result,
+    auction: json,
     receivedAt: Date.now()
 });
 
