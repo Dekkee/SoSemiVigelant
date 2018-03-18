@@ -1,22 +1,37 @@
-import React from 'react'
-import PropTypes from 'prop-types';
+import * as React from 'react'
+import { connect } from 'react-redux';
 
+import { closeAucModal } from '../actions'
 import { Modal } from './modal'
 
-class AuctionItemModal extends React.Component{
-  static propTypes = {
-        auction: PropTypes.shape({
-            id: PropTypes.number,
-            name: PropTypes.string
-        }),
-        isFetching: PropTypes.bool.isRequired,
-        lastUpdated: PropTypes.number
-    };
+type IProps = IOwnProps & IStateProps & IDispatchProps;
+
+export interface IOwnProps {
+
+}
+
+interface IStateProps {
+    isFetching?: boolean;
+    modalIsOpen?: boolean;
+    auction?: IAuction;
+    lastUpdated?: number;
+}
+
+interface IDispatchProps {
+    onClose?: () => void;
+}
+
+const mapStateToProps = state => state.auctionModal;
+
+const mapDispatchToProps = (dispatch) => ({
+    onClose: () => dispatch(closeAucModal())
+});
+
+@(connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps) as any)
+export class AuctionItemModal extends React.Component<IProps> {
 
   constructor(props) {
     super(props);
-
-    this.closeModal = this.closeModal.bind(this);
   }
 
   closeModal() {
@@ -30,7 +45,7 @@ class AuctionItemModal extends React.Component{
             <div>
                 <Modal
                     isOpen={modalIsOpen}
-                    onRequestClose={this.closeModal}
+                    onRequestClose={this.closeModal.bind(this)}
                     title={auction && auction.name}>
                     {modalIsOpen && isFetching
                         ? <h2 className="loading">Loading...</h2> 
@@ -54,5 +69,3 @@ class AuctionItemModal extends React.Component{
         );
     }
 } 
-
-export default AuctionItemModal

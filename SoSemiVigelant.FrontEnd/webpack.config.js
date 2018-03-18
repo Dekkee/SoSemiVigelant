@@ -10,7 +10,8 @@ const plugins = [
     new HtmlWebpackPlugin({
         title: 'Hot Module Replacement',
         filename: 'public/index.html'
-    })
+    }),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru|en/)
 ];
 
 if (!isProduction) {
@@ -24,8 +25,8 @@ if (!isProduction) {
 }
 
 module.exports = {
-    entry: './src/index.jsx',
-
+    entry: './src/index.tsx',
+    mode: isProduction ? 'production' : 'development',
     output: {
         filename: 'bundle.js',
         path: path.join(__dirname, 'public'),
@@ -39,6 +40,14 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [{
                     loader: 'babel-loader'
+                }]
+            },
+            {
+                test: /\.(tsx|ts)?$/,
+
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'ts-loader'
                 }]
             }
         ]
@@ -54,6 +63,6 @@ module.exports = {
     devtool: 'eval-source-map',
 
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
     }
 };

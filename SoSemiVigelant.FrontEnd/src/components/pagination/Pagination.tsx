@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ReactPaginate from 'react-paginate';
+import * as React from 'react';
+import * as ReactPaginate from 'react-paginate';
 
-export class Pagination extends React.Component{
-    static propTypes = {
-        count: PropTypes.number.isRequired,
-        page: PropTypes.number.isRequired,
-        pageSize: PropTypes.number.isRequired,
-        clickCallback: PropTypes.func.isRequired
-    }
+export interface IProps {
+    count: number;
+    page: number;
+    pageSize: number;
+    clickCallback: () => void;
+}
+
+export class Pagination extends React.Component<IProps> {
 
     constructor(props) {
-            super(props);
+        super(props);
     }
     
     render() {

@@ -1,12 +1,32 @@
 import {
   REQUEST_AUC, RECEIVE_AUC, CLOSE_AUC_MODAL
-} from '../actions'
+} from '../actions/index'
 
-function reducer(state = {
+export interface IState {
+    isFetching: boolean;
+    modalIsOpen: boolean;
+    auction: IAuction;
+}
+
+export const reducer = (state: IState = {
   isFetching: false,
   modalIsOpen: false,
-  auction: {id: 0, name: ''}
-}, action) {
+  auction: {
+      id: 0,
+      name: '',
+      startBid: 0,
+      bidAmount: 0,
+      city: '',
+      description: '',
+      seller: {
+          name: '',
+          refs: 0,
+      },
+      currentBid: 0,
+      shippingInfo: '',
+      shippingInfoShort: '',
+  }
+}, action) => {
     switch (action.type) {
         case REQUEST_AUC:
             return {
@@ -33,6 +53,4 @@ function reducer(state = {
         default:
             return state
     }
-}
-
-export default reducer;
+};
