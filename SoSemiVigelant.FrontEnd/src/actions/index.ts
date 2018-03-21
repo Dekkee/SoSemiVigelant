@@ -1,4 +1,5 @@
 import { getJson, getQuery, getTakeSkipQuery, getTakeSkipQueryString } from '../api/core'
+import { IAuctionsListRequest } from '../api/contracts';
 
 export const REQUEST_AUCS = 'REQUEST_AUCS';
 export const RECEIVE_AUCS = 'RECEIVE_AUCS';
@@ -35,7 +36,7 @@ const closeAuc = () => ({
     type: CLOSE_AUC_MODAL
 });
 
-const fetchAucs = props => dispatch => {
+const fetchAucs = (props: IAuctionsListRequest) => dispatch => {
     dispatch(requestAucs(props));
 
     const paging = props.perPage ?
@@ -59,7 +60,7 @@ const shouldFetchAucs = (state) => {
     return !aucs.isFetching;
 };
 
-export const fetchAucsIfNeeded = props => (dispatch, getState) => {
+export const fetchAucsIfNeeded = (props: IAuctionsListRequest) => (dispatch, getState) => {
     if (shouldFetchAucs(getState())) {
         return dispatch(fetchAucs(props))
     }

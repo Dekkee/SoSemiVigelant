@@ -3,6 +3,19 @@ import * as fetch from 'isomorphic-fetch';
 
 import { map } from '../utils/fp';
 
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+export interface IResponseStatus {
+    status: number;
+    statusText: string;
+}
+
+export interface IErrorResponse extends IResponseStatus {
+    code: number;
+    error: string;
+    msg: string;
+}
+
 const endPoint = process.env.API_HOST && process.env.HOST_PORT ?
     `http://${process.env.API_HOST}:${process.env.HOST_PORT}` :
     'api';

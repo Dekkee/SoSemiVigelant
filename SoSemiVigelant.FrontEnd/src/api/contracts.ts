@@ -1,9 +1,9 @@
-interface IUser {
+export interface IUser {
     name: string;
     refs: number;
 }
 
-interface IAuction {
+export interface IAuction {
     id: number;
     name: string;
     startBid: number;
@@ -14,4 +14,12 @@ interface IAuction {
     shippingInfo: string;
     seller: IUser;
     description: string;
+}
+
+export interface IAuctionsListRequest {
+    perPage?: number;
+    page?: number;
+    sortOrder?: string;
+    sortDirection?: boolean;
+    searchText?: string;
 }
