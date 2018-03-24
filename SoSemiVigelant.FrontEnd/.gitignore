@@ -21,3 +21,5 @@
 
 node_modules
 public/bundle.js
+
+yarn-error.log

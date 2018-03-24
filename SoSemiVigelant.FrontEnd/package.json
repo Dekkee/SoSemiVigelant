@@ -7,7 +7,8 @@
   "scripts": {
     "start-dev": "webpack-dev-server --inline --hot --content-base ./public",
     "start": "webpack -p & node server.js",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "analyze": "webpack --env analyze"
   },
   "babel": {
     "presets": [
@@ -33,7 +34,7 @@
     "inline-environment-variables-webpack-plugin": "^1.2.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.19.4",
-    "moment": "^2.17.1",
+    "moment": "^2.21.0",
     "moment-duration-format": "^2.2.2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -45,11 +46,14 @@
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
+    "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
     "ts-loader": "^4.0.1",
     "typescript": "^2.6.2",
     "webpack": "^4.1.1",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^3.1.0"
+    "webpack-dev-server": "^3.1.0",
+    "webpack-merge": "^4.1.2"
   }
 }
