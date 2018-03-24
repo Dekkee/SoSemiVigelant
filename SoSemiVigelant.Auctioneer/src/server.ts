@@ -8,7 +8,7 @@ import * as cors from 'cors';
 
 import { setup } from './api';
 import { connectToRabbit } from './service';
-import { mongoUrl, rabbitUrl } from './config';
+import { mongoUrl } from './config';
 
 const app = express()
     .use(morgan(':method :url -> :status'))
@@ -36,7 +36,7 @@ app.get('*', function (req, resp) {
     });
 });
 
-connectToRabbit(rabbitUrl.toString());
+connectToRabbit();
 
 const args = yargs.option(
     'port', { alias: 'p', default: 8000, type: 'number' }
