@@ -7,7 +7,7 @@ export interface IAuctionsInitAction extends Action {
 }
 
 export interface IAuctionsDoneAction extends Action {
-    partners: IAuction[];
+    auctions: IAuction[];
 }
 
 export interface IAuctionsFailAction extends Action {

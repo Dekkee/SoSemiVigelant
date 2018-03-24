@@ -40,7 +40,7 @@ const fetchAucs = (props: IAuctionsListRequest) => dispatch => {
     dispatch(requestAucs(props));
 
     const paging = props.perPage ?
-        getTakeSkipQuery(props.perPage, props.page) : { full: "true" };
+        getTakeSkipQuery(props.perPage, props.page) : { full: 'true' };
 
     const params = {
         ...paging,

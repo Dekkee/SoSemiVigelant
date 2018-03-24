@@ -1,6 +1,8 @@
 import {
   REQUEST_AUC, RECEIVE_AUC, CLOSE_AUC_MODAL
-} from '../actions/index'
+} from '../actions'
+
+import { IAuction } from '../api/contracts';
 
 export interface IState {
     isFetching: boolean;

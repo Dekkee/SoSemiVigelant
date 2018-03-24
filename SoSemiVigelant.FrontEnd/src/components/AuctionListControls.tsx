@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { debounce } from 'lodash';
+import debounce =require('lodash/debounce');
 
 import { Pagination } from './pagination';
 

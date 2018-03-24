@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { closeAucModal } from '../actions'
 import { Modal } from './modal'
+import { IAuction } from '../api/contracts';
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
 

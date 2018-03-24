@@ -47,16 +47,13 @@ export interface TakeSkipQuery {
     skip: number;
 }
 
-export function getTakeSkipQuery (totalPages: number, page: number): TakeSkipQuery {
-    return { take: totalPages, skip: Math.ceil(page * totalPages) };
-}
+export const getTakeSkipQuery = (totalPages: number, page: number): TakeSkipQuery =>
+    ({ take: totalPages, skip: Math.ceil(page * totalPages) });
 
-export function getTakeSkipQueryString (totalPages: number, page: number): string {
-    return getQuery(getTakeSkipQuery(totalPages, page));
-}
+export const getTakeSkipQueryString = (totalPages: number, page: number): string =>
+    getQuery(getTakeSkipQuery(totalPages, page));
 
-export function getJson (url: string, data?: any): Promise<any> {
-    return fetch(resolveUrl(url), data)
+export const getJson = (url: string, data?: any): Promise<any> =>
+    fetch(resolveUrl(url), data)
         .then(checkStatus)
         .then(respToJson);
-}
