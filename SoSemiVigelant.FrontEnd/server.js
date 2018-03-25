@@ -1,4 +1,5 @@
-var express = require('express');
+const express = require('express');
+const compression = require('compression');
 
 'use strict';
 
@@ -7,7 +8,8 @@ const PORT = 8080;
 
 // App
 const app = express();
-app.use(express.static('public'))
+app.use(compression({ threshold: 0 }));
+app.use(express.static('public'));
 
 app.listen(PORT);
 console.log('Running on http://localhost:' + PORT);
