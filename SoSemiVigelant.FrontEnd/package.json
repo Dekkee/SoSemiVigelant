@@ -5,9 +5,10 @@
   "main": "",
   "license": "MIT",
   "scripts": {
-    "start-dev": "webpack-dev-server --inline --hot --content-base ./public",
-    "start": "webpack -p & node server.js",
-    "build": "webpack -p",
+    "start-dev": "webpack-dev-server --end dev --inline --hot --content-base ./public",
+    "start": "webpack -p --env prod & node server.js",
+    "build": "webpack --env dev",
+    "build:prod": "webpack -p --env prod",
     "analyze": "webpack --env analyze"
   },
   "dependencies": {

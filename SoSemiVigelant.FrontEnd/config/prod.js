@@ -7,7 +7,6 @@ module.exports = function (_path) {
     return merge(require('./base')(_path), {
         mode: 'production',
         plugins: [
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru|en/),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify('production')
             })

@@ -13,6 +13,10 @@ module.exports = function (_path) {
                 API_HOST: 'localhost',
                 HOST_PORT: '8000'
             })
-        ]
+        ],
+        devServer: {
+            contentBase: './public',
+            hot: true
+        }
     });
 };

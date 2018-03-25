@@ -2,12 +2,14 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const plugins = [
     new HtmlWebpackPlugin({
         title: 'Hot Module Replacement',
-        filename: 'public/index.html'
-    })
+        filename: 'index.html'
+    }),
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ru|en/),
 ];
 
 
@@ -25,16 +27,9 @@ module.exports = (_path) => ({
                 test: /\.(tsx|ts)?$/,
 
                 exclude: /node_modules/,
-                use: [{
-                    loader: 'awesome-typescript-loader'
-                }]
+                use: 'awesome-typescript-loader'
             }
         ]
-    },
-
-    devServer: {
-        contentBase: './public',
-        hot: true
     },
 
     plugins,
@@ -42,6 +37,19 @@ module.exports = (_path) => ({
     devtool: 'eval-source-map',
 
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
+        extensions: ['.js', '.ts', '.tsx']
+    },
+
+    optimization: {
+        namedChunks: true,
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    chunks: "all"
+                }
+            }
+        }
     }
 });
