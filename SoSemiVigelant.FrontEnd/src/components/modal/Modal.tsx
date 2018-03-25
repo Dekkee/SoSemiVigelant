@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ReactModal from 'react-modal';
 import Button from '../Button'
 
+ReactModal.setAppElement('#root');
+
 const customStyles = {
     content: {
         top: '50%',

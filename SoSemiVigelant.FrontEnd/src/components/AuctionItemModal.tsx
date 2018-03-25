@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
 
-import { closeAucModal } from '../actions'
 import { Modal } from './modal'
 import { IAuction } from '../api/contracts';
+import { actions } from '../actions/auctions';
+import { selector } from '../selectors/auctionModal';
 
 type IProps = IOwnProps & IStateProps & IDispatchProps;
 
@@ -22,10 +23,10 @@ interface IDispatchProps {
     onClose?: () => void;
 }
 
-const mapStateToProps = state => state.auctionModal;
+const mapStateToProps = state => selector(state);
 
-const mapDispatchToProps = (dispatch) => ({
-    onClose: () => dispatch(closeAucModal())
+const mapDispatchToProps: IDispatchProps = ({
+    onClose: () => actions.closeModal()
 });
 
 @(connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps) as any)

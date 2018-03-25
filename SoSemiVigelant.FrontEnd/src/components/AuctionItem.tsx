@@ -3,21 +3,24 @@ import { connect } from 'react-redux';
 
 import { Ticker } from './Ticker';
 import { fetchAucInfo } from '../actions';
+import { actions } from '../actions/auctions';
+import { Action } from 'redux';
 
-export interface IProps {
+export type IProps = IOwnProps & IDispatchProps;
+
+interface IOwnProps {
     name: string;
     id: number;
-    estimated: number;
+    estimated: Date;
     currentBid?: number;
-    onView: (id: number) => void;
 }
 
 interface IDispatchProps {
-    onView?: (id: number) => (dispatch: any, getState: any) => Promise<any>;
+    onView?: (id: number) => Action;
 }
 
 const mapDispatchToProps: IDispatchProps = {
-    onView: (id: number) => fetchAucInfo(id)
+    onView: (id: number) => actions.get.init({id})
 };
 
 @(connect<null, IDispatchProps>(null, mapDispatchToProps) as any)

@@ -9,6 +9,7 @@ export interface IAuction {
     startBid: number;
     currentBid: number;
     bidAmount: number;
+    estimated: Date;
     city: string;
     shippingInfoShort: string;
     shippingInfo: string;
@@ -22,4 +23,20 @@ export interface IAuctionsListRequest {
     sortOrder?: string;
     sortDirection?: boolean;
     searchText?: string;
+}
+
+export interface IAuctionsListResponse {
+    values: IAuction[],
+    count: number,
+    receivedAt: number
+}
+
+export interface IAuctionInfoRequest {
+    id: number;
+}
+
+export interface IAuctionInfoResponse {
+    id: number;
+    auction: IAuction,
+    receivedAt: number
 }

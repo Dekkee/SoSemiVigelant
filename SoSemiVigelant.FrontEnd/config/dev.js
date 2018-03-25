@@ -15,8 +15,10 @@ module.exports = function (_path) {
             })
         ],
         devServer: {
+            compress: true,
             contentBase: './public',
             hot: true
-        }
+        },
+        devtool: 'cheap-source-map',
     });
 };

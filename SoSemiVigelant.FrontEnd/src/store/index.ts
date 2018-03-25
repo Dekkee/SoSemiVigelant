@@ -1,24 +1,24 @@
-import thunk from 'redux-thunk';
+import sagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, Store } from 'redux';
 
-import { reducer } from '../reducers';
+import { IState, reducer } from '../reducers';
+import { root } from '../sagas';
 
-const middleware = [thunk];
-if (process.env.NODE_ENV !== 'production') {
-    middleware.push(createLogger())
-}
+export const configureStore = (): Store<IState> => {
+    const sagaMW = sagaMiddleware();
 
-export const store = createStore(
-    reducer, {
-        auctions: {
-            isFetching: false,
-            items: [],
-            page: 0,
-            perPage: 20,
-            sortOrder: 'estimated',
-            sortDirection: true
-        }
-    },
-    applyMiddleware(...middleware)
-);
+    const middleware = [sagaMW];
+
+    if (process.env.NODE_ENV !== 'production') {
+        middleware.push(createLogger())
+    }
+
+    const store = createStore<IState>(
+        reducer, applyMiddleware(...middleware)
+    );
+
+    sagaMW.run(root);
+
+    return store;
+};

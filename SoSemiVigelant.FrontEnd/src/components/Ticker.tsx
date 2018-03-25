@@ -2,9 +2,10 @@ import * as React from 'react';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import { Duration } from 'moment';
+import 'moment/locale/ru';
 
 export interface IProps {
-    initialTime: number;
+    initialTime: Date;
     className?: string;
 }
 
@@ -22,7 +23,7 @@ export class Ticker extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            ticks: moment.duration(moment(new Date(props.initialTime)).diff(moment.now()))
+            ticks: moment.duration(moment(props.initialTime).diff(moment.now()))
         };
     }
 

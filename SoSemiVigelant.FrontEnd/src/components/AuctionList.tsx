@@ -4,8 +4,11 @@ import * as classNames from 'classnames';
 import { AuctionItem } from './AuctionItem'
 import { AuctionListControls } from './AuctionListControls'
 
-import { fetchAucInfo, fetchAucsIfNeeded } from '../actions/index'
 import { connect } from 'react-redux';
+import { actions } from '../actions/auctions';
+import { selector } from '../selectors/auctions';
+import { IAuction, IAuctionsListRequest } from '../api/contracts';
+import { Action } from 'redux';
 
 type IProps = IOwnProps & IDispatchProps & IStateProps;
 
@@ -14,11 +17,11 @@ export interface IOwnProps {
 }
 
 interface IDispatchProps {
-    loadAucs?: (request: any) => void;
+    loadAuctions?: (request: IAuctionsListRequest) => Action;
 }
 
 interface IStateProps {
-    items?: any[];
+    items?: IAuction[];
     lastUpdated?: number;
     page?: number;
     perPage?: number;
@@ -35,13 +38,13 @@ interface IState {
     }[]
 }
 
-const mapStateToProps: (state) => IStateProps = state => state.auctions;
+const mapStateToProps = (state): IStateProps => ({
+    ...selector(state)
+});
 
-function mapDispatchToProps (dispatch): IDispatchProps {
-    return {
-        loadAucs: request => dispatch(fetchAucsIfNeeded(request))
-    }
-}
+const mapDispatchToProps: IDispatchProps = {
+    loadAuctions: actions.fetch.init,
+};
 
 @(connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps) as any)
 export class AuctionList extends React.Component<IProps, IState> {
@@ -68,8 +71,8 @@ export class AuctionList extends React.Component<IProps, IState> {
     }
 
     componentDidMount () {
-        const { loadAucs, page, perPage, sortOrder, sortDirection, searchText } = this.props;
-        loadAucs({
+        const { loadAuctions, page, perPage, sortOrder, sortDirection, searchText } = this.props;
+        loadAuctions({
             page,
             perPage,
             sortOrder,
@@ -79,8 +82,8 @@ export class AuctionList extends React.Component<IProps, IState> {
     }
 
     handlePageChange (page) {
-        const { loadAucs, sortOrder, sortDirection, perPage, searchText } = this.props;
-        loadAucs({
+        const { loadAuctions, sortOrder, sortDirection, perPage, searchText } = this.props;
+        loadAuctions({
             page,
             perPage,
             sortOrder,
@@ -90,8 +93,8 @@ export class AuctionList extends React.Component<IProps, IState> {
     }
 
     handlePageSizeChange (perPage) {
-        const { loadAucs, sortOrder, sortDirection, page, searchText } = this.props;
-        loadAucs({
+        const { loadAuctions, sortOrder, sortDirection, page, searchText } = this.props;
+        loadAuctions({
             page,
             perPage,
             sortOrder,
@@ -101,8 +104,8 @@ export class AuctionList extends React.Component<IProps, IState> {
     }
 
     handleSearchTextChange (searchText) {
-        const { loadAucs, sortOrder, sortDirection, page, perPage } = this.props;
-        loadAucs({
+        const { loadAuctions, sortOrder, sortDirection, page, perPage } = this.props;
+        loadAuctions({
             page,
             perPage,
             sortOrder,
@@ -112,14 +115,14 @@ export class AuctionList extends React.Component<IProps, IState> {
     }
 
     handleSort (obj) {
-        const { loadAucs, sortOrder, page, sortDirection, perPage, searchText } = this.props;
+        const { loadAuctions, sortOrder, page, sortDirection, perPage, searchText } = this.props;
         let direction = true;
 
         if (sortOrder === obj) {
             direction = !sortDirection;
         }
 
-        loadAucs({
+        loadAuctions({
             page,
             perPage,
             sortOrder: obj,
@@ -167,10 +170,8 @@ export class AuctionList extends React.Component<IProps, IState> {
                             isEmpty ? <h2>Empty.</h2>
                                 :
                                 <div className="auctionList-body" style={ { opacity: isFetching ? 0.5 : 1 } }>
-                                    { items.map((auc, i) =>
-                                        <AuctionItem
-                                            { ...auc }
-                                            key={ i }/>
+                                    { items.map((auction, i) =>
+                                        <AuctionItem { ...auction } key={ i }/>
                                     ) }
                                 </div>
                     }
