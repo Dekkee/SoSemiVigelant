@@ -36,7 +36,7 @@ const listen = async() => {
         const connection = await amqp.connect(url.toString());
         const channel = await connection.createChannel();
 
-        const q = await channel.assertQueue('description', {exclusive: true});
+        const q = await channel.assertQueue('description', {durable: false});
         await channel.prefetch(1);
         await channel.consume(q.queue, async (msg) => {
             if (msg) {

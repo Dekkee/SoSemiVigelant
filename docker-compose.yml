@@ -48,7 +48,7 @@ services:
         - 27017:27017
 
   sesemivigelant-rabbit:
-    image: "rabbitmq:3-alpine"
+    image: "rabbitmq:3-management-alpine"
     hostname: "sesemivigelant-rabbit"
     environment:
       RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
