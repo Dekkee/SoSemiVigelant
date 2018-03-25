@@ -1,4 +1,6 @@
-import { flow, compact, join } from 'lodash/fp';
+import * as flow from 'lodash/fp/flow';
+import * as compact from 'lodash/fp/compact';
+import * as join from 'lodash/fp/join';
 import * as fetch from 'isomorphic-fetch';
 
 import { map } from '../utils/fp';
