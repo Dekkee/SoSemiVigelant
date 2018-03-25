@@ -16,10 +16,9 @@ export interface IErrorResponse extends IResponseStatus {
     msg: string;
 }
 
-const endPoint = 'http://192.168.1.42:8000';
-// process.env.API_HOST && process.env.HOST_PORT ?
-//     `http://${process.env.API_HOST}:${process.env.HOST_PORT}` :
-//     'api';
+const endPoint = process.env.API_HOST && process.env.HOST_PORT ?
+    `http://${process.env.API_HOST}:${process.env.HOST_PORT}` :
+    'api';
 
 const respToJson = (response: any) => response.json();
 
