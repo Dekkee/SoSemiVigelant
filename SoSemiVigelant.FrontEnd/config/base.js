@@ -22,19 +22,11 @@ module.exports = (_path) => ({
     module: {
         rules: [
             {
-                test: /\.(jsx|js)?$/,
-
-                exclude: /node_modules/,
-                use: [{
-                    loader: 'babel-loader'
-                }]
-            },
-            {
                 test: /\.(tsx|ts)?$/,
 
                 exclude: /node_modules/,
                 use: [{
-                    loader: 'ts-loader'
+                    loader: 'awesome-typescript-loader'
                 }]
             }
         ]
