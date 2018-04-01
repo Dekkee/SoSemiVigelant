@@ -1,6 +1,7 @@
 import {Action, ActionCreator as ReduxActionCreator, Func0, Func1, Func2, Func3} from 'redux';
 import * as forEachCap from 'lodash/fp/forEach';
-const forEach = forEachCap.convert({cap: false});
+import * as convert from 'lodash/fp/convert';
+const forEach = convert(forEachCap, {cap: false});
 
 const actionCreatorTypeId = Symbol('action_creator_type_id');
 

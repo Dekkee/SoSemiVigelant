@@ -2,8 +2,8 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const webpack = require('webpack');
-
 
 module.exports = (_path) => {
     const plugins = [
@@ -13,6 +13,7 @@ module.exports = (_path) => {
             template: path.join(_path, 'src/template/index.html'),
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new LodashModuleReplacementPlugin,
     ];
 
     return {
