@@ -8,4 +8,5 @@ COPY . /app
 WORKDIR /app
 
 RUN yarn install --freeze-lockfile
-ENTRYPOINT [ "yarn", "run", "start", "-p=8080" ]
+RUN yarn build:prod
+ENTRYPOINT [ "node", "server" ]
