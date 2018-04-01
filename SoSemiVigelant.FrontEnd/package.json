@@ -29,6 +29,7 @@
     "moment": "^2.21.0",
     "moment-duration-format": "^2.2.2",
     "node-sass": "^4.8.3",
+    "query-string": "^6.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.0",

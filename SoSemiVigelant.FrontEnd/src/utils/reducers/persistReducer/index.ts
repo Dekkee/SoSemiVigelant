@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import debounce = require('lodash/debounce');
+import debounce from 'lodash-es/debounce';
 
 /**
  * Интерфейс сериализатора значения в строку.

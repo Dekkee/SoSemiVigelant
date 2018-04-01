@@ -1,7 +1,5 @@
 import { Action, ActionCreator as ReduxActionCreator, Func0, Func1, Func2, Func3 } from 'redux';
 
-import forEach from 'lodash-es/forEach';
-
 const actionCreatorTypeId = Symbol('action_creator_type_id');
 
 export type ActionInfo = Action;

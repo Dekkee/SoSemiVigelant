@@ -1,8 +1,5 @@
-import join from 'lodash-es/join';;
-import compact from 'lodash-es/compact';
-import map from 'lodash-es/map';
-
 import * as fetch from 'isomorphic-fetch';
+import * as queryString from 'querystring';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -37,7 +34,7 @@ export function resolveUrl (url: string): string {
     return `${endPoint}/${url}`;
 }
 
-export const getQuery = (obj: any): string => (join(compact(map(obj, (val, key) => val ? `${key}=${val}` : undefined)), '&'));
+export const getQuery = (obj: any): string => queryString.stringify(obj);
 
 export interface TakeSkipQuery {
     take: number;
