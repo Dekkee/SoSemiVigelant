@@ -1,7 +1,7 @@
 import * as React from 'react';
 import debounce =require('lodash/debounce');
 
-import { Pagination } from './pagination';
+import { Pagination } from './Pagination';
 
 export interface IProps {
     count: number;

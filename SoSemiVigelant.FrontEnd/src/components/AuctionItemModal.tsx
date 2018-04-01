@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
 
-import { Modal } from './modal'
+import { Modal } from './Modal'
 import { IAuction } from '../api/contracts';
 import { actions } from '../actions/auctions';
 import { selector } from '../selectors/auctionModal';
