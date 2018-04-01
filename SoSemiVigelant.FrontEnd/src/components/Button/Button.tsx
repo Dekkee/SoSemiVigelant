@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import './Button.scss';
+
 export interface IProps {
     className: string;
     icon?: string;
@@ -7,7 +9,7 @@ export interface IProps {
     onClick: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export default class Button extends React.Component<IProps> {
+export class Button extends React.Component<IProps> {
     constructor (props: IProps) {
         super(props)
     }

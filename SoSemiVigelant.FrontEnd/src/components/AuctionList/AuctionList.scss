@@ -1,0 +1,50 @@
+.auctionList {
+    max-width: 1500px;
+    margin: auto;
+
+    &-header {
+        background: #fff;
+        box-sizing: border-box;
+        display: flex;
+        padding: 0px 10px;
+        line-height: 32px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: -1px;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+        &-item {
+            font-weight: bold;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            &.sort-by::after {
+                font-family: 'Material Icons';
+                content: "arrow_drop_up";
+            }
+
+            &.sort-by-desc::after {
+                font-family: 'Material Icons';
+                content: "arrow_drop_down";
+            }
+        }
+    }
+}
+
+.auction-column {
+    &-name {
+        margin-right: auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    &-currentBet {
+        width: 10%;
+        min-width: 70px;
+        text-align: right;
+    }
+}

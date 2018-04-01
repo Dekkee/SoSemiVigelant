@@ -1,14 +1,16 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 
-import { AuctionItem } from './AuctionItem'
-import { AuctionListControls } from './AuctionListControls'
+import { AuctionItem } from '../AuctionItem/index'
+import { AuctionListControls } from '../AuctionListControls'
 
 import { connect } from 'react-redux';
-import { actions } from '../actions/auctions';
-import { selector } from '../selectors/auctions';
-import { IAuction, IAuctionsListRequest } from '../api/contracts';
+import { actions } from '../../actions/auctions';
+import { selector } from '../../selectors/auctions';
+import { IAuction, IAuctionsListRequest } from '../../api/contracts';
 import { Action } from 'redux';
+
+import './AuctionList.scss';
 
 type IProps = IOwnProps & IDispatchProps & IStateProps;
 

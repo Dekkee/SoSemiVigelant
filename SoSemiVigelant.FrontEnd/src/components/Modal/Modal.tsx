@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as ReactModal from 'react-modal';
-import Button from '../Button'
+import { Button } from '../Button'
+
+import './Modal.scss';
 
 ReactModal.setAppElement('#root');
 
@@ -39,8 +41,8 @@ export class Modal extends React.Component<IProps> {
         return(
             <ReactModal isOpen={isOpen} onRequestClose={onRequestClose} style={style} contentLabel="Popup window">
                 <div className="modal-header">
-                    <span className="modal-header-title">{title}</span>
-                    <Button className="modal-header-close-button icon" icon={'clear'} onClick={onRequestClose} disabled={false}/>
+                    <span className="modal-header__title">{title}</span>
+                    <Button className="modal-header__close-button icon" icon={'clear'} onClick={onRequestClose} disabled={false}/>
                 </div>
                 <div className="modal-body">{children}</div>
             </ReactModal>

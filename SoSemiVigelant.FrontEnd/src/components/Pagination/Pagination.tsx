@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as ReactPaginate from 'react-paginate';
 
+import './Pagination.scss';
+
 export interface IProps {
     count: number;
     page: number;

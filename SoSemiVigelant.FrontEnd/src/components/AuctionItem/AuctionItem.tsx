@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Ticker } from './Ticker';
-import { fetchAucInfo } from '../actions';
-import { actions } from '../actions/auctions';
+import { Ticker } from '../Ticker';
+import { actions } from '../../actions/auctions';
 import { Action } from 'redux';
+
+import './AuctionItem.scss';
 
 export type IProps = IOwnProps & IDispatchProps;
 
