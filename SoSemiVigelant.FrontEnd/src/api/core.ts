@@ -1,9 +1,8 @@
-import * as flow from 'lodash/fp/flow'
-import * as compact from 'lodash/fp/compact'
-import * as join from 'lodash/fp/join'
-import * as fetch from 'isomorphic-fetch';
+import join from 'lodash-es/join';;
+import compact from 'lodash-es/compact';
+import map from 'lodash-es/map';
 
-import { map } from '../utils/fp';
+import * as fetch from 'isomorphic-fetch';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -38,11 +37,7 @@ export function resolveUrl (url: string): string {
     return `${endPoint}/${url}`;
 }
 
-export const getQuery: (obj: any) => string = flow(
-    map((val, key) => val ? `${key}=${val}` : undefined),
-    compact,
-    join('&'),
-);
+export const getQuery = (obj: any): string => (join(compact(map(obj, (val, key) => val ? `${key}=${val}` : undefined)), '&'));
 
 export interface TakeSkipQuery {
     take: number;

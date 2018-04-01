@@ -12,9 +12,7 @@
     "analyze": "webpack --env analyze"
   },
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.42",
-    "@babel/preset-env": "^7.0.0-beta.42",
-    "@types/lodash": "^4.14.106",
+    "@types/lodash": "^4.14.104",
     "@types/moment-duration-format": "^2.2.0",
     "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
@@ -25,7 +23,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.6",
     "inline-environment-variables-webpack-plugin": "^1.2.1",
-    "lodash": "^4.17.5",
+    "lodash-es": "^4.17.8",
     "lodash-webpack-plugin": "^0.11.4",
     "material-ui": "^1.0.0-beta.40",
     "moment": "^2.21.0",

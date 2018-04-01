@@ -45,3 +45,5 @@ export const actions = {
 };
 
 initActionCreators(`auctions/`, actions);
+console.log(actions);
+console.log(actions.closeModal());
