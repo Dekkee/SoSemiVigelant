@@ -6,5 +6,4 @@ RUN cd /tmp && yarn install --freeze-lockfile && mkdir -p /app && cp -a /tmp/nod
 
 COPY . /app
 WORKDIR /app
-RUN yarn install --freeze-lockfile
 ENTRYPOINT [ "yarn", "run", "start", "-p=8000" ]
