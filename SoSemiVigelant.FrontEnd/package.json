@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --env dev",
-    "start": "webpack -p --env prod && node server.js",
+    "start": "node server.js",
     "build": "webpack --env dev",
     "build:prod": "webpack -p --env prod",
     "analyze": "webpack --env analyze"
