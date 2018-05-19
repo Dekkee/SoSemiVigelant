@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 
-import { AuctionItem } from '../AuctionItem/index'
+import { AuctionItem } from '../AuctionItem'
 import { AuctionListControls } from '../AuctionListControls'
 
 import { connect } from 'react-redux';

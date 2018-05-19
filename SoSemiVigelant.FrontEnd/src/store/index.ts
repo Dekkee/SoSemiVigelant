@@ -1,6 +1,6 @@
 import sagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
-import { createStore, applyMiddleware, Store } from 'redux';
+import { createStore, applyMiddleware, Store, Action } from 'redux';
 
 import { IState, reducer } from '../reducers';
 import { root } from '../sagas';
@@ -14,7 +14,7 @@ export const configureStore = (): Store<IState> => {
         middleware.push(createLogger())
     }
 
-    const store = createStore<IState>(
+    const store = createStore<IState, Action, {}, {}>(
         reducer, applyMiddleware(...middleware)
     );
 
