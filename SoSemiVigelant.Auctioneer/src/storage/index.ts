@@ -9,7 +9,7 @@ import UserRepository from './entities/UserRepository';
 import { Model, Document } from 'mongoose';
 
 export abstract class DataStorage<D extends { [index: string]: any }, E extends { [index: string]: any }> {
-    constructor (
+    protected constructor (
         protected readonly repository: ICrudRepository<D, Key>,
         private readonly map: { [index: string]: any },
         protected readonly model: Model<D & Document>
@@ -65,12 +65,16 @@ export class AuctionsStorage extends DataStorage<AuctionModel, AuctionEntity> {
     }
 
     public async updateStatuses () {
-        await this.model.update(
-            { estimated: { $lt: new Date() } },
-            { isActive: false },
-            { multi: true },
-            (err) => console.error(`updateStatuses failed: ${err}`)
-        )
+        try {
+            const now = new Date();
+            console.log(colors.cyan(`updating statuses at ${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`));
+            await this.model.update(
+                { estimated: { $lt: now} },
+                { isActive: false },
+                { multi: true });
+        } catch (e) {
+            console.error(`updateStatuses failed: ${e}`);
+        }
     }
 }
 
