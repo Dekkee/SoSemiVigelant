@@ -64,6 +64,9 @@ export default abstract class CrudRepository<T extends Document> implements ICru
             if (query.name) {
                 docQuery = docQuery.find({'name': { "$regex": query.name, "$options": "i" }})
             }
+            if (query.isActive) {
+                docQuery = docQuery.find({'isActive': query.isActive})
+            }
             return await docQuery.exec();
         } catch (e) {
             console.error(colors.red(e.message));
@@ -73,7 +76,14 @@ export default abstract class CrudRepository<T extends Document> implements ICru
 
     async count (query: any = {}): Promise<number> {
         try {
-            return await this.model.count(query.name ? {'name': { "$regex": query.name, "$options": "i" }} : {});
+            let docQuery = this.model.find();
+            if (query.name) {
+                docQuery = docQuery.find({'name': { "$regex": query.name, "$options": "i" }})
+            }
+            if ('isActive' in query) {
+                docQuery = docQuery.find({'isActive': query.isActive})
+            }
+            return await docQuery.count();
         } catch (e) {
             console.error(colors.red(e.message));
             throw e;

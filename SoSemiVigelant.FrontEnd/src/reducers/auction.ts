@@ -32,7 +32,8 @@ export const reducer = switchReducer<IState>(Object.assign(
         page: action.request.page,
         perPage: action.request.perPage,
         sortOrder: action.request.sortOrder,
-        sortDirection: action.request.sortDirection
+        sortDirection: action.request.sortDirection,
+        isActive: action.request.isActive,
     })),
     switchCase(actions.fetch.done)((state: IState, action: IAuctionsDoneAction): IState => ({
         ...state,

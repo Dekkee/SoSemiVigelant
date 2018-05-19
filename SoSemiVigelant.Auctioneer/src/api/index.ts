@@ -10,6 +10,7 @@ export const setup = (app: express.Application) => {
     app.get('/auctions', async (req, resp) => {
         try {
             const rep = new AuctionRepository();
+            console.log(req.query);
             resp.send({
                 result: await rep.list(req.query),
                 count: await rep.count(req.query)

@@ -12,7 +12,8 @@ export const fetchAucs = async (props: IAuctionsListRequest): Promise<IAuctionsL
         ...paging,
         order: props.sortOrder,
         asc: Boolean(props.sortDirection),
-        name: props.searchText
+        name: props.searchText,
+        isActive: props.isActive
     };
 
     const json = await getJson(`auctions?${getQuery(params)}`);
