@@ -75,51 +75,55 @@ export class AuctionList extends React.Component<IProps, IState> {
     }
 
     componentDidMount () {
-        const { loadAuctions, page, perPage, sortOrder, sortDirection, searchText } = this.props;
+        const { loadAuctions, page, perPage, sortOrder, sortDirection, searchText, isActive } = this.props;
         loadAuctions({
             page,
             perPage,
             sortOrder,
             sortDirection,
-            searchText
+            searchText,
+            isActive,
         });
     }
 
     handlePageChange (page) {
-        const { loadAuctions, sortOrder, sortDirection, perPage, searchText } = this.props;
+        const { loadAuctions, sortOrder, sortDirection, perPage, searchText, isActive } = this.props;
         loadAuctions({
             page,
             perPage,
             sortOrder,
             sortDirection,
-            searchText
+            searchText,
+            isActive,
         });
     }
 
     handlePageSizeChange (perPage) {
-        const { loadAuctions, sortOrder, sortDirection, page, searchText } = this.props;
+        const { loadAuctions, sortOrder, sortDirection, page, searchText, isActive } = this.props;
         loadAuctions({
             page,
             perPage,
             sortOrder,
             sortDirection,
-            searchText
+            searchText,
+            isActive,
         });
     }
 
     handleSearchTextChange (searchText) {
-        const { loadAuctions, sortOrder, sortDirection, page, perPage } = this.props;
+        const { loadAuctions, sortOrder, sortDirection, page, perPage, isActive } = this.props;
         loadAuctions({
             page,
             perPage,
             sortOrder,
             sortDirection,
-            searchText
+            searchText,
+            isActive,
         });
     }
 
     handleSort (obj) {
-        const { loadAuctions, sortOrder, page, sortDirection, perPage, searchText } = this.props;
+        const { loadAuctions, sortOrder, page, sortDirection, perPage, searchText, isActive } = this.props;
         let direction = true;
 
         if (sortOrder === obj) {
@@ -131,7 +135,8 @@ export class AuctionList extends React.Component<IProps, IState> {
             perPage,
             sortOrder: obj,
             sortDirection: direction,
-            searchText
+            searchText,
+            isActive,
         });
     }
 
