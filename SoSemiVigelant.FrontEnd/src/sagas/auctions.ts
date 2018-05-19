@@ -5,7 +5,6 @@ import { IAuctionsListResponse } from '../api/contracts';
 
 const handleFetch = function* (action: IAuctionsInitAction) {
     try {
-        console.log(action.request);
         const response: IAuctionsListResponse = yield call(fetchAucs, action.request);
 
         yield put(actions.fetch.done(response));
