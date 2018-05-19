@@ -4,7 +4,7 @@ import * as classNames from 'classnames';
 import { AuctionItem } from '../AuctionItem'
 import { AuctionListControls } from '../AuctionListControls'
 
-import { connect } from 'react-redux';
+import { connect } from '../../utils/connect';
 import { actions } from '../../actions/auctions';
 import { selector } from '../../selectors/auctions';
 import { IAuction, IAuctionsListRequest } from '../../api/contracts';
@@ -50,7 +50,7 @@ const mapDispatchToProps: IDispatchProps = {
     loadAuctions: actions.fetch.init,
 };
 
-@(connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps) as any)
+@connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps)
 export class AuctionList extends React.Component<IProps, IState> {
 
     constructor (props) {

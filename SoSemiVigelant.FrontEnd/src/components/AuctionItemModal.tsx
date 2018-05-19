@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { connect } from 'react-redux';
+import { connect } from '../utils/connect';
 
 import { Modal } from './Modal'
 import { IAuction } from '../api/contracts';
@@ -29,7 +29,7 @@ const mapDispatchToProps: IDispatchProps = ({
     onClose: () => actions.closeModal()
 });
 
-@(connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps) as any)
+@connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps)
 export class AuctionItemModal extends React.Component<IProps> {
 
   constructor(props) {

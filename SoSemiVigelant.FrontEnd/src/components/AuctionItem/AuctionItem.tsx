@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect } from '../../utils/connect';
 
 import { Ticker } from '../Ticker';
 import { actions } from '../../actions/auctions';
@@ -24,7 +24,7 @@ const mapDispatchToProps: IDispatchProps = {
     onView: (id: number) => actions.get.init({id})
 };
 
-@(connect<null, IDispatchProps>(null, mapDispatchToProps) as any)
+@connect<null, IDispatchProps>(null, mapDispatchToProps)
 export class AuctionItem extends React.Component<IProps> {
     constructor (props: IProps) {
         super(props);
