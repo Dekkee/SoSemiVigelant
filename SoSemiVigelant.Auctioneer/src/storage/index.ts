@@ -8,14 +8,14 @@ import { UserModel, UserMap, User } from './entities/User';
 import UserRepository from './entities/UserRepository';
 import { Model, Document } from 'mongoose';
 
-export abstract class DataStorage<D extends {[index: string]: any}, E extends {[index: string]: any}> {
-    constructor(
+export abstract class DataStorage<D extends { [index: string]: any }, E extends { [index: string]: any }> {
+    constructor (
         protected readonly repository: ICrudRepository<D, Key>,
-        private readonly map: {[index: string]: any},
-        private readonly model: Model<D & Document>
-    ) {    }
+        private readonly map: { [index: string]: any },
+        protected readonly model: Model<D & Document>
+    ) { }
 
-    async syncData(data: (any & {id: Key})[]) {
+    async syncData (data: (any & { id: Key })[]) {
         console.log(colors.cyan(`Syncing entities: `) + data.length);
         for (const entry of data) {
             await this.repository.get(entry.id) === null
@@ -24,11 +24,11 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
         }
     };
 
-    public async bulkAdd(entrys: E[]) {
+    public async bulkAdd (entrys: E[]) {
         await this.syncData(await this.parse(entrys));
     }
 
-    private async parse(entrys: E[]): Promise<D[]>{
+    private async parse (entrys: E[]): Promise<D[]> {
         return Promise.all(entrys.map(async (entry) => {
             const model: D = {} as D;
             const keys = Object.keys(this.map);
@@ -37,7 +37,7 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
                     model[key] = new Date(entry[this.map[key]] * 1000);
                 } else if (typeof this.map[key] === 'object') {
                     const rule = this.map[key];
-                    const query = {[rule.path]: entry[rule.key]};
+                    const query = { [rule.path]: entry[rule.key] };
                     const object = await rule.model.findOne(query).exec();
                     model[key] = object._id;
                 } else {
@@ -50,12 +50,12 @@ export abstract class DataStorage<D extends {[index: string]: any}, E extends {[
 }
 
 export class AuctionsStorage extends DataStorage<AuctionModel, AuctionEntity> {
-    constructor() {
+    constructor () {
         super(new AuctionRepository(), AuctionMap, Auction);
     }
 
 
-    public async updateDescription(id: Key, description: string) {
+    public async updateDescription (id: Key, description: string) {
         const entity = await this.repository.get(id);
         if (!entity) {
             throw new Error(`Entity ${id} not found`)
@@ -63,10 +63,19 @@ export class AuctionsStorage extends DataStorage<AuctionModel, AuctionEntity> {
         entity.description = description;
         await this.repository.update(entity);
     }
+
+    public async updateStatuses () {
+        await this.model.update(
+            { estimated: { $lt: new Date() } },
+            { isActive: false },
+            { multi: true },
+            (err) => console.error(`updateStatuses failed: ${err}`)
+        )
+    }
 }
 
 export class UsersStorage extends DataStorage<UserModel, UserEntity> {
-    constructor() {
+    constructor () {
         super(new UserRepository(), UserMap, User);
     }
 }

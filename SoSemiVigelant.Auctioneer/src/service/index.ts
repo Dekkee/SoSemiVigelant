@@ -52,6 +52,7 @@ const onListRequest = async (msg: Message) => {
         console.log(colors.cyan('List received. Count: ') + parsed.result.length);
         await usersStorage.bulkAdd(Object.values(parsed.entities.users));
         await auctionsStorage.bulkAdd(Object.values(parsed.entities.auctions));
+        await auctionsStorage.updateStatuses();
         console.log(colors.cyan('Done!'));
     } catch (e) {
         console.log(colors.red(e.message));

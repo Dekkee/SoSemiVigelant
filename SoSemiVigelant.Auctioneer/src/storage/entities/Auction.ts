@@ -3,7 +3,7 @@ import { User } from './User';
 
 export interface AuctionModel {
     [index: string]: any;
-    
+
     id: number;
     name: string;
     estimated: Date;
@@ -21,6 +21,7 @@ export interface AuctionModel {
     sellerIp: string;
     seller: number;
     description: string;
+    isActive: boolean;
 }
 
 export const AuctionSchema: Schema = new Schema({
@@ -44,7 +45,8 @@ export const AuctionSchema: Schema = new Schema({
     city: String,
     sellerIp: String,
     seller: { type: Schema.Types.ObjectId, ref: 'users' },
-    description: String
+    description: String,
+    isActive: { type: Boolean, default: true }
 }, {
     toObject: {
         transform: function (doc, ret) {
@@ -62,7 +64,7 @@ export const AuctionSchema: Schema = new Schema({
 
 export const Auction: Model<AuctionModel & Document> = model<AuctionModel & Document>('auctions', AuctionSchema);
 
-export const AuctionMap: Record<keyof AuctionModel, string | {model: Model<Document>, path: string, key: string}> = {
+export const AuctionMap: Record<keyof AuctionModel, string | { model: Model<Document>, path: string, key: string }> = {
     id: 'id',
     name: 'lot',
     estimated: 'date_estimated',
