@@ -10,6 +10,7 @@ export interface IState {
     sortDirection: boolean;
     items: IAuction[];
     count: number;
+    isActive?: boolean;
     lastUpdated?: number;
 }
 
@@ -20,7 +21,8 @@ const initialState: IState = {
     page: 0,
     perPage: 20,
     sortOrder: 'estimated',
-    sortDirection: true
+    sortDirection: true,
+    isActive: true,
 };
 
 export const reducer = switchReducer<IState>(Object.assign(

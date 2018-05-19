@@ -23,6 +23,7 @@ export interface IAuctionsListRequest {
     sortOrder?: string;
     sortDirection?: boolean;
     searchText?: string;
+    isActive?: boolean;
 }
 
 export interface IAuctionsListResponse {

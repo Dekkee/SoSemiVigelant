@@ -31,6 +31,7 @@ interface IStateProps {
     sortDirection?: boolean;
     count?: number;
     isFetching?: boolean;
+    isActive?: boolean;
 }
 
 interface IState {
@@ -41,6 +42,7 @@ interface IState {
 }
 
 const mapStateToProps = (state): IStateProps => ({
+    isActive: true,
     ...selector(state)
 });
 
