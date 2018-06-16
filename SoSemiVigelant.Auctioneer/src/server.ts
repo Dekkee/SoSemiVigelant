@@ -36,8 +36,16 @@ app.get('*', function (req, resp) {
     });
 });
 
-connectToRabbit()
-    .catch((error) => console.error(`RabbitMQ: Failed to connect: ${error}`));
+const tryConnectToRabbit = () => connectToRabbit()
+    .catch((error) => {
+        console.error(`RabbitMQ: Failed to connect: ${error}`)
+        setTimeout(() => {
+            console.info('reconnecting to rabbit...');
+            tryConnectToRabbit();
+        }, 1000);
+    });
+
+tryConnectToRabbit();
 
 const args = yargs.option(
     'port', { alias: 'p', default: 8000, type: 'number' }
