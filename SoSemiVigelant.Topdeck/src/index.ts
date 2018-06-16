@@ -7,7 +7,7 @@ import { description } from './description';
 
 const exchange = 'topdeck';
 
-const load = async() => {
+const load = async () => {
     try {
         console.log(colors.cyan(`Performing topdeck request`));
         const aucs: any = await list();
@@ -30,35 +30,30 @@ load();
 
 setInterval(load, 60 * 1000);
 
-const listen = async() => {
-    try {
-        console.log(colors.cyan(`Listening for descriptions`));
-        const connection = await amqp.connect(url.toString());
-        const channel = await connection.createChannel();
+const listen = async () => {
+    console.log(colors.cyan(`Listening for descriptions`));
+    const connection = await amqp.connect(url.toString());
+    const channel = await connection.createChannel();
 
-        const q = await channel.assertQueue('description', {durable: false});
-        await channel.prefetch(1);
-        await channel.consume(q.queue, async (msg) => {
-            if (msg) {
-                const { id } = JSON.parse(msg.content.toString());
-                console.log(colors.cyan(`Request description for ${id}`));
-                const data = {
-                    id,
-                    description: await description(id)
-                };
-                console.log(colors.cyan(`Description received: `) + data.description);
-                channel.sendToQueue(
-                    msg.properties.replyTo,
-                    new Buffer(JSON.stringify(data)),
-                    {correlationId: msg.properties.correlationId});
-                console.log(colors.cyan(`Done`));
-                channel.ack(msg);
-            }
-        });
-    }
-    catch (e) {
-        console.log(colors.red(`Error!: ${e.message}`));
-    }
+    const q = await channel.assertQueue('description', { durable: false });
+    await channel.prefetch(1);
+    await channel.consume(q.queue, async (msg) => {
+        if (msg) {
+            const { id } = JSON.parse(msg.content.toString());
+            console.log(colors.cyan(`Request description for ${id}`));
+            const data = {
+                id,
+                description: await description(id)
+            };
+            console.log(colors.cyan(`Description received: `) + data.description);
+            channel.sendToQueue(
+                msg.properties.replyTo,
+                new Buffer(JSON.stringify(data)),
+                { correlationId: msg.properties.correlationId });
+            console.log(colors.cyan(`Done`));
+            channel.ack(msg);
+        }
+    });
 };
 
 const tryListen = () => listen()
