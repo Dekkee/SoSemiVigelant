@@ -61,4 +61,13 @@ const listen = async() => {
     }
 };
 
-listen();
+const tryListen = () => listen()
+    .catch((error) => {
+        console.error(`RabbitMQ: Failed to connect: ${error}`)
+        setTimeout(() => {
+            console.info('reconnecting to rabbit...');
+            tryListen();
+        }, 1000);
+    });
+
+tryListen();
