@@ -1,0 +1,12 @@
+.card-layout {
+  display: grid;
+  grid-template-columns: auto auto 100px 100px 100px;
+
+  &__header {
+    grid-row-gap: 10px;
+  }
+
+  &--dark {
+    background: aliceblue;
+  }
+}

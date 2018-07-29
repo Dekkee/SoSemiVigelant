@@ -64,3 +64,9 @@ services:
       - "5672:5672"
     labels:
       NAME: "rabbitmq"
+
+  sosemivigelant-scg:
+    build:
+      context: ./SoSemiVigelant.Scg
+      dockerfile: Dockerfile
+    restart: always
