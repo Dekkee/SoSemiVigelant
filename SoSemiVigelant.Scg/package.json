@@ -24,6 +24,7 @@
     "@types/react": "^16.4.7",
     "@types/react-dom": "^16.0.6",
     "abort-controller": "^1.0.2",
+    "abortcontroller-polyfill": "^1.1.9",
     "awesome-typescript-loader": "^5.2.0",
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
@@ -46,6 +47,7 @@
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
+    "whatwg-fetch": "^2.0.4",
     "yarn": "^1.9.2"
   },
   "nodemonConfig": {

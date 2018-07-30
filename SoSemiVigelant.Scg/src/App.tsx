@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as cn from 'classnames';
-import AbortController from 'abort-controller';
+import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only';
+import 'whatwg-fetch';
 
 import { ChangeEvent } from "react";
 import { debounce } from 'lodash';
@@ -24,21 +25,25 @@ export class App extends React.Component<{}, IState> {
         this.state = {
             rows: []
         }
-
-        this.controller = new AbortController();
     }
 
-    private controller: AbortController;
+    private controller: AbortController = null;
 
     requestData = debounce(async (value: string) => {
         if (!value) {
             return;
         }
-        this.controller.abort();
-        const rows = await (await fetch(`${url}/api?name=${value}`, { signal: this.controller.signal })).json() as ParsedRow[];
-        if (rows) {
-            this.setState({ rows });
+        if (this.controller) {
+            this.controller.abort();
         }
+        this.controller = new AbortController();
+        try {
+            const rows = await (await fetch(`${url}/api?name=${value}`, { signal: this.controller.signal })).json() as ParsedRow[];
+            this.controller = null;
+            if (rows) {
+                this.setState({ rows });
+            }
+        } catch (e) { }
     }, 300);
 
     onInput = (e: ChangeEvent) => this.requestData((e.target as HTMLInputElement).value);
