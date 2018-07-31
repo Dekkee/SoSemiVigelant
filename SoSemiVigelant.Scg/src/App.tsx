@@ -52,10 +52,9 @@ export class App extends React.Component<{}, IState> {
         const { rows } = this.state;
         return (
             <>
-                <label>
-                    Search:
-                    <input onChange={(e) => this.onInput(e)} />
-                </label>
+                <div className="search-container">
+                    <input onChange={(e) => this.onInput(e)} className="search-input" />
+                </div>
                 {
                     rows.length
                         ?
