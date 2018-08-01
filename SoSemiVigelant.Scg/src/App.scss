@@ -1,9 +1,15 @@
 body {
     padding: 10px;
     margin: 0;
-    background-color: #D2FCC1;
+    background-color: #FFF;
     color: #283F3B;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+.main-container {
+    margin: auto;
+    max-width: 700px;
+    height: 100vh;
 }
 
 .cards-container {
@@ -18,15 +24,16 @@ body {
 .search-input {
     width: 100%;
     border: 2px solid #4B9D0B;
-    user-select: none;
+    outline: none;
     border-radius: 4px;
     height: 30px;
     margin-bottom: 10px;
     font-size: 15pt;
     box-sizing: border-box;
-    background-color: #D2FCC1;
+    background-color: #ccffcc;
+    color: inherit;
     &:focus {
         border: 3px solid #4B9D0B;
-        background: #B7F2CF;
+        background: #99ff99;
     }
 }

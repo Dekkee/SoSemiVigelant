@@ -51,7 +51,7 @@ export class App extends React.Component<{}, IState> {
     render() {
         const { rows } = this.state;
         return (
-            <>
+            <div className="main-container">
                 <div className="search-container">
                     <input onChange={(e) => this.onInput(e)} className="search-input" />
                 </div>
@@ -73,7 +73,7 @@ export class App extends React.Component<{}, IState> {
                         : <div>empty</div>
 
                 }
-            </>
+            </div>
         );
     }
 }
