@@ -11,7 +11,7 @@ import { CardLayout } from "./components/CardLayout";
 import './App.scss';
 
 interface IState {
-    rows: ParsedRow[]
+    rows?: ParsedRow[]
 }
 
 const url = process.env.NODE_ENV === 'production'
@@ -23,7 +23,7 @@ export class App extends React.Component<{}, IState> {
         super(props);
 
         this.state = {
-            rows: []
+            rows: null
         }
     }
 
@@ -56,22 +56,27 @@ export class App extends React.Component<{}, IState> {
                     <input onChange={(e) => this.onInput(e)} className="search-input" />
                 </div>
                 {
-                    rows.length
-                        ?
-                        // ? <div className="cards-container">
-                        //     <span>Name</span>
-                        //     <span>Category</span>
-                        //     <span>Rarity</span>
-                        //     <span>Condition</span>
-                        //     <span>Price</span>
-                        //    {
-                        rows.map((row, i) => <CardLayout className={cn({ "card-layout--dark": i % 2 })}
-                            card={row}
-                            key={i} />)
-                        //    }
-                        // </div>
-                        : <div>empty</div>
-
+                    rows
+                        ? rows.length
+                            ?
+                            // ? <div className="cards-container">
+                            //     <span>Name</span>
+                            //     <span>Category</span>
+                            //     <span>Rarity</span>
+                            //     <span>Condition</span>
+                            //     <span>Price</span>
+                            //    {
+                            rows.map((row, i) => <CardLayout className={cn({ "card-layout--dark": i % 2 })}
+                                card={row}
+                                key={i} />)
+                            //    }
+                            // </div>
+                            : <div className="empty-container">
+                                <div className="empty">empty</div>
+                            </div>
+                        : <div className="start-search-container">
+                            <div className="start-search">Start search!</div>
+                        </div>
                 }
             </div>
         );

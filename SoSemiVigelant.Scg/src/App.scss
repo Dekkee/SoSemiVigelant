@@ -1,5 +1,4 @@
 body {
-    padding: 10px;
     margin: 0;
     background-color: #FFF;
     color: #283F3B;
@@ -7,9 +6,12 @@ body {
 }
 
 .main-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
     margin: auto;
     max-width: 700px;
-    height: 100vh;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .cards-container {
@@ -32,8 +34,17 @@ body {
     box-sizing: border-box;
     background-color: #ccffcc;
     color: inherit;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     &:focus {
         border: 3px solid #4B9D0B;
         background: #99ff99;
     }
+}
+
+.empty-container,
+.start-search-container {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100vh;
 }
