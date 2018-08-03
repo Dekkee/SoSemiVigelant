@@ -18,8 +18,7 @@ app.use(express.static('dist'));
 
 app.get('/api', async function (req, resp) {
     const answer = await (await fetch(`http://www.starcitygames.com/results?name=${req.query.name}`)).text();
-    const rows = parseScgAnswer(answer);
-    resp.status(200).send(rows);
+    resp.status(200).send(parseScgAnswer(answer));
 });
 app.get('*', function (req, resp) {
     resp.status(404).send({

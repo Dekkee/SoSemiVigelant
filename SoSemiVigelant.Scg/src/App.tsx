@@ -9,6 +9,7 @@ import { ParsedRow } from "./entities/Row";
 import { CardLayout } from "./components/CardLayout";
 
 import './App.scss';
+import { ScgResponce } from './server/html-parser';
 
 interface IState {
     rows?: ParsedRow[]
@@ -38,7 +39,7 @@ export class App extends React.Component<{}, IState> {
         }
         this.controller = new AbortController();
         try {
-            const rows = await (await fetch(`${url}/api?name=${value}`, { signal: this.controller.signal })).json() as ParsedRow[];
+            const { rows } = await (await fetch(`${url}/api?name=${value}`, { signal: this.controller.signal })).json() as ScgResponce;
             this.controller = null;
             if (rows) {
                 this.setState({ rows });
