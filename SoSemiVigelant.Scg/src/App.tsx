@@ -80,7 +80,8 @@ export class App extends React.Component<{}, IState> {
         return (
             <div className="main-container">
                 <div className="search-container">
-                    <input onChange={(e) => this.onInput(e)} className="search-input" />
+                    <input onChange={(e) => this.onInput(e)} className="search-input" id="search-input" required />
+                    <label htmlFor="search-input" className="search-label">Search</label>
                 </div>
                 {
                     isFetching
