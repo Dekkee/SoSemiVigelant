@@ -23,7 +23,6 @@
     "@types/node-fetch": "^2.1.2",
     "@types/react": "^16.4.7",
     "@types/react-dom": "^16.0.6",
-    "abort-controller": "^1.0.2",
     "abortcontroller-polyfill": "^1.1.9",
     "awesome-typescript-loader": "^5.2.0",
     "body-parser": "^1.18.3",
