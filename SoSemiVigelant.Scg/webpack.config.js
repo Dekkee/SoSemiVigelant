@@ -1,11 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OfflinePlugin = require('offline-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = (env) => {
     const plugins = [
+        new CleanWebpackPlugin(['dist']),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(env)
         }),
@@ -13,6 +15,13 @@ module.exports = (env) => {
             filename: 'index.html',
             favicon: './src/icons/favicon.ico',
             template: path.join('./src/template/index.html'),
+            title: 'Tuktuk SCG scrapper',
+            meta: {
+                viewport: 'width=device-width, initial-scale=1',
+                author: require('./package').author,
+                charset: 'utf-8',
+                description: 'starcitygames.com shop price srapper'
+            }
         }),
         new WebpackPwaManifest({
             name: "Tuktuk SCG scrapper",
