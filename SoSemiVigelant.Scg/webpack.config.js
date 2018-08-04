@@ -11,6 +11,7 @@ module.exports = (env) => {
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
+            favicon: './src/icons/favicon.ico',
             template: path.join('./src/template/index.html'),
         }),
         new WebpackPwaManifest({
@@ -75,7 +76,7 @@ module.exports = (env) => {
                     ]
                 },
                 {
-                    test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.ico$/,
+                    test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
                     loader: 'file-loader?name=[name].[ext]'
                 }
             ]
