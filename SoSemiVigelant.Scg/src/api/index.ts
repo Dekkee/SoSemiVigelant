@@ -1,5 +1,4 @@
 import { ScgResponce } from "../server/html-parser";
-import { debounce } from 'lodash';
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only';
 import 'whatwg-fetch';
 
@@ -7,18 +6,18 @@ const url = process.env.NODE_ENV === 'production'
     ? ''
     : '//localhost:8081';
 
-export const searchByName = debounce(async (value: string) => {
+let controller = null;
+
+export const searchByName = async (value: string) => {
     if (!value) {
         return;
     }
-    if (this.controller) {
-        this.controller.abort();
+    if (controller) {
+        controller.abort();
     }
-    this.controller = new AbortController();
+    controller = new AbortController();
     try {
-        const response = await (await fetch(`${url}/api?name=${value}`, { signal: this.controller.signal })).json() as ScgResponce;
-        this.controller = null;
-        return response;
+        return await (await fetch(`${url}/api?name=${value}`, { signal: controller.signal })).json() as ScgResponce;
     } catch (e) {
         const domException = e as DOMException;
         // ignore abortError
@@ -26,5 +25,7 @@ export const searchByName = debounce(async (value: string) => {
             return;
         }
         throw e;
+    } finally {
+        controller = null;
     }
-}, 300);
+};

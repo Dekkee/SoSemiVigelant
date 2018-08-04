@@ -11,7 +11,6 @@ import './App.scss';
 import { Updater } from "./pwa/updater";
 import { UpdateStatus, UpdateLabel } from "./components/UpdateLabel";
 
-
 interface State {
     rows?: ParsedRow[];
     isFetching: boolean;
@@ -38,18 +37,30 @@ export class App extends React.Component<{}, State> {
         });
     }
 
+    private controller: AbortController = null;
+
     requestData = debounce(async (value: string) => {
         if (!value) {
             return;
         }
         this.setState({...this.state, isFetching: true});
+        if (this.controller) {
+            this.controller.abort();
+        }
+        this.controller = new AbortController();
         try {
             const { rows } = await searchByName(value);
+            this.controller = null;
             if (rows) {
                 this.setState({ ...this.state, rows, isFetching: false });
                 return;
             }
         } catch (e) {
+            const domException = e as DOMException;
+            // abortError
+            if (domException.code === 20) {
+                return;
+            }
             this.setState({ ...this.state, isFetching: false });
         }
     }, 300);
@@ -73,7 +84,7 @@ export class App extends React.Component<{}, State> {
         const { rows, isFetching, updateStatus } = this.state;
         return (
             <div className="main-container">
-                <SearchInput onTextChanged={this.requestData.bind(this)}/>
+                <SearchInput onTextChanged={(value) => this.requestData(value)}/>
                 {
                     isFetching
                         ? <div className="loading-container">
