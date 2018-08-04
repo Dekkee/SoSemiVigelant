@@ -1,64 +1,58 @@
 import * as React from 'react';
 import * as cn from 'classnames';
-import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only';
-import 'whatwg-fetch';
 
-import { ChangeEvent } from "react";
 import { debounce } from 'lodash';
 import { ParsedRow } from "./entities/Row";
 import { CardLayout } from "./components/CardLayout";
+import { SearchInput } from "./components/SearchInput";
+import { searchByName } from './api';
 
 import './App.scss';
-import { ScgResponce } from './server/html-parser';
+import { Updater } from "./pwa/updater";
+import { UpdateStatus, UpdateLabel } from "./components/UpdateLabel";
 
-interface IState {
+
+interface State {
     rows?: ParsedRow[];
     isFetching: boolean;
+    updateStatus: UpdateStatus;
 }
 
-const url = process.env.NODE_ENV === 'production'
-    ? ''
-    : '//localhost:8081';
+export class App extends React.Component<{}, State> {
+    private pwaUpdater: Updater;
 
-export class App extends React.Component<{}, IState> {
     constructor(props) {
         super(props);
 
         this.state = {
             rows: null,
             isFetching: false,
-        }
-    }
+            updateStatus: UpdateStatus.NotRequired,
+        };
 
-    private controller: AbortController = null;
+        this.pwaUpdater = new Updater({
+            onUpdateReady: () => this.setState({...this.state, updateStatus: UpdateStatus.Required }),
+            onUpdated: () => window.location.reload(),
+            onUpdateFailed: () => this.setState({...this.state, updateStatus: UpdateStatus.Failed }),
+            onUpdating: () => this.setState({...this.state, updateStatus: UpdateStatus.Updating }),
+        });
+    }
 
     requestData = debounce(async (value: string) => {
         if (!value) {
             return;
         }
         this.setState({...this.state, isFetching: true});
-        if (this.controller) {
-            this.controller.abort();
-        }
-        this.controller = new AbortController();
         try {
-            const { rows } = await (await fetch(`${url}/api?name=${value}`, { signal: this.controller.signal })).json() as ScgResponce;
-            this.controller = null;
+            const { rows } = await searchByName(value);
             if (rows) {
                 this.setState({ ...this.state, rows, isFetching: false });
                 return;
             }
-        } catch (e) { 
-            const domException = e as DOMException;
-            // abortError
-            if (domException.code === 20) {
-                return;
-            }
+        } catch (e) {
             this.setState({ ...this.state, isFetching: false });
         }
     }, 300);
-
-    onInput = (e: ChangeEvent) => this.requestData((e.target as HTMLInputElement).value);
 
     renderTable(rows: ParsedRow[]) {
         return (rows
@@ -76,20 +70,18 @@ export class App extends React.Component<{}, IState> {
     };
 
     render() {
-        const { rows, isFetching } = this.state;
+        const { rows, isFetching, updateStatus } = this.state;
         return (
             <div className="main-container">
-                <div className="search-container">
-                    <input onChange={(e) => this.onInput(e)} className="search-input" id="search-input" required />
-                    <label htmlFor="search-input" className="search-label">Search</label>
-                </div>
+                <SearchInput onTextChanged={this.requestData.bind(this)}/>
                 {
                     isFetching
                         ? <div className="loading-container">
-                            <div className="loading"><i className="icon-spinner8 icon-big" />Loading</div>
+                            <div className="loading"><i className="icon-spinner8 icon-big icon-rotating" />Loading</div>
                         </div>
                         : this.renderTable(rows)
                 }
+                <UpdateLabel status={updateStatus} onRequestUpdate={() => this.pwaUpdater.performUpdate() }/>
             </div>
         );
     }

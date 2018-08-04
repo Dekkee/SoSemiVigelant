@@ -9,7 +9,7 @@ export interface IProps {
     className?: string,
 }
 
-export class CardLayout extends React.Component<IProps & { key: number }> {
+export class CardLayout extends React.PureComponent<IProps & { key: number }> {
     render () {
         const { name, set, cards } = this.props.card;
         const { className } = this.props;
