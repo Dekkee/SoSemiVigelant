@@ -61,7 +61,11 @@ module.exports = (env) => {
                 },
             ]
         }),
-        new OfflinePlugin()
+        new OfflinePlugin({
+            ServiceWorker: {
+                events: true
+            }
+        })
     ];
     if (env !== 'production') {
         plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -75,18 +79,18 @@ module.exports = (env) => {
                 test: /\.tsx?/,
                 use: 'awesome-typescript-loader'
             },
-                {
-                    test: /\.scss$/,
-                    use: [
-                        "style-loader", // creates style nodes from JS strings
-                        "css-loader", // translates CSS into CommonJS
-                        "sass-loader" // compiles Sass to CSS
-                    ]
-                },
-                {
-                    test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-                    loader: 'file-loader?name=[name].[ext]'
-                }
+            {
+                test: /\.scss$/,
+                use: [
+                    "style-loader", // creates style nodes from JS strings
+                    "css-loader", // translates CSS into CommonJS
+                    "sass-loader" // compiles Sass to CSS
+                ]
+            },
+            {
+                test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+                loader: 'file-loader?name=[name].[ext]'
+            }
             ]
         },
         plugins,
