@@ -15,7 +15,7 @@ module.exports = (env) => {
             template: path.join('./src/template/index.html'),
         }),
         new WebpackPwaManifest({
-            name: "Tuktuk, the SCG scrapper",
+            name: "Tuktuk SCG scrapper",
             short_name: "Tuktuk",
             lang: "en-GB",
             start_url: "/",
