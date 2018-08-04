@@ -22,10 +22,8 @@ module.exports = (env) => {
             display: "standalone",
             theme_color: "#ccffcc",
             background_color: "#FFFFFF",
-            fingerprints: false,
-            inject: true,
             ios: true,
-            "icons": [
+            icons: [
                 {
                     src: path.resolve(__dirname, './src/icons/android-icon-192x192.png'),
                     sizes: [36, 48, 72, 144, 192],
