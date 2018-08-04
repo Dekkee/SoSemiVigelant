@@ -24,6 +24,7 @@ module.exports = (env) => {
             background_color: "#FFFFFF",
             fingerprints: false,
             inject: true,
+            ios: true,
             "icons": [
                 {
                     src: path.resolve(__dirname, './src/icons/android-icon-192x192.png'),
