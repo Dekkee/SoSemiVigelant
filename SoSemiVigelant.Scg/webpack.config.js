@@ -5,6 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
+
 const webpack = require('webpack');
 const path = require('path');
 
@@ -73,7 +75,11 @@ module.exports = (env) => {
                 events: true
             }
         }),
-        new MiniCssExtractPlugin()
+        new MiniCssExtractPlugin(),
+        new PreloadWebpackPlugin({
+            rel: 'preload',
+            include: 'allChunks' // or 'initial'
+        })
     ];
     if (env !== 'production') {
         plugins.push(new webpack.HotModuleReplacementPlugin());
