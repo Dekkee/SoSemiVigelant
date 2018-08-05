@@ -72,7 +72,7 @@ module.exports = (env) => {
             ServiceWorker: {
                 events: true
             }
-        })
+        }),
         new MiniCssExtractPlugin()
     ];
     if (env !== 'production') {
