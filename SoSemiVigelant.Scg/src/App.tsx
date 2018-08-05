@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as cn from 'classnames';
 
-import { debounce } from 'lodash';
+import debounce = require('lodash/debounce');
 import { ParsedRow } from "./entities/Row";
 import { CardLayout } from "./components/CardLayout";
 import { SearchInput } from "./components/SearchInput";

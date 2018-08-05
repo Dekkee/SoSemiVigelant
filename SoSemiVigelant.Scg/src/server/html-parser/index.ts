@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import { omit } from 'lodash';
+import omit = require('lodash/omit');
 import { ParsedRow, RawRow } from "../../entities/Row";
 
 type ScgPaging = {

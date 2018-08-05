@@ -2,6 +2,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OfflinePlugin = require('offline-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const webpack = require('webpack');
 const path = require('path');
 
@@ -21,6 +24,10 @@ module.exports = (env) => {
                 author: require('./package').author,
                 charset: 'utf-8',
                 description: 'starcitygames.com shop price srapper'
+            },
+            versions: {
+                react: require('./package').dependencies.react,
+                'react-dom': require('./package').dependencies['react-dom']
             }
         }),
         new WebpackPwaManifest({
@@ -66,6 +73,7 @@ module.exports = (env) => {
                 events: true
             }
         })
+        new MiniCssExtractPlugin()
     ];
     if (env !== 'production') {
         plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -79,18 +87,18 @@ module.exports = (env) => {
                 test: /\.tsx?/,
                 use: 'awesome-typescript-loader'
             },
-            {
-                test: /\.scss$/,
-                use: [
-                    "style-loader", // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS
-                ]
-            },
-            {
-                test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-                loader: 'file-loader?name=[name].[ext]'
-            }
+                {
+                    test: /\.scss$/,
+                    use: [
+                        env ? MiniCssExtractPlugin.loader : 'style-loader', // creates style nodes from JS strings
+                        "css-loader", // translates CSS into CommonJS
+                        "sass-loader" // compiles Sass to CSS
+                    ]
+                },
+                {
+                    test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+                    loader: 'file-loader?name=[name].[ext]'
+                }
             ]
         },
         plugins,
@@ -103,5 +111,19 @@ module.exports = (env) => {
             hot: true
         },
         devtool: env && 'cheap-source-map',
+        externals: env && {
+            "react": "React",
+            "react-dom": "ReactDOM"
+        },
+        optimization: env && {
+            minimizer: [
+                new UglifyJsPlugin({
+                    cache: true,
+                    parallel: true,
+                    sourceMap: true // set to true if you want JS source maps
+                }),
+                new OptimizeCSSAssetsPlugin({})
+            ]
+        },
     }
 };
