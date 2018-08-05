@@ -6,9 +6,32 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 
 const webpack = require('webpack');
 const path = require('path');
+
+const externals = [
+    {
+        module: 'react',
+        entry: `https://unpkg.com/react@${require('./package').dependencies.react}/umd/react.production.min.js`,
+        global: 'React',
+    },
+    {
+        module: 'react-dom',
+        entry: `https://unpkg.com/react-dom@${require('./package').dependencies['react-dom']}/umd/react-dom.production.min.js`,
+        global: 'ReactDOM',
+    },
+];
+
+const vendors = [
+    {
+    entry: 'icomoon.woff2',
+},
+    {
+        entry: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
+    },
+];
 
 module.exports = (env) => {
     const plugins = [
@@ -26,10 +49,6 @@ module.exports = (env) => {
                 author: require('./package').author,
                 charset: 'utf-8',
                 description: 'starcitygames.com shop price srapper'
-            },
-            versions: {
-                react: require('./package').dependencies.react,
-                'react-dom': require('./package').dependencies['react-dom']
             }
         }),
         new WebpackPwaManifest({
@@ -70,16 +89,23 @@ module.exports = (env) => {
                 },
             ]
         }),
+        new HtmlWebpackExternalsPlugin(
+            {
+                externals
+            }
+        ),
+        new MiniCssExtractPlugin(),
         new OfflinePlugin({
             ServiceWorker: {
                 events: true
-            }
+            },
+            externals: [...vendors.map(value => value.entry), ...externals.map(value => value.entry)]
         }),
-        new MiniCssExtractPlugin(),
         new PreloadWebpackPlugin({
             rel: 'preload',
             include: 'allChunks' // or 'initial'
-        })
+        }),
+
     ];
     if (env !== 'production') {
         plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -118,8 +144,10 @@ module.exports = (env) => {
         },
         devtool: env && 'cheap-source-map',
         externals: env && {
-            "react": "React",
-            "react-dom": "ReactDOM"
+            ...externals.reduce((previousValue, currentValue) => ({
+                ...previousValue,
+                [currentValue.module]: currentValue.global
+            }), {})
         },
         optimization: env && {
             minimizer: [
