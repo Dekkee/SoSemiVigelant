@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --env production",
     "dev": "webpack-dev-server",
-    "server": "ts-node ./src/server/server.ts",
+    "start": "ts-node ./src/server/server.ts",
     "server-dev": "nodemon"
   },
   "main": "index.js",
