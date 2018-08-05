@@ -18,7 +18,8 @@ interface State {
 }
 
 export class App extends React.Component<{}, State> {
-    private pwaUpdater: Updater;
+    private readonly pwaUpdater: Updater;
+    private controller: AbortController;
 
     constructor(props) {
         super(props);
@@ -35,11 +36,15 @@ export class App extends React.Component<{}, State> {
             onUpdateFailed: () => this.setState({...this.state, updateStatus: UpdateStatus.Failed }),
             onUpdating: () => this.setState({...this.state, updateStatus: UpdateStatus.Updating }),
         });
+
+        this.controller = null;
     }
 
-    private controller: AbortController = null;
+    private onUpdateCancelled() {
+        this.setState({...this.state, updateStatus: UpdateStatus.Cancelled });
+    }
 
-    requestData = debounce(async (value: string) => {
+    private readonly requestData = debounce(async (value: string) => {
         if (!value) {
             return;
         }
@@ -92,7 +97,7 @@ export class App extends React.Component<{}, State> {
                         </div>
                         : this.renderTable(rows)
                 }
-                <UpdateLabel status={updateStatus} onRequestUpdate={() => this.pwaUpdater.performUpdate() }/>
+                <UpdateLabel status={updateStatus} onRequestUpdate={() => this.pwaUpdater.performUpdate() } onUpdateCancelled={() => this.onUpdateCancelled()}/>
             </div>
         );
     }

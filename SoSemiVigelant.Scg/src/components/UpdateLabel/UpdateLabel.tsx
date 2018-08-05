@@ -7,12 +7,14 @@ export enum UpdateStatus {
     Required,
     NotRequired,
     Updating,
-    Failed
+    Failed,
+    Cancelled
 }
 
 export interface Props {
     status: UpdateStatus;
     onRequestUpdate: () => void;
+    onUpdateCancelled: () => void;
 }
 
 export class UpdateLabel extends React.PureComponent<Props> {
@@ -21,8 +23,8 @@ export class UpdateLabel extends React.PureComponent<Props> {
     }
 
     render () {
-        const { status, onRequestUpdate } = this.props;
-        const isHidden = status === UpdateStatus.NotRequired;
+        const { status, onRequestUpdate, onUpdateCancelled } = this.props;
+        const isHidden = status === UpdateStatus.NotRequired || status === UpdateStatus.Cancelled;
         const isFailed = status === UpdateStatus.Failed;
         return (
             <div className={cn(
@@ -32,11 +34,11 @@ export class UpdateLabel extends React.PureComponent<Props> {
                 )}>
                 {
                     status === UpdateStatus.Required &&
-                    <span className="update-label update-label--ready" onClick={onRequestUpdate}>Update is ready.<br/>Tap me to start updating!</span>
+                    <span className="update-label update-label--ready" onClick={onRequestUpdate}>Update is ready.<br/>Click me to start updating!</span>
                 }
                 {
                     status === UpdateStatus.Updating &&
-                    <div className="update-label update-label--updating"><i className="icon-spinner8 icon-big icon-rotating" />Updating</div>
+                    <div className="update-label update-label--updating"><i className="icon-spinner8 icon-big icon-rotating" />Loading update!</div>
                 }
                 {
                     status === UpdateStatus.Failed &&
@@ -44,7 +46,7 @@ export class UpdateLabel extends React.PureComponent<Props> {
                 }
                 {
                     !isHidden &&
-                    <div className="update-label update-label__close">&times;</div>
+                    <div className="update-label update-label__close" onClick={onUpdateCancelled}>&times;</div>
                 }
             </div>
         )
