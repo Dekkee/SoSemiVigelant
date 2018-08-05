@@ -10,6 +10,7 @@ const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 
 const webpack = require('webpack');
 const path = require('path');
+const manifest = require('./src/pwa/manifest');
 
 const externals = [
     {
@@ -26,8 +27,8 @@ const externals = [
 
 const vendors = [
     {
-    entry: 'icomoon.woff2',
-},
+        entry: 'icomoon.woff2',
+    },
     {
         entry: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
     },
@@ -43,57 +44,16 @@ module.exports = (env) => {
             filename: 'index.html',
             favicon: './src/icons/favicon.ico',
             template: path.join('./src/template/index.html'),
-            title: 'Tuktuk SCG scrapper',
+            title: manifest.name,
             meta: {
                 viewport: 'width=device-width, initial-scale=1',
-                author: require('./package').author,
+                author: manifest.author,
                 charset: 'utf-8',
-                description: 'starcitygames.com shop price srapper'
+                description: manifest.description,
             }
         }),
-        new WebpackPwaManifest({
-            name: "Tuktuk SCG scrapper",
-            short_name: "Tuktuk",
-            lang: "en-GB",
-            start_url: "/",
-            display: "standalone",
-            theme_color: "#ccffcc",
-            background_color: "#FFFFFF",
-            ios: true,
-            icons: [
-                {
-                    src: path.resolve(__dirname, './src/icons/android-icon-192x192.png'),
-                    sizes: [36, 48, 72, 144, 192],
-                    type: "image/png",
-                    destination: path.join('icons', 'android')
-                },
-                {
-                    src: path.resolve(__dirname, './src/icons/apple-icon-1024x1024.png'),
-                    sizes: [57, 60, 72, 76, 114, 120, 144, 152, 180, 1024],
-                    type: "image/png",
-                    destination: path.join('icons', 'ios'),
-                    ios: true
-                },
-                {
-                    src: path.resolve(__dirname, './src/icons/apple-icon-1024x1024.png'),
-                    sizes: 1024,
-                    type: "image/png",
-                    destination: path.join('icons', 'ios'),
-                    ios: 'startup'
-                },
-                {
-                    src: path.resolve(__dirname, './src/icons/ms-icon-310x310.png'),
-                    sizes: [70, 144, 150, 310],
-                    type: "image/png",
-                    destination: path.join('icons', 'ms')
-                },
-            ]
-        }),
-        new HtmlWebpackExternalsPlugin(
-            {
-                externals
-            }
-        ),
+        new WebpackPwaManifest(manifest),
+        new HtmlWebpackExternalsPlugin({externals}),
         new MiniCssExtractPlugin(),
         new OfflinePlugin({
             ServiceWorker: {
