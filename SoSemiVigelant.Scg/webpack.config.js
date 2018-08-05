@@ -102,7 +102,7 @@ module.exports = (env) => {
                     ]
                 },
                 {
-                    test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+                    test: /\.jpe?g$|\.gif$|\.svg$|\.woff$|\.woff2$|\.ttf$|\.wav$|\.mp3$/,
                     loader: 'file-loader?name=[name].[ext]'
                 }
             ]
