@@ -80,7 +80,7 @@ export class App extends React.Component<{}, State> {
                     <div className="empty"><i className="icon-sad icon-big" />Not found</div>
                 </div>
             : <div className="start-search-container">
-                <div className="start-search"><i className="icon-search icon-big" />hol search!</div>
+                <div className="start-search"><i className="icon-search icon-big" />Start search!</div>
             </div>
         );
     };
