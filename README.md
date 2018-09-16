@@ -1,29 +1,18 @@
-SoSemiVigelant
+SoSemiVigelant ![dev](https://teamcity.dekker.gdn/app/rest/builds/buildType%3A%28id%3ASosemivigelant_Build%29/statusIcon) 
 ===============
 
 Аукционная приложуха для топдека в доккер контейнере
 
-* Бэк на **ASP.NET Core**
-* Фронт на **React/Redux**
-* Данные в **PostgreSQL**
-
-Статус сборки
--------------
-
-| Ветка     | Статус                                                                                                             |
-|-----------|--------------------------------------------------------------------------------------------------------------------|
-| `dev`     | ![dev](https://teamcity.dekker.gdn/app/rest/builds/buildType%3A%28id%3ASosemivigelant_Build%29/statusIcon)         |
+* Backend **ts-node**
+* frontend **React/Redux**
+* Database **MongoDB**
 
 Как запустить
 -------------
 
 ```bash
-git clone https://bitbucket.org/Dekkee/sosemivigelant.git sosemivigelant
+git clone https://github.com/Dekkee/SoSemiVigelant.git sosemivigelant
 cd sosemivigelant
-
-# Создаем volume чтобы персистентное хранилище в докере под виндой работало
-docker volume create --name sql.data -d local
-
 docker-compose up -d
 
 ```
