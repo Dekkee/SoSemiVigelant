@@ -1,6 +1,8 @@
-import { getJson, getQuery, getTakeSkipQuery } from '../api/core'
+import { getJson, getQuery, getTakeSkipQuery } from '../api/core';
 import {
-    IAuctionInfoRequest, IAuctionInfoResponse, IAuctionsListRequest,
+    IAuctionInfoRequest,
+    IAuctionInfoResponse,
+    IAuctionsListRequest,
     IAuctionsListResponse
 } from '../api/contracts';
 
@@ -30,5 +32,5 @@ export const fetchAucInfo = async ({ id }: IAuctionInfoRequest): Promise<IAuctio
         id,
         auction: json,
         receivedAt: Date.now()
-    }
+    };
 };

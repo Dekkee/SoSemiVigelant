@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import 'moment-duration-format';
 import { Duration } from 'moment';
+import 'moment-duration-format';
 import 'moment/locale/ru';
 
 export interface IProps {
@@ -69,7 +69,7 @@ export class Ticker extends React.Component<IProps, IState> {
 
         return (
             ticks.milliseconds() > 0
-                ? <div className="ticker">{ this.format(ticks as DurationWithFormat) }</div>
+                ? <div className="ticker">{this.format(ticks as DurationWithFormat)}</div>
                 : 'Завершен'
         );
     }

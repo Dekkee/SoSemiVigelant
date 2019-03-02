@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactModal from 'react-modal';
-import { Button } from '../Button'
+import { Button } from '../Button';
 
 import './Modal.scss';
 
@@ -14,7 +14,7 @@ const customStyles = {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        maxHeight: '80%', 
+        maxHeight: '80%',
         overlfow: 'scroll',
         padding: '10px',
         minHeight: '100px',
@@ -32,17 +32,20 @@ export interface IProps {
 }
 
 export class Modal extends React.Component<IProps> {
-    render() {
-        const { onRequestClose,
+    render () {
+        const {
+            onRequestClose,
             isOpen,
             title,
             style = customStyles,
-            children } = this.props;
-        return(
+            children
+        } = this.props;
+        return (
             <ReactModal isOpen={isOpen} onRequestClose={onRequestClose} style={style} contentLabel="Popup window">
                 <div className="modal-header">
                     <span className="modal-header__title">{title}</span>
-                    <Button className="modal-header__close-button icon" icon={'clear'} onClick={onRequestClose} disabled={false}/>
+                    <Button className="modal-header__close-button icon" icon={'clear'} onClick={onRequestClose}
+                            disabled={false}/>
                 </div>
                 <div className="modal-body">{children}</div>
             </ReactModal>

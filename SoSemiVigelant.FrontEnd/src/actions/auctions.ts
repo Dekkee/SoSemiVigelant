@@ -2,7 +2,9 @@ import { Action } from 'redux';
 import { action, initActionCreators } from '../utils/actions/actionCreatorFactory';
 import { IErrorResponse } from '../api/core';
 import {
-    IAuction, IAuctionInfoRequest, IAuctionInfoResponse, IAuctionsListRequest,
+    IAuctionInfoRequest,
+    IAuctionInfoResponse,
+    IAuctionsListRequest,
     IAuctionsListResponse
 } from '../api/contracts';
 

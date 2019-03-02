@@ -38,7 +38,7 @@ app.get('*', function (req, resp) {
 
 const tryConnectToRabbit = () => connectToRabbit()
     .catch((error) => {
-        console.error(`RabbitMQ: Failed to connect: ${error}`)
+        console.error(`RabbitMQ: Failed to connect: ${error}`);
         setTimeout(() => {
             console.info('reconnecting to rabbit...');
             tryConnectToRabbit();

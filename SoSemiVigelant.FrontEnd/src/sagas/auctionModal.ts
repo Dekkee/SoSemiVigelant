@@ -14,6 +14,6 @@ const handleFetch = function* (action: IAuctionInitAction) {
     }
 };
 
-export function* saga() {
+export function* saga () {
     yield takeLatest(actions.get.init.type, handleFetch);
 }

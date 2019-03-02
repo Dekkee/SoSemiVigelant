@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions, IAuctionsInitAction } from '../actions/auctions';
-import { fetchAucs } from "../actions";
+import { fetchAucs } from '../actions';
 import { IAuctionsListResponse } from '../api/contracts';
 
 const handleFetch = function* (action: IAuctionsInitAction) {
@@ -14,6 +14,6 @@ const handleFetch = function* (action: IAuctionsInitAction) {
     }
 };
 
-export function* saga() {
+export function* saga () {
     yield takeLatest(actions.fetch.init.type, handleFetch);
 }

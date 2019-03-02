@@ -20,8 +20,7 @@ const load = async () => {
         await channel.assertExchange(exchange, 'topic', { durable: false });
         channel.publish(exchange, 'auctions.list', new Buffer(JSON.stringify(aucs)), { persistent: true });
         console.log(colors.cyan(`Done`));
-    }
-    catch (e) {
+    } catch (e) {
         console.log(colors.red(`Error!: ${e.message}`));
     }
 };
@@ -58,7 +57,7 @@ const listen = async () => {
 
 const tryListen = () => listen()
     .catch((error) => {
-        console.error(`RabbitMQ: Failed to connect: ${error}`)
+        console.error(`RabbitMQ: Failed to connect: ${error}`);
         setTimeout(() => {
             console.info('reconnecting to rabbit...');
             tryListen();

@@ -5,7 +5,7 @@ import {
     MapStateToPropsParam,
     MergeProps,
     Options,
-} from 'react-redux'
+} from 'react-redux';
 import { IState } from '../../reducers';
 
 
@@ -13,12 +13,12 @@ export type InferableComponentEnhancerWithProps<IInjectedProps, INeedsProps> =
     <IComponent extends React.ComponentType<IInjectedProps & INeedsProps>>(component: IComponent) => IComponent
 
 export interface IConnect {
-    <IStateProps = {}, IDispatchProps = {}, IOwnProps = {}>(
+    <IStateProps = {}, IDispatchProps = {}, IOwnProps = {}> (
         mapStateToProps?: MapStateToPropsParam<IStateProps, IOwnProps, IState>,
         mapDispatchToProps?: MapDispatchToPropsParam<IDispatchProps, IOwnProps>,
     ): InferableComponentEnhancerWithProps<IStateProps & IDispatchProps, IOwnProps>
 
-    <IStateProps = {}, IDispatchProps = {}, IOwnProps = {}, IMergedProps = {}>(
+    <IStateProps = {}, IDispatchProps = {}, IOwnProps = {}, IMergedProps = {}> (
         mapStateToProps?: MapStateToPropsParam<IStateProps, IOwnProps, IState>,
         mapDispatchToProps?: MapDispatchToPropsParam<IDispatchProps, IOwnProps>,
         mergeProps?: MergeProps<IStateProps, IDispatchProps, IOwnProps, IMergedProps>,

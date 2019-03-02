@@ -14,7 +14,7 @@ export const description = (id: number): Promise<{}> => {
                 res.on('data', (chunk: any) => data.push(chunk));
                 res.on('end', () => {
                     const page = Buffer.concat(data);
-                    const cheer = cheerio.load(page.toString(), {decodeEntities: false});
+                    const cheer = cheerio.load(page.toString(), { decodeEntities: false });
 
                     const html = cheer('.row .col-xs-12').html();
                     if (!html) {

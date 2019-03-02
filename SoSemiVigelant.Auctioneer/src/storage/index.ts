@@ -4,23 +4,24 @@ import { Auction, AuctionMap, AuctionModel } from './entities/Auction';
 import { ICrudRepository, Key } from './entities/CrudRepository';
 import * as colors from 'colors';
 import AuctionRepository from './entities/AuctionRepository';
-import { UserModel, UserMap, User } from './entities/User';
+import { User, UserMap, UserModel } from './entities/User';
 import UserRepository from './entities/UserRepository';
-import { Model, Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
 export abstract class DataStorage<D extends { [index: string]: any }, E extends { [index: string]: any }> {
     protected constructor (
         protected readonly repository: ICrudRepository<D, Key>,
         private readonly map: { [index: string]: any },
         protected readonly model: Model<D & Document>
-    ) { }
+    ) {
+    }
 
     async syncData (data: (any & { id: Key })[]) {
         console.log(colors.cyan(`Syncing entities: `) + data.length);
         for (const entry of data) {
             await this.repository.get(entry.id) === null
                 ? this.repository.put(entry)
-                : this.repository.update(entry)
+                : this.repository.update(entry);
         }
     };
 
@@ -58,7 +59,7 @@ export class AuctionsStorage extends DataStorage<AuctionModel, AuctionEntity> {
     public async updateDescription (id: Key, description: string) {
         const entity = await this.repository.get(id);
         if (!entity) {
-            throw new Error(`Entity ${id} not found`)
+            throw new Error(`Entity ${id} not found`);
         }
         entity.description = description;
         await this.repository.update(entity);
@@ -69,7 +70,7 @@ export class AuctionsStorage extends DataStorage<AuctionModel, AuctionEntity> {
             const now = new Date();
             console.log(colors.cyan(`updating statuses at ${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`));
             await this.model.update(
-                { estimated: { $lt: now} },
+                { estimated: { $lt: now } },
                 { isActive: false },
                 { multi: true });
         } catch (e) {

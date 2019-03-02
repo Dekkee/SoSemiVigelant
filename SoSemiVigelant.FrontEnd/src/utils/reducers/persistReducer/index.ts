@@ -5,9 +5,9 @@ import debounce from 'lodash-es/debounce';
  * Интерфейс сериализатора значения в строку.
  */
 export interface ISerializer<TValue> {
-    parse(str: string): TValue;
+    parse (str: string): TValue;
 
-    stringify(value: TValue): string;
+    stringify (value: TValue): string;
 }
 
 /**

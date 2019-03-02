@@ -26,7 +26,7 @@ const checkStatus = (response: any): any => {
     } else {
         const error = new Error(response.statusText);
         (error as any).response = response;
-        throw error
+        throw error;
     }
 };
 

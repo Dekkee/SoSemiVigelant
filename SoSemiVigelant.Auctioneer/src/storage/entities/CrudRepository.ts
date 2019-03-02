@@ -1,6 +1,6 @@
 import { ObjectID } from 'mongodb';
 
-import { Model, Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 import * as colors from 'colors';
 
 export type Key = string | number;
@@ -62,10 +62,10 @@ export default abstract class CrudRepository<T extends Document> implements ICru
                 docQuery = docQuery.sort([[query.order, Boolean(query.asc) ? 'ascending' : 'descending']]);
             }
             if (query.name) {
-                docQuery = docQuery.find({'name': { "$regex": query.name, "$options": "i" }})
+                docQuery = docQuery.find({ 'name': { '$regex': query.name, '$options': 'i' } });
             }
             if (query.isActive) {
-                docQuery = docQuery.find({'isActive': query.isActive})
+                docQuery = docQuery.find({ 'isActive': query.isActive });
             }
             return await docQuery.exec();
         } catch (e) {
@@ -78,10 +78,10 @@ export default abstract class CrudRepository<T extends Document> implements ICru
         try {
             let docQuery = this.model.find();
             if (query.name) {
-                docQuery = docQuery.find({'name': { "$regex": query.name, "$options": "i" }})
+                docQuery = docQuery.find({ 'name': { '$regex': query.name, '$options': 'i' } });
             }
             if ('isActive' in query) {
-                docQuery = docQuery.find({'isActive': query.isActive})
+                docQuery = docQuery.find({ 'isActive': query.isActive });
             }
             return await docQuery.count();
         } catch (e) {
@@ -92,13 +92,13 @@ export default abstract class CrudRepository<T extends Document> implements ICru
 }
 
 export interface ICrudRepository<T, K extends Key> {
-    list(query: any): Promise<T[]>;
+    list (query: any): Promise<T[]>;
 
-    get(id: K): Promise<T | null>;
+    get (id: K): Promise<T | null>;
 
-    put(item: T): void;
+    put (item: T): void;
 
-    delete(id: K): void;
+    delete (id: K): void;
 
-    update(item: T): void;
+    update (item: T): void;
 }

@@ -17,7 +17,7 @@ export interface ActionCreatorFactory {
 }
 
 export const action: ActionCreatorFactory = (create: any) => {
-    const creator: ActionCreator = <any> ((...args: any[]): Action => ({
+    const creator: ActionCreator = <any>((...args: any[]): Action => ({
         ...create(...args),
         type: creator.type,
     }));

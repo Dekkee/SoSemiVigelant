@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 
-import { AuctionItem } from '../AuctionItem'
-import { AuctionListControls } from '../AuctionListControls'
+import { AuctionItem } from '../AuctionItem';
+import { AuctionListControls } from '../AuctionListControls';
 
 import { connect } from '../../utils/connect';
 import { actions } from '../../actions/auctions';
@@ -148,13 +148,13 @@ export class AuctionList extends React.Component<IProps, IState> {
             <div>
                 <div className="auctionList">
                     <AuctionListControls
-                        count={ count }
-                        page={ page }
-                        pageSize={ perPage }
-                        onPageSizeChanged={ this.handlePageSizeChange.bind(this) }
-                        onPageChanged={ this.handlePageChange.bind(this) }
-                        onSearchTextChange={ this.handleSearchTextChange.bind(this) }
-                        showSearchInput={ true }/>
+                        count={count}
+                        page={page}
+                        pageSize={perPage}
+                        onPageSizeChanged={this.handlePageSizeChange.bind(this)}
+                        onPageChanged={this.handlePageChange.bind(this)}
+                        onSearchTextChange={this.handleSearchTextChange.bind(this)}
+                        showSearchInput={true}/>
 
                     <div className="auctionList-header">
                         {
@@ -168,8 +168,8 @@ export class AuctionList extends React.Component<IProps, IState> {
                                         'sort-by-desc': sortOrder === column.name && !sortDirection
                                     }
                                 );
-                                return <span className={ cn } onClick={ () => this.handleSort(column.name) }
-                                             key={ i }>{ column.label }</span>;
+                                return <span className={cn} onClick={() => this.handleSort(column.name)}
+                                             key={i}>{column.label}</span>;
                             })
                         }
                     </div>
@@ -178,18 +178,18 @@ export class AuctionList extends React.Component<IProps, IState> {
                             ? <h2 className="loading">Loading...</h2> :
                             isEmpty ? <h2>Empty.</h2>
                                 :
-                                <div className="auctionList-body" style={ { opacity: isFetching ? 0.5 : 1 } }>
-                                    { items.map((auction, i) =>
-                                        <AuctionItem { ...auction } key={ i }/>
-                                    ) }
+                                <div className="auctionList-body" style={{ opacity: isFetching ? 0.5 : 1 }}>
+                                    {items.map((auction, i) =>
+                                        <AuctionItem {...auction} key={i}/>
+                                    )}
                                 </div>
                     }
                     <AuctionListControls
-                        count={ count }
-                        page={ page }
-                        pageSize={ perPage }
-                        onPageSizeChanged={ this.handlePageSizeChange.bind(this) }
-                        onPageChanged={ this.handlePageChange.bind(this) }/>
+                        count={count}
+                        page={page}
+                        pageSize={perPage}
+                        onPageSizeChanged={this.handlePageSizeChange.bind(this)}
+                        onPageChanged={this.handlePageChange.bind(this)}/>
                 </div>
             </div>
         );

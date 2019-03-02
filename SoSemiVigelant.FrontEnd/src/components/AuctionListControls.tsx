@@ -1,7 +1,7 @@
 import * as React from 'react';
-import debounce =require('lodash/debounce');
 
 import { Pagination } from './Pagination';
+import debounce = require('lodash/debounce');
 
 export interface IProps {
     count: number;
@@ -43,6 +43,31 @@ export class AuctionListControls extends React.Component<IProps, IState> {
         }, 200);
     }
 
+    render () {
+        const { count, page, pageSize, showSearchInput } = this.props;
+        const { options } = this.state;
+
+        return (
+            <div className="pagination-container">
+                <div className="pagination-count">Всего: {count}</div>
+                {
+                    showSearchInput && <div className="pagination-search-input">
+                        <i className="material-icons">search</i>
+                        <input type="text" placeholder="Поиск..." onChange={this.handleSearchTextChange.bind(this)}/>
+                    </div>
+                }
+                <Pagination count={count} page={page} pageSize={pageSize}
+                            clickCallback={this.handlePageChange.bind(this)}/>
+                <select className="pagination-page-size-select" onChange={this.handlePageSizeChanged.bind(this)}
+                        value={pageSize}>
+                    {
+                        options.map((opt, i) => (<option value={opt.value} key={i}>{opt.label}</option>))
+                    }
+                </select>
+            </div>
+        );
+    }
+
     private handleSearchTextChange (event) {
         this.onSearchTextChange(event.target.value);
     }
@@ -53,30 +78,5 @@ export class AuctionListControls extends React.Component<IProps, IState> {
 
     private handlePageSizeChanged (event) {
         this.props.onPageSizeChanged(event.target.value);
-    }
-
-    render () {
-        const { count, page, pageSize, showSearchInput } = this.props;
-        const { options } = this.state;
-
-        return (
-            <div className="pagination-container">
-                <div className="pagination-count">Всего: { count }</div>
-                {
-                    showSearchInput && <div className="pagination-search-input">
-                        <i className="material-icons">search</i>
-                        <input type="text" placeholder="Поиск..." onChange={ this.handleSearchTextChange.bind(this) }/>
-                    </div>
-                }
-                <Pagination count={ count } page={ page } pageSize={ pageSize }
-                            clickCallback={ this.handlePageChange.bind(this) }/>
-                <select className="pagination-page-size-select" onChange={ this.handlePageSizeChanged.bind(this) }
-                        value={ pageSize }>
-                    {
-                        options.map((opt, i) => (<option value={ opt.value } key={ i }>{ opt.label }</option>))
-                    }
-                </select>
-            </div>
-        );
     }
 }

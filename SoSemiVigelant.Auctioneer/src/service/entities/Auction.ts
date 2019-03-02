@@ -1,6 +1,4 @@
 export interface AuctionEntity {
-    [index:string] : any;
-
     id: number;
     lot: string;
     date_estimated: Date;
@@ -17,4 +15,6 @@ export interface AuctionEntity {
     city: string;
     seller_ip: string;
     seller: string;
+
+    [index: string]: any;
 }

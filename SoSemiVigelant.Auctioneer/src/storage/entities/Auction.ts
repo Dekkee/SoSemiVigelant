@@ -1,9 +1,7 @@
-import { Schema, Document, Model, model, Types } from 'mongoose';
+import { Document, Model, model, Schema } from 'mongoose';
 import { User } from './User';
 
 export interface AuctionModel {
-    [index: string]: any;
-
     id: number;
     name: string;
     estimated: Date;
@@ -22,6 +20,8 @@ export interface AuctionModel {
     seller: number;
     description: string;
     isActive: boolean;
+
+    [index: string]: any;
 }
 
 export const AuctionSchema: Schema = new Schema({

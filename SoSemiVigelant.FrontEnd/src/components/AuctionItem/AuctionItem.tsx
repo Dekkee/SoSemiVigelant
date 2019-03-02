@@ -21,7 +21,7 @@ interface IDispatchProps {
 }
 
 const mapDispatchToProps: IDispatchProps = {
-    onView: (id: number) => actions.get.init({id})
+    onView: (id: number) => actions.get.init({ id })
 };
 
 @connect<null, IDispatchProps>(null, mapDispatchToProps)
@@ -37,10 +37,10 @@ export class AuctionItem extends React.Component<IProps> {
     render () {
         const { name, estimated, currentBid } = this.props;
         return (
-            <div className="auctionItem" onClick={ this.handleView.bind(this) }>
-                <span className="auction-column auction-column-name">{ name }</span>
-                <Ticker className="auction-column auction-column-timeLeft" initialTime={ estimated }/>
-                <span className="auction-column auction-column-currentBet">{ currentBid }</span>
+            <div className="auctionItem" onClick={this.handleView.bind(this)}>
+                <span className="auction-column auction-column-name">{name}</span>
+                <Ticker className="auction-column auction-column-timeLeft" initialTime={estimated}/>
+                <span className="auction-column auction-column-currentBet">{currentBid}</span>
             </div>
         );
     }

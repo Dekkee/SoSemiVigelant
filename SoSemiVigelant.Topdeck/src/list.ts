@@ -50,7 +50,8 @@ export const list = (): Promise<{}> => {
                     const data: any[] = [];
                     res.on('data', (chunk: any) => data.push(chunk));
                     res.on('end', () => {
-                        const page = Buffer.concat(data);;
+                        const page = Buffer.concat(data);
+                        ;
                         const cheer = cheerio.load(page.toString());
                         const scripts = cheer('script');
                         for (let index in scripts) {
