@@ -24,7 +24,7 @@ const mapDispatchToProps: DispatchProps = {
     onView: (id: number) => actions.get.init({ id })
 };
 
-@connect<null, DispatchProps>(null, mapDispatchToProps)
+@connect<any, DispatchProps>(null, mapDispatchToProps)
 export class AuctionItem extends React.Component<Props> {
     constructor (props: Props) {
         super(props);
