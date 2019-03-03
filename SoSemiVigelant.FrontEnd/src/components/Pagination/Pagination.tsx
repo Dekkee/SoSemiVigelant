@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactPaginate from 'react-paginate';
+import ReactPaginate from 'react-paginate';
 
 import './Pagination.scss';
 
@@ -26,6 +26,7 @@ export class Pagination extends React.Component<Props> {
         if (pageCount === 1) {
             return null;
         }
+
         return <ReactPaginate
             disableInitialCallback={true}
             onPageChange={clickCallback}
