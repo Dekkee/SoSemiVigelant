@@ -2,23 +2,44 @@ version: "3"
 services:
   sesemivigelant-auctioneer:
     build: .
+    restart: always
     ports:
-        - 8000:80
+      - 8000:8000
     links:
-        - sesemivigelant-mongo
+      - sesemivigelant-mongo
     depends_on:
-        - sesemivigelant-mongo
+      - sesemivigelant-mongo
+      - sesemivigelant-rabbit
     environment:
-        - NODE_ENV=development
+      - NODE_ENV=development
+      - RABBIT_HOST=sesemivigelant-rabbit
+      - MONGO_HOST=sesemivigelant-mongo
+      - RABBIT_USER=SuchRabbit
+      - RABBIT_PASS=VeryPassword
+
   sesemivigelant-mongo:
-    image: mongo:latest
+    image: mongo:4
+    hostname: sesemivigelant-mongo
+    restart: always
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
-      - MONGODB_USER=SuchMongo
-      - MONGODB_PASS=VeryPassword
-    volumes:
-      - ./data/db:/data/db
+      - LC_CTYPE=en_US.UTF-8
     ports:
-        - 27017:27017
+      - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null # --quiet
+
+  sesemivigelant-rabbit:
+    image: rabbitmq:3-management-alpine
+    hostname: sesemivigelant-rabbit
+    restart: always
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=SWQOKODSQALRPCLNMEQG
+      - RABBITMQ_DEFAULT_USER=SuchRabbit
+      - RABBITMQ_DEFAULT_PASS=VeryPassword
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+      - 15672:15672
+      - 5672:5672
+    labels:
+      NAME: "rabbitmq"

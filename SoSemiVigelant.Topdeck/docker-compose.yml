@@ -7,7 +7,8 @@ services:
     links:
         - sesemivigelant-mongo
     depends_on:
-        - sesemivigelant-mongo
+      - sesemivigelant-mongo
+      - sesemivigelant-rabbit
     environment:
         - NODE_ENV=development
   sesemivigelant-mongo:

@@ -18,3 +18,8 @@ services:
   sesemivigelant-topdeck:
     environment:
       - NODE_ENV=production
+
+  sosemivigelant-mongo:
+    volumes:
+      - ./data/db:/data/db
+
