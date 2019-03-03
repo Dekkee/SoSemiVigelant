@@ -33,18 +33,3 @@
         }
     }
 }
-
-.auction-column {
-    &__name {
-        margin-right: auto;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    &__current-bet {
-        width: 10%;
-        min-width: 70px;
-        text-align: right;
-    }
-}

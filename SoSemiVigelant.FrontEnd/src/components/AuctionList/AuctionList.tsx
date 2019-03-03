@@ -162,7 +162,7 @@ export class AuctionList extends React.Component<Props, State> {
                                 const cn = classNames(
                                     'auction-list__header-item',
                                     `auction-list__header-item-${column.name}`,
-                                    `auction-column__${column.name}`,
+                                    `auction-item__${column.name}`,
                                     {
                                         'sort-by': sortOrder === column.name && sortDirection,
                                         'sort-by-desc': sortOrder === column.name && !sortDirection

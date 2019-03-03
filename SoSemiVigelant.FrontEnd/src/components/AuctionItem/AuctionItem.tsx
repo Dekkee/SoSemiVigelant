@@ -38,9 +38,9 @@ export class AuctionItem extends React.Component<Props> {
         const { name, estimated, currentBid } = this.props;
         return (
             <div className="auction-item" onClick={this.handleView.bind(this)}>
-                <span className="auction-column auction-column__name">{name}</span>
-                <Ticker className="auction-column auction-column__timeLeft" initialTime={estimated}/>
-                <span className="auction-column auction-column__currentBet">{currentBid}</span>
+                <span className="auction-item__name">{name}</span>
+                <Ticker className="auction-item__time-left" initialTime={estimated}/>
+                <span className="auction-item__current-bet">{currentBid}</span>
             </div>
         );
     }

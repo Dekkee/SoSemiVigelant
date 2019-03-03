@@ -13,4 +13,17 @@
         background-color: rgba(0, 0, 0, .1);
         cursor: pointer;
     }
+
+    &__name {
+        margin-right: auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    &__current-bet {
+        width: 10%;
+        min-width: 70px;
+        text-align: right;
+    }
 }
