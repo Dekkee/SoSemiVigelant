@@ -2,35 +2,35 @@ import * as React from 'react';
 import { connect } from '../utils/connect';
 
 import { Modal } from './Modal';
-import { IAuction } from '../api/contracts';
+import { Auction } from '../api/contracts';
 import { actions } from '../actions/auctions';
 import { selector } from '../selectors/auctionModal';
 
-type IProps = IOwnProps & IStateProps & IDispatchProps;
+type Props = OwnProps & StateProps & DispatchProps;
 
-export interface IOwnProps {
+export interface OwnProps {
 
 }
 
-interface IStateProps {
+interface StateProps {
     isFetching?: boolean;
     modalIsOpen?: boolean;
-    auction?: IAuction;
+    auction?: Auction;
     lastUpdated?: number;
 }
 
-interface IDispatchProps {
+interface DispatchProps {
     onClose?: () => void;
 }
 
 const mapStateToProps = state => selector(state);
 
-const mapDispatchToProps: IDispatchProps = ({
+const mapDispatchToProps: DispatchProps = ({
     onClose: () => actions.closeModal()
 });
 
-@connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps)
-export class AuctionItemModal extends React.Component<IProps> {
+@connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)
+export class AuctionItemModal extends React.Component<Props> {
 
     constructor (props) {
         super(props);

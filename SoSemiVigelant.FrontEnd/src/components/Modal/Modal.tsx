@@ -22,7 +22,7 @@ const customStyles = {
     }
 };
 
-export interface IProps {
+export interface Props {
     isOpen: boolean;
     onRequestClose: () => void;
     style?: {
@@ -31,7 +31,7 @@ export interface IProps {
     title: string;
 }
 
-export class Modal extends React.Component<IProps> {
+export class Modal extends React.Component<Props> {
     render () {
         const {
             onRequestClose,

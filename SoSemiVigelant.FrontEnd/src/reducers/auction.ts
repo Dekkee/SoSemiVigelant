@@ -1,6 +1,6 @@
-import { IAuction } from '../api/contracts';
+import { Auction } from '../api/contracts';
 import { switchCase, switchReducer } from '../utils/reducers/switchReducer';
-import { actions, IAuctionsDoneAction, IAuctionsFailAction, IAuctionsInitAction } from '../actions/auctions';
+import { actions, AuctionsDoneAction, AuctionsFailAction, AuctionsInitAction } from '../actions/auctions';
 
 export interface IState {
     isFetching: boolean;
@@ -8,7 +8,7 @@ export interface IState {
     perPage: number;
     sortOrder: string;
     sortDirection: boolean;
-    items: IAuction[];
+    items: Auction[];
     count: number;
     isActive?: boolean;
     lastUpdated?: number;
@@ -26,7 +26,7 @@ const initialState: IState = {
 };
 
 export const reducer = switchReducer<IState>(Object.assign(
-    switchCase(actions.fetch.init)((state: IState, action: IAuctionsInitAction): IState => ({
+    switchCase(actions.fetch.init)((state: IState, action: AuctionsInitAction): IState => ({
         ...state,
         isFetching: true,
         page: action.request.page,
@@ -35,14 +35,14 @@ export const reducer = switchReducer<IState>(Object.assign(
         sortDirection: action.request.sortDirection,
         isActive: action.request.isActive,
     })),
-    switchCase(actions.fetch.done)((state: IState, action: IAuctionsDoneAction): IState => ({
+    switchCase(actions.fetch.done)((state: IState, action: AuctionsDoneAction): IState => ({
         ...state,
         isFetching: false,
         items: action.response.values,
         count: action.response.count,
         lastUpdated: action.response.receivedAt
     })),
-    switchCase(actions.fetch.fail)((state: IState, action: IAuctionsFailAction): IState => ({
+    switchCase(actions.fetch.fail)((state: IState, action: AuctionsFailAction): IState => ({
         ...state
     }))
 ), initialState);

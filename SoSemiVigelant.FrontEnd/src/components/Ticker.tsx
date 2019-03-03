@@ -4,22 +4,22 @@ import { Duration } from 'moment';
 import 'moment-duration-format';
 import 'moment/locale/ru';
 
-export interface IProps {
+export interface Props {
     initialTime: Date;
     className?: string;
 }
 
-interface IState {
+interface State {
     ticks: Duration;
 }
 
 type DurationWithFormat = Duration & { format: (str: string) => string };
 
-export class Ticker extends React.Component<IProps, IState> {
-    private readonly _interval = 1000;
+export class Ticker extends React.Component<Props, State> {
+    private readonly interval = 1000;
     private timer: number | null = null;
 
-    constructor (props: IProps) {
+    constructor (props: Props) {
         super(props);
 
         this.state = {
@@ -28,10 +28,10 @@ export class Ticker extends React.Component<IProps, IState> {
     }
 
     componentDidMount () {
-        this.timer = window.setInterval(this.tick.bind(this), this._interval);
+        this.timer = window.setInterval(this.tick.bind(this), this.interval);
     }
 
-    componentWillReceiveProps (nextProps: IProps) {
+    componentWillReceiveProps (nextProps: Props) {
         if (this.props !== nextProps) {
             this.setState({
                 ticks: moment.duration(moment(new Date(nextProps.initialTime)).diff(moment.now()))

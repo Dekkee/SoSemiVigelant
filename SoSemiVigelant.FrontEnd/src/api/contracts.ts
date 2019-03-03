@@ -1,9 +1,9 @@
-export interface IUser {
+export interface User {
     name: string;
     refs: number;
 }
 
-export interface IAuction {
+export interface Auction {
     id: number;
     name: string;
     startBid: number;
@@ -13,11 +13,11 @@ export interface IAuction {
     city: string;
     shippingInfoShort: string;
     shippingInfo: string;
-    seller: IUser;
+    seller: User;
     description: string;
 }
 
-export interface IAuctionsListRequest {
+export interface AuctionsListRequest {
     perPage?: number;
     page?: number;
     sortOrder?: string;
@@ -26,18 +26,18 @@ export interface IAuctionsListRequest {
     isActive?: boolean;
 }
 
-export interface IAuctionsListResponse {
-    values: IAuction[],
+export interface AuctionsListResponse {
+    values: Auction[],
     count: number,
     receivedAt: number
 }
 
-export interface IAuctionInfoRequest {
+export interface AuctionInfoRequest {
     id: number;
 }
 
-export interface IAuctionInfoResponse {
+export interface AuctionInfoResponse {
     id: number;
-    auction: IAuction,
+    auction: Auction,
     receivedAt: number
 }

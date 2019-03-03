@@ -3,12 +3,12 @@ import * as queryString from 'querystring';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export interface IResponseStatus {
+export interface ResponseStatus {
     status: number;
     statusText: string;
 }
 
-export interface IErrorResponse extends IResponseStatus {
+export interface ErrorResponse extends ResponseStatus {
     code: number;
     error: string;
     msg: string;

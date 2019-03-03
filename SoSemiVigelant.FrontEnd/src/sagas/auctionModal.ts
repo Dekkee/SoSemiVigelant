@@ -1,11 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { actions, IAuctionInitAction } from '../actions/auctions';
+import { actions, AuctionInitAction } from '../actions/auctions';
 import { fetchAucInfo, } from '../actions';
-import { IAuctionInfoResponse } from '../api/contracts';
+import { AuctionInfoResponse } from '../api/contracts';
 
-const handleFetch = function* (action: IAuctionInitAction) {
+const handleFetch = function* (action: AuctionInitAction) {
     try {
-        const response: IAuctionInfoResponse = yield call(fetchAucInfo, action.request);
+        const response: AuctionInfoResponse = yield call(fetchAucInfo, action.request);
 
         yield put(actions.get.done(response));
 

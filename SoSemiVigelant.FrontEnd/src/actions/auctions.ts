@@ -1,47 +1,47 @@
 import { Action } from 'redux';
 import { action, initActionCreators } from '../utils/actions/actionCreatorFactory';
-import { IErrorResponse } from '../api/core';
+import { ErrorResponse } from '../api/core';
 import {
-    IAuctionInfoRequest,
-    IAuctionInfoResponse,
-    IAuctionsListRequest,
-    IAuctionsListResponse
+    AuctionInfoRequest,
+    AuctionInfoResponse,
+    AuctionsListRequest,
+    AuctionsListResponse
 } from '../api/contracts';
 
-export interface IAuctionsInitAction extends Action {
-    request: IAuctionsListRequest;
+export interface AuctionsInitAction extends Action {
+    request: AuctionsListRequest;
 }
 
-export interface IAuctionsDoneAction extends Action {
-    response: IAuctionsListResponse;
+export interface AuctionsDoneAction extends Action {
+    response: AuctionsListResponse;
 }
 
-export interface IAuctionsFailAction extends Action {
-    error: IErrorResponse;
+export interface AuctionsFailAction extends Action {
+    error: ErrorResponse;
 }
 
-export interface IAuctionInitAction extends Action {
-    request: IAuctionInfoRequest;
+export interface AuctionInitAction extends Action {
+    request: AuctionInfoRequest;
 }
 
-export interface IAuctionDoneAction extends Action {
-    response: IAuctionInfoResponse;
+export interface AuctionDoneAction extends Action {
+    response: AuctionInfoResponse;
 }
 
-export interface IAuctionFailAction extends Action {
-    error: IErrorResponse;
+export interface AuctionFailAction extends Action {
+    error: ErrorResponse;
 }
 
 export const actions = {
     fetch: {
-        init: action((request: IAuctionsListRequest) => ({ request })),
-        done: action((response: IAuctionsListResponse) => ({ response })),
-        fail: action((error: IErrorResponse) => ({ error })),
+        init: action((request: AuctionsListRequest) => ({ request })),
+        done: action((response: AuctionsListResponse) => ({ response })),
+        fail: action((error: ErrorResponse) => ({ error })),
     },
     get: {
-        init: action((request: IAuctionInfoRequest) => ({ request })),
-        done: action((response: IAuctionInfoResponse) => ({ response })),
-        fail: action((error: IErrorResponse) => ({ error })),
+        init: action((request: AuctionInfoRequest) => ({ request })),
+        done: action((response: AuctionInfoResponse) => ({ response })),
+        fail: action((error: ErrorResponse) => ({ error })),
     },
     closeModal: action(() => ({})),
 };

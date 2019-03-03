@@ -1,12 +1,12 @@
 import { getJson, getQuery, getTakeSkipQuery } from '../api/core';
 import {
-    IAuctionInfoRequest,
-    IAuctionInfoResponse,
-    IAuctionsListRequest,
-    IAuctionsListResponse
+    AuctionInfoRequest,
+    AuctionInfoResponse,
+    AuctionsListRequest,
+    AuctionsListResponse
 } from '../api/contracts';
 
-export const fetchAucs = async (props: IAuctionsListRequest): Promise<IAuctionsListResponse> => {
+export const fetchAucs = async (props: AuctionsListRequest): Promise<AuctionsListResponse> => {
     const paging = props.perPage ?
         getTakeSkipQuery(props.perPage, props.page) : { full: 'true' };
 
@@ -26,7 +26,7 @@ export const fetchAucs = async (props: IAuctionsListRequest): Promise<IAuctionsL
     };
 };
 
-export const fetchAucInfo = async ({ id }: IAuctionInfoRequest): Promise<IAuctionInfoResponse> => {
+export const fetchAucInfo = async ({ id }: AuctionInfoRequest): Promise<AuctionInfoResponse> => {
     const json = await getJson(`auctions/${id}`);
     return {
         id,

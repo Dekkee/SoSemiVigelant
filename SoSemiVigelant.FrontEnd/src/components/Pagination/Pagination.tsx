@@ -3,14 +3,14 @@ import * as ReactPaginate from 'react-paginate';
 
 import './Pagination.scss';
 
-export interface IProps {
+export interface Props {
     count: number;
     page: number;
     pageSize: number;
     clickCallback: () => void;
 }
 
-export class Pagination extends React.Component<IProps> {
+export class Pagination extends React.Component<Props> {
 
     constructor (props) {
         super(props);
@@ -43,4 +43,4 @@ export class Pagination extends React.Component<IProps> {
             previousClassName={'pagination-previous'}
             nextClassName={'pagination-next'}/>;
     }
-};
+}

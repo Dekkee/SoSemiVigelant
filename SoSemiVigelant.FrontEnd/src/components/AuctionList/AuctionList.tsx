@@ -7,23 +7,23 @@ import { AuctionListControls } from '../AuctionListControls';
 import { connect } from '../../utils/connect';
 import { actions } from '../../actions/auctions';
 import { selector } from '../../selectors/auctions';
-import { IAuction, IAuctionsListRequest } from '../../api/contracts';
+import { Auction, AuctionsListRequest } from '../../api/contracts';
 import { Action } from 'redux';
 
 import './AuctionList.scss';
 
-type IProps = IOwnProps & IDispatchProps & IStateProps;
+type Props = OwnProps & DispatchProps & StateProps;
 
-export interface IOwnProps {
+export interface OwnProps {
     searchText?: string;
 }
 
-interface IDispatchProps {
-    loadAuctions?: (request: IAuctionsListRequest) => Action;
+interface DispatchProps {
+    loadAuctions?: (request: AuctionsListRequest) => Action;
 }
 
-interface IStateProps {
-    items?: IAuction[];
+interface StateProps {
+    items?: Auction[];
     lastUpdated?: number;
     page?: number;
     perPage?: number;
@@ -34,24 +34,24 @@ interface IStateProps {
     isActive?: boolean;
 }
 
-interface IState {
+interface State {
     columns: {
         name: string;
         label: string;
     }[]
 }
 
-const mapStateToProps = (state): IStateProps => ({
+const mapStateToProps = (state): StateProps => ({
     isActive: true,
     ...selector(state)
 });
 
-const mapDispatchToProps: IDispatchProps = {
+const mapDispatchToProps: DispatchProps = {
     loadAuctions: actions.fetch.init,
 };
 
-@connect<IStateProps, IDispatchProps>(mapStateToProps, mapDispatchToProps)
-export class AuctionList extends React.Component<IProps, IState> {
+@connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)
+export class AuctionList extends React.Component<Props, State> {
 
     constructor (props) {
         super(props);
@@ -146,7 +146,7 @@ export class AuctionList extends React.Component<IProps, IState> {
         const { columns } = this.state;
         return (
             <div>
-                <div className="auctionList">
+                <div className="auction-list">
                     <AuctionListControls
                         count={count}
                         page={page}
@@ -156,13 +156,13 @@ export class AuctionList extends React.Component<IProps, IState> {
                         onSearchTextChange={this.handleSearchTextChange.bind(this)}
                         showSearchInput={true}/>
 
-                    <div className="auctionList-header">
+                    <div className="auction-list__header">
                         {
                             columns.map((column, i) => {
                                 const cn = classNames(
-                                    'auctionList-header-item',
-                                    `auctionList-header-item-${column.name}`,
-                                    `auction-column-${column.name}`,
+                                    'auction-list__header-item',
+                                    `auction-list__header-item-${column.name}`,
+                                    `auction-column__${column.name}`,
                                     {
                                         'sort-by': sortOrder === column.name && sortDirection,
                                         'sort-by-desc': sortOrder === column.name && !sortDirection
@@ -178,7 +178,7 @@ export class AuctionList extends React.Component<IProps, IState> {
                             ? <h2 className="loading">Loading...</h2> :
                             isEmpty ? <h2>Empty.</h2>
                                 :
-                                <div className="auctionList-body" style={{ opacity: isFetching ? 0.5 : 1 }}>
+                                <div className="auction-list__body" style={{ opacity: isFetching ? 0.5 : 1 }}>
                                     {items.map((auction, i) =>
                                         <AuctionItem {...auction} key={i}/>
                                     )}

@@ -1,8 +1,8 @@
-.auctionList {
+.auction-list {
     max-width: 1500px;
     margin: auto;
 
-    &-header {
+    &__header {
         background: #fff;
         box-sizing: border-box;
         display: flex;
@@ -35,14 +35,14 @@
 }
 
 .auction-column {
-    &-name {
+    &__name {
         margin-right: auto;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
     }
 
-    &-currentBet {
+    &__current-bet {
         width: 10%;
         min-width: 70px;
         text-align: right;

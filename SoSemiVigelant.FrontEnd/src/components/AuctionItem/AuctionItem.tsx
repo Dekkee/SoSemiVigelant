@@ -7,26 +7,26 @@ import { Action } from 'redux';
 
 import './AuctionItem.scss';
 
-export type IProps = IOwnProps & IDispatchProps;
+export type Props = OwnProps & DispatchProps;
 
-interface IOwnProps {
+interface OwnProps {
     name: string;
     id: number;
     estimated: Date;
     currentBid?: number;
 }
 
-interface IDispatchProps {
+interface DispatchProps {
     onView?: (id: number) => Action;
 }
 
-const mapDispatchToProps: IDispatchProps = {
+const mapDispatchToProps: DispatchProps = {
     onView: (id: number) => actions.get.init({ id })
 };
 
-@connect<null, IDispatchProps>(null, mapDispatchToProps)
-export class AuctionItem extends React.Component<IProps> {
-    constructor (props: IProps) {
+@connect<null, DispatchProps>(null, mapDispatchToProps)
+export class AuctionItem extends React.Component<Props> {
+    constructor (props: Props) {
         super(props);
     }
 
@@ -37,10 +37,10 @@ export class AuctionItem extends React.Component<IProps> {
     render () {
         const { name, estimated, currentBid } = this.props;
         return (
-            <div className="auctionItem" onClick={this.handleView.bind(this)}>
-                <span className="auction-column auction-column-name">{name}</span>
-                <Ticker className="auction-column auction-column-timeLeft" initialTime={estimated}/>
-                <span className="auction-column auction-column-currentBet">{currentBid}</span>
+            <div className="auction-item" onClick={this.handleView.bind(this)}>
+                <span className="auction-column auction-column__name">{name}</span>
+                <Ticker className="auction-column auction-column__timeLeft" initialTime={estimated}/>
+                <span className="auction-column auction-column__currentBet">{currentBid}</span>
             </div>
         );
     }

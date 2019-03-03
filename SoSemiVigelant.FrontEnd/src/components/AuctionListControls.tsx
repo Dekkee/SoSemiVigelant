@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Pagination } from './Pagination';
 import debounce = require('lodash/debounce');
 
-export interface IProps {
+export interface Props {
     count: number;
     page: number;
     pageSize: number;
@@ -13,14 +13,14 @@ export interface IProps {
     onSearchTextChange?: (val: number) => void;
 }
 
-interface IState {
+interface State {
     options: {
         value: number;
         label: string;
     }[]
 }
 
-export class AuctionListControls extends React.Component<IProps, IState> {
+export class AuctionListControls extends React.Component<Props, State> {
 
     private onSearchTextChange: (val: number) => void;
 

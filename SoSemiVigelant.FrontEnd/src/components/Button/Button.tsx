@@ -2,15 +2,15 @@ import * as React from 'react';
 
 import './Button.scss';
 
-export interface IProps {
+export interface Props {
     className: string;
     icon?: string;
     disabled: boolean;
     onClick: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
-export class Button extends React.Component<IProps> {
-    constructor (props: IProps) {
+export class Button extends React.Component<Props> {
+    constructor (props: Props) {
         super(props);
     }
 
